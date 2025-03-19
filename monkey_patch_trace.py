@@ -13,25 +13,7 @@ import importlib
 import ast
 from sqlalchemy import Engine
 
-
-class Config:
-    """
-    用于引入配置文件，配置文件中包含了任务类型、任务文件、任务配置等信息。
-    """
-
-    def __init__(self, config_path):
-        self.config_path = config_path
-        self.config = None
-        self.load_config()
-        self.task_type = self.config['task_type']
-
-    def load_config(self):
-        """
-        从配置文件中加载配置信息。
-        :return: 无
-        """
-        with open(self.config_path, encoding='utf-8') as file:
-            self.config = json.load(file)
+from config_class import Config
 
 
 class UniversalTracer:
@@ -146,6 +128,9 @@ class UniversalTracer:
                 'io_nodes': [],
                 'db_nodes': []
             }
+
+            if caller_function_name == 'get_all_users':
+                print(caller_function_name, called_function_name,caller_file,called_file)
 
             self.thread_local.call_stack.append(call_info)
 
@@ -327,7 +312,6 @@ def setup_sqlalchemy_events(tracer):
                     if (tracer.config.config['task_dir'] in item['called_file']
                             and tracer.config.config['venv_dir'] not in item['called_file']):
                         item.setdefault("db_nodes", []).append(db_info)
-                        print(item)
                         break
             else:
                 tracer.db_data[threading.current_thread().ident].append(db_info)
@@ -355,6 +339,8 @@ def setup_sqlalchemy_events(tracer):
 
 
 if __name__ == '__main__':
+    import drop_all_tables
+    drop_all_tables.delete_all_table_data()
     CONFIG_FILE_PATH = 'config/config.json'
     config_data = Config(CONFIG_FILE_PATH)
     shutil.rmtree(config_data.config['trace_output_dir'], ignore_errors=True)

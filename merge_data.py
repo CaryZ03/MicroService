@@ -1,6 +1,9 @@
+"""
+将动静态分析的结果合并，并保存到两个json文件中，分别对应的是合并后的结果和映射关系
+"""
 import os
 import json
-from monkey_patch_trace import Config
+from config_class import Config
 from find_imports import CodeAnalyzer
 from find_imports import FuncRelationShip
 import shutil
@@ -10,8 +13,11 @@ double_select = {}
 
 # 统计所有的信息的node，包括trace node和import node
 class InformationNode:
-    def __init__(self, importNode):
-        self.importNode = importNode
+    """
+    信息节点类，用于存储导入节点的信息
+    """
+    def __init__(self, import_node):
+        self.importNode = import_node
         self.children = []
         self.father = None
         self.call_functions = []
@@ -65,6 +71,9 @@ class InformationNode:
 
 
 class IONode:
+    """
+    I/O节点类，用于存储I/O操作的信息
+    """
     def __init__(self):
         self.io_function = None
         self.file = None
@@ -96,6 +105,9 @@ class IONode:
 
 
 class DBNode:
+    """
+    数据库节点类，用于存储数据库操作的信息
+    """
     def __init__(self):
         self.db_function = None
         self.table = None
@@ -124,6 +136,9 @@ class DBNode:
 
 
 class TraceNode:
+    """
+    跟踪节点类，用于存储跟踪信息
+    """
     def __init__(self):
         self.called_function_name = None
         self.called_file = None
@@ -149,7 +164,7 @@ class TraceNode:
             'exec_time': self.exec_time,
             'caller_first_lineno': self.caller_first_lineno,
             'db_nodes': [db_node.to_dict() for db_node in self.db_nodes],
-            'io_nodes': [io_node.to_dict() for io_node in self.io_nodes]
+            'io_nodes': [io_node.to_dict() for io_node in self.io_nodes],
         }
 
     def from_dict(self, data):
@@ -168,21 +183,32 @@ class TraceNode:
 
 
 def get_imports_nodes(json_dir):
+    """
+    从静态分析的json文件中获取结果，并解析成节点和字典映射
+    :param json_dir: json文件保存的文件夹
+    :return: 解析结果和对应的字典映射
+    """
     imports_result = []
-    nodeMap = {}
+    node_map = {}
     for file in os.listdir(json_dir):
         if file.endswith('.json'):
             json_path = os.path.join(json_dir, file)
             analyzer = CodeAnalyzer(file.replace('&', '/').replace('.json', '.py'))
             analyzer.load_from_json(json_path)
             root_node = InformationNode(analyzer.root_node)
-            root_node.analyze_tree(root_node, nodeMap)
-            imports_result.append((file.replace('&', '/').replace('.json','.py'), root_node))
+            root_node.analyze_tree(root_node, node_map)
+            imports_result.append((file.replace('&', '/').replace('.json', '.py'), root_node))
 
-    return imports_result, nodeMap
+    return imports_result, node_map
 
 
 def save_merged_results(imports_results, file_path):
+    """
+    保存合并后的结果到json文件
+    :param imports_results: 保存的结果
+    :param file_path: 保存路径
+    :return:
+    """
     data = []
     for file_name, root_node in imports_results:
         item = {
@@ -194,9 +220,15 @@ def save_merged_results(imports_results, file_path):
         json.dump(data, f, indent=4)
 
 
-def save_map_results(nodeMap, file_path):
+def save_map_results(node_map, file_path):
+    """
+    保存映射关系到json文件
+    :param node_map: 映射关系
+    :param file_path: 保存路径
+    :return: 无
+    """
     data = []
-    for key, value in nodeMap.items():
+    for key, value in node_map.items():
         data.append({
             "key": key,
             "value": value.to_dict()
@@ -206,6 +238,11 @@ def save_map_results(nodeMap, file_path):
 
 
 def load_imports_results(file_path):
+    """
+    从json文件中加载静态分析的结果
+    :param file_path: 加载的路径
+    :return: 静态分析结果
+    """
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     imports_results = []
@@ -217,6 +254,11 @@ def load_imports_results(file_path):
 
 
 def get_trace_data(config):
+    """
+    从动态分析的json文件中获取结果
+    :param config: 配置文件
+    :return: 动态分析的结果
+    """
     json_dir = config.config['trace_output_dir']
     trace_result = []
     for file in os.listdir(json_dir):
@@ -234,18 +276,26 @@ def get_trace_data(config):
     return trace_result
 
 
-def merge_result(trace_data, nodeMap, root_dir):
+def merge_result(trace_data, node_map, root_dir):
+    """
+    将动态分析和静态分析的结果合并
+    :param trace_data: 动态分析的结果
+    :param node_map: 节点和四元组的映射
+    :param root_dir: 根路径
+    :return: 无
+    """
     global double_select
     for thread in trace_data:
         for key, value in thread.items():
             for item in value:
                 if item.called_file is not None and item.caller_file is not None and item.called_file.startswith(
                         root_dir):
+                    called_func = item.called_function_name
+                    caller_func = item.caller_function_name
                     called_path = item.called_file.removeprefix(root_dir).removeprefix('/')
                     caller_path = item.caller_file.removeprefix(root_dir).removeprefix('/')
                     called_lineno = item.called_lineno
-                    called_func = item.called_function_name
-                    caller_func = item.caller_function_name
+
                     caller_lineno = item.caller_lineno
                     called_tuple = None
                     caller_tuple = None
@@ -264,7 +314,7 @@ def merge_result(trace_data, nodeMap, root_dir):
                                     caller_tuple = call_tuple
                                     break
                             if caller_tuple is not None:
-                                caller_node = nodeMap[caller_tuple]
+                                caller_node = node_map[caller_tuple]
                                 caller_node.io_nodes.extend(item.io_nodes)
 
                     if (called_func, called_path) in double_select:
@@ -273,7 +323,7 @@ def merge_result(trace_data, nodeMap, root_dir):
                                 called_tuple = call_tuple
                                 break
                         if called_tuple is not None:
-                            called_node = nodeMap[called_tuple]
+                            called_node = node_map[called_tuple]
                             called_node.db_nodes.extend(item.db_nodes)
                             called_node.io_nodes.extend(item.io_nodes)
 
@@ -291,8 +341,8 @@ def merge_result(trace_data, nodeMap, root_dir):
                             break
 
                     if called_tuple is not None and caller_tuple is not None:
-                        called_node = nodeMap[called_tuple]
-                        caller_node = nodeMap[caller_tuple]
+                        called_node = node_map[called_tuple]
+                        caller_node = node_map[caller_tuple]
                         caller_node.call_functions.append(called_tuple)
                         called_node.exec_time += item.exec_time
                         called_node.exec_count += 1
@@ -310,6 +360,7 @@ def main():
     os.makedirs(map_output_dir_path, exist_ok=True)
     save_merged_results(imports_result, os.path.join(map_output_dir_path, 'merged_result.json'))
     save_map_results(nodeMap, os.path.join(map_output_dir_path, 'map_result.json'))
+
 
 if __name__ == '__main__':
     main()

@@ -1,271 +1,153 @@
+"""
+利用聚类算法对节点进行聚类，具体方法：
+1. 首先利用轮廓系数来确定最佳的聚类数
+2. 通过函数之间的语义相似度矩阵来划分出函数的聚类
+3. 然后根据函数的依赖性关系进行聚类的优化
+"""
 import numpy as np
-import networkx as nx
-from node2vec import Node2Vec
-from sklearn.cluster import KMeans
-from transformers import BertTokenizer, BertModel
-import torch
-
-# 示例数据
-functions = [
-    {
-        "function_id": ("calculate_sum", 1, "math_utils.py", 10),
-        "call_relations": [("get_numbers", 21, "math_utils.py", 30)],
-        "imported_libraries": ["math"],
-        "return_names": ["sum_result"],
-        "class_name": ["MathUtils"],
-        "database_calls": ["math_db"]
-    },
-    {
-        "function_id": ("get_numbers", 21, "math_utils.py", 30),
-        "call_relations": [],
-        "imported_libraries": [],
-        "return_names": ["number_list"],
-        "class_name": ["MathUtils"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("generate_report", 1, "report_generator.py", 20),
-        "call_relations": [("fetch_data", 21, "report_generator.py", 40)],
-        "imported_libraries": ["pandas", "matplotlib"],
-        "return_names": ["report_file"],
-        "class_name": ["ReportGenerator"],
-        "database_calls": ["data_db"]
-    },
-    {
-        "function_id": ("fetch_data", 21, "report_generator.py", 40),
-        "call_relations": [],
-        "imported_libraries": ["sqlite3"],
-        "return_names": ["data_frame"],
-        "class_name": ["ReportGenerator"],
-        "database_calls": ["data_db"]
-    },
-    {
-        "function_id": ("encrypt_data", 1, "security_utils.py", 15),
-        "call_relations": [("get_key", 16, "security_utils.py", 25)],
-        "imported_libraries": ["cryptography"],
-        "return_names": ["encrypted_data"],
-        "class_name": ["SecurityUtils"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("get_key", 16, "security_utils.py", 25),
-        "call_relations": [],
-        "imported_libraries": [],
-        "return_names": ["encryption_key"],
-        "class_name": ["SecurityUtils"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("process_image", 1, "image_processor.py", 25),
-        "call_relations": [("resize_image", 26, "image_processor.py", 35)],
-        "imported_libraries": ["opencv-python"],
-        "return_names": ["processed_image"],
-        "class_name": ["ImageProcessor"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("resize_image", 26, "image_processor.py", 35),
-        "call_relations": [],
-        "imported_libraries": [],
-        "return_names": ["resized_image"],
-        "class_name": ["ImageProcessor"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("validate_user", 1, "user_auth.py", 18),
-        "call_relations": [("check_password", 19, "user_auth.py", 28)],
-        "imported_libraries": ["bcrypt"],
-        "return_names": ["is_valid"],
-        "class_name": ["UserAuth"],
-        "database_calls": ["user_db"]
-    },
-    {
-        "function_id": ("check_password", 19, "user_auth.py", 28),
-        "call_relations": [],
-        "imported_libraries": [],
-        "return_names": ["password_match"],
-        "class_name": ["UserAuth"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("send_email", 1, "email_utils.py", 22),
-        "call_relations": [],
-        "imported_libraries": ["smtplib"],
-        "return_names": ["email_sent"],
-        "class_name": ["EmailUtils"],
-        "database_calls": []
-    },
-    {
-        "function_id": ("log_event", 1, "logging_utils.py", 16),
-        "call_relations": [],
-        "imported_libraries": ["logging"],
-        "return_names": ["log_status"],
-        "class_name": ["LoggingUtils"],
-        "database_calls": []
-    }
-]
+import json
+from config_class import Config
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.metrics import silhouette_score
+import os
 
 
-# 1. 构建函数描述文本
-def build_function_description(func):
-    description = f"Function {func['function_id'][0]}"
-    if func['class_name']:
-        description += f" in class {func['class_name'][0]}"
-    if func['return_names']:
-        description += f" returns {', '.join(func['return_names'])}"
-    if func['imported_libraries']:
-        description += f" uses {', '.join(func['imported_libraries'])} libraries"
-    if func['database_calls']:
-        description += f" and calls databases: {', '.join(func['database_calls'])}"
-    func['description'] = func['function_id'][0] if len(func['class_name']) == 0 else func['class_name'][0] + '.' + \
-                                                                                      func['function_id'][0]
-    return description
+def find_best_n_clusters(dependence_matrix):
+    """
+    通过轮廓系数来确定最佳的聚类数
+    :param dependence_matrix: 语义相关度矩阵
+    :return: 最佳聚类数
+    """
+    max_score = -1
+    best_n_clusters = 2
+    for n_clusters in range(2, 11):
+        try:
+            labels = hierarchical_clustering(dependence_matrix, n_clusters)
+            unique_labels = np.unique(labels)
+            if len(unique_labels) < 2:
+                print(f"Skipping n_clusters = {n_clusters} because all points are in one cluster.")
+                continue
+            distance_matrix = 1 - dependence_matrix
+            np.fill_diagonal(distance_matrix, 0)  # 将对角线元素设置为 0
+            score = silhouette_score(distance_matrix, labels, metric='precomputed')
+            if score > max_score:
+                max_score = score
+                best_n_clusters = n_clusters
+        except ValueError as e:
+            print(f"Error occurred for n_clusters = {n_clusters}: {e}")
+            continue
+    return best_n_clusters
 
 
-descriptions = [build_function_description(func) for func in functions]
-print("Function Descriptions:")
-for desc in descriptions:
-    print(desc)
-
-# 2. 使用 BERT 提取语义特征
-bert_base_uncased = './bert_base_uncased'
-tokenizer = BertTokenizer.from_pretrained(bert_base_uncased)
-model = BertModel.from_pretrained(bert_base_uncased)
-
-
-def extract_semantic_features(descriptions):
-    features = []
-    for desc in descriptions:
-        inputs = tokenizer(desc, return_tensors='pt', truncation=True, padding=True)
-        with torch.no_grad():
-            outputs = model(**inputs)
-        cls_feature = outputs.last_hidden_state[:, 0, :].numpy()  # 使用 [CLS] token 的特征
-        features.append(cls_feature)
-    return np.vstack(features)
+def hierarchical_clustering(similarity_matrix, n_clusters=2):
+    """
+    使用层次聚类对相似性矩阵进行聚类
+    :param similarity_matrix: 相似性矩阵
+    :param n_clusters: 聚类数
+    :return: 聚类标签
+    """
+    clustering = AgglomerativeClustering(n_clusters=n_clusters, metric='precomputed', linkage='average')
+    labels = clustering.fit_predict(1 - similarity_matrix)  # 将相似性转换为距离
+    return labels
 
 
-semantic_features = extract_semantic_features(descriptions)
-print("\nSemantic Features Shape:", semantic_features.shape)
-
-# 3. 处理函数调用关系
-G = nx.DiGraph()
-for func in functions:
-    func_id = func['function_id'][0]
-    G.add_node(func_id)
-    for call in func['call_relations']:
-        G.add_edge(func_id, call[0])
-
-# 使用 Node2Vec 提取调用关系特征
-node2vec = Node2Vec(G, dimensions=64, walk_length=30, num_walks=200, workers=4)
-n2v_model = node2vec.fit(window=10, min_count=1, batch_words=4)
-
-# 获取每个函数的调用关系特征
-call_relation_features = np.array([n2v_model.wv[node] for node in G.nodes()])
-print("Call Relation Features Shape:", call_relation_features.shape)
-
-# 4. 定义权重
-weights = {
-    "semantic": 40,  # 语义特征权重
-    "call_relation": 30,  # 调用关系特征权重
-    "imported_libraries": 5,  # 导入库权重
-    "return_names": 5,  # 返回值名称权重
-    "database_calls": 20,  # 数据库调用权重
-    "name_features": 60  # 函数名称语义
-}
+def load_func_list(file_path):
+    """
+    从文件中加载函数列表
+    :param file_path: 文件路径
+    :return: 函数列表
+    """
+    with open(file_path, 'r') as f:
+        return json.load(f)
 
 
-def encode_description(desc):
-    desc_feature = np.zeros(10)
-    for ch in desc:
-        # 使用字符的 ASCII 码作为哈希的一部分
-        idx = ord(ch) % 10
-        desc_feature[idx] += 1
-    return desc_feature
+def optimize_cluster(call_chain_matrix, labels, func_list, threshold=0.5):
+    """
+    根据函数的依赖性关系进行聚类的优化
+    当前的思路：
+    考虑到有些语义完全和其它的内容无关的部分，划分方法如下：
+        1. 将聚类中有且只有它一个节点的这种节点称作孤立节点，针对孤立节点进行处理
+        2. 首先将每个聚类调用这种孤立节点的call_chain_numpy对应的点的权重加和
+        3. 取最大的作为这个孤立节点的归属聚类
+        4. 如果没有任何的聚类调用过它，则将其划分到一个聚类中，这种聚类负责存放孤立节点
+    同时，如果某些聚类中的节点被其它聚类节点调用的时候，判断条件如下：
+        1. 如果某个聚类调用这个节点的次数占比超过阈值，则将这个节点划分到这个聚类中
+        2. 其它情况仍保持语义优先，即将这个节点划分到语义相似度最高的聚类中
+    :param call_chain_matrix: 函数调用关系矩阵
+    :param labels: 聚类标签
+    :param func_list: 函数列表
+    :param threshold: 将聚类忽略语义关系划分的阈值
+    :return: 优化后的聚类标签
+    """
+    n_clusters = labels.max() + 1
+
+    # 处理孤立节点情况
+    for i in range(n_clusters):
+        cluster_funcs = [j for j in range(len(labels)) if labels[j] == i]
+        call_chain_count = {}
+        if len(cluster_funcs) == 1:
+            for j in range(len(func_list)):
+                if i == j:
+                    continue
+                else:
+                    if labels[j] not in call_chain_count:
+                        call_chain_count[labels[j]] = 0
+                    call_chain_count[labels[j]] += call_chain_matrix[j][cluster_funcs[0]]
+            max_count = 0
+            max_label = n_clusters
+            for label, count in call_chain_count.items():
+                if count > max_count:
+                    max_count = count
+                    max_label = label
+            labels[cluster_funcs[0]] = max_label
+
+    # 处理被其它聚类调用的情况
+    for i in range(len(func_list)):
+        call_chain_count = {}
+        for j in range(len(func_list)):
+            if i == j:
+                continue
+            else:
+                if labels[j] not in call_chain_count:
+                    call_chain_count[labels[j]] = 0
+                call_chain_count[labels[j]] += call_chain_matrix[j][i]
+        max_count = 0
+        max_label = -1
+        for label, count in call_chain_count.items():
+            if count > max_count:
+                max_count = count
+                max_label = label
+        if max_count > threshold:
+            labels[i] = max_label
+
+    return labels
 
 
-# 5. 加权特征融合
-def weighted_feature_fusion(functions, semantic_features, call_relation_features, weights):
-    # 初始化加权特征列表
-    weighted_features = []
+def main():
+    config_path = 'config/config.json'
+    config = Config(config_path)
 
-    for i, func in enumerate(functions):
-        # 语义特征
-        semantic_feature = semantic_features[i] * weights["semantic"]
+    func_list = load_func_list(os.path.join(config.config['dependence_output_dir'], 'func_list.json'))
+    semantic_similarity_matrix = np.load(
+        os.path.join(config.config['dependence_output_dir'], 'semantic_similarity_numpy.npy'))
+    call_chain_matrix = np.load(os.path.join(config.config['dependence_output_dir'], 'call_chain_numpy.npy'))
 
-        # 调用关系特征
-        call_relation_feature = call_relation_features[i] * weights["call_relation"]
+    best_n_clusters = find_best_n_clusters(semantic_similarity_matrix)
+    print(f"Best number of clusters: {best_n_clusters}")
 
-        # 导入库特征
-        imported_libs = func['imported_libraries']
-        imported_lib_feature = np.zeros(10)  # 假设最多 10 种库
-        for lib in imported_libs:
-            lib_hash = hash(lib) % 10  # 简单哈希编码
-            imported_lib_feature[lib_hash] = 1
-        imported_lib_feature = imported_lib_feature * weights["imported_libraries"]
-
-        # 返回值名称特征
-        return_names = func['return_names']
-        return_name_feature = np.zeros(10)  # 假设最多 10 种返回值
-        for name in return_names:
-            name_hash = hash(name) % 10  # 简单哈希编码
-            return_name_feature[name_hash] = 1
-        return_name_feature = return_name_feature * weights["return_names"]
-
-        # 数据库调用特征
-        db_calls = func['database_calls']
-        db_call_feature = np.zeros(10)  # 假设最多 10 种数据库
-        for db in db_calls:
-            db_hash = hash(db) % 10  # 简单哈希编码
-            db_call_feature[db_hash] = 1
-        db_call_feature = db_call_feature * weights["database_calls"]
-
-        description = encode_description(func['description'] * weights['name_features'])
-
-        # 拼接所有加权特征
-        combined_feature = np.hstack([
-            description,
-            semantic_feature,
-            call_relation_feature,
-            imported_lib_feature,
-            return_name_feature,
-            db_call_feature,
-        ])
-        weighted_features.append(combined_feature)
-
-    return np.vstack(weighted_features)
+    labels = hierarchical_clustering(semantic_similarity_matrix, n_clusters=best_n_clusters)
+    labels = optimize_cluster(call_chain_matrix, labels, func_list)
+    label_groups = {}
+    for label, func in zip(labels, func_list):
+        if label not in label_groups:
+            label_groups[label] = []
+        label_groups[label].append(func[0])
+    # 打印按标签分组的函数
+    for label, functions in label_groups.items():
+        print(f"Label: {label}")
+        for function in functions:
+            print(f"  Function: {function}")
 
 
-# 加权特征融合
-weighted_features = weighted_feature_fusion(functions, semantic_features, call_relation_features, weights)
-print("Weighted Features Shape:", weighted_features.shape)
-
-# 6. 聚类
-kmeans = KMeans(n_clusters=4)
-clusters = kmeans.fit_predict(weighted_features)
-
-# 输出聚类结果
-print("\nClustering Results:")
-for i, func in enumerate(functions):
-    print(f"Function {func['function_id'][0]} is in cluster {clusters[i]}")
-
-
-# 7. 优化跨聚类调用
-def optimize_clusters(functions, clusters, G):
-    cluster_map = {func['function_id'][0]: cluster_id for func, cluster_id in zip(functions, clusters)}
-
-    # 检查跨聚类调用
-    for edge in G.edges():
-        src, dst = edge
-        if cluster_map[src] != cluster_map[dst]:
-            # 将被调用的函数移动到调用函数的聚类中
-            cluster_map[dst] = cluster_map[src]
-
-    # 更新聚类结果
-    new_clusters = [cluster_map[func['function_id'][0]] for func in functions]
-    return new_clusters
-
-# 优化聚类
-# optimized_clusters = optimize_clusters(functions, clusters, G)
-# print("\nOptimized Clustering Results:")
-# for i, func in enumerate(functions):
-#     print(f"Function {func['function_id'][0]} is in cluster {optimized_clusters[i]}")
+if __name__ == "__main__":
+    main()

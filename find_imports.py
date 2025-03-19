@@ -2,7 +2,7 @@ import ast
 import json
 import keyword
 import os
-from monkey_patch_trace import Config
+from config_class import Config
 
 
 def ast_to_dict(node):
@@ -18,7 +18,7 @@ class FuncRelationShip:
     def __init__(self, node=None, fileName=None):
         self.node = node
         self.func_name = node.name if node is not None and hasattr(node, 'name') else 'root'
-        self.imports = set()
+        self.imports = []
         self.children = []
         self.father = None
         self.use_variables = set()
@@ -156,7 +156,7 @@ class CodeAnalyzer(ast.NodeVisitor):
             module_name = func.id
             import_name, import_node = self.find_module_name(module_name, current_node_imports, imports)
             if import_name is not None and import_node is not None:
-                results.add((import_name, import_node))
+                results.append((import_name, import_node))
             for arg in stmt.args:
                 self.find_stmt_imports(arg, imports, current_node_imports, results, funcNode)
         elif isinstance(stmt, ast.Name):
@@ -260,7 +260,6 @@ def main(input_file_path, config_path):
     config = Config(config_path)
     analyzer = CodeAnalyzer(input_file_path)
     analyzer.analyze()
-    os.makedirs(config.config['imports_output_dir'], exist_ok=True)
     output_file_path = os.path.join(config.config['imports_output_dir'],
                                     input_file_path.replace('/', '&').replace('py', 'json'))
     analyzer.add_init_node(analyzer.root_node)
@@ -268,4 +267,4 @@ def main(input_file_path, config_path):
 
 
 if __name__ == '__main__':
-    main('job/app/routes.py', 'config/config.json')
+    main('formal_job/app/routes.py', 'config/config.json')

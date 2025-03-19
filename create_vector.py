@@ -7,7 +7,7 @@
 5. 数据库调用
 """
 from merge_data import InformationNode
-from find_imports import Config
+from config_class import Config
 import json
 import os
 from merge_data import main as merge_data_main

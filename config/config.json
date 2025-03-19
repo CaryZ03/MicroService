@@ -2,20 +2,21 @@
   "root_dir": "/Users/xht/Desktop/auto-tracer",
   "venv_dir": "/Users/xht/Desktop/auto-tracer/.venv",
   "task_dir": "/Users/xht/Desktop/auto-tracer/job",
-  "task_file": "job/run.py",
+  "task_file": "job/app.py",
   "task_type": "flask",
   "imports_output_dir": "imports_results",
   "vector_output_dir": "vector_results",
   "trace_output_dir": "trace_results",
   "map_output_dir": "map_results",
+  "dependence_output_dir": "dependence_results",
   "semantic_similarity_weights":{
-    "name_similarity": 0.5,
-    "database_similarity": 0.3,
-    "import_similarity": 0.2
+    "name_similarity": 0.55,
+    "database_similarity": 0.35,
+    "import_similarity": 0.1
   },
   "total_similarity_weight":{
-    "call_chain_weight": 0.5,
-    "semantic_similarity": 0.5
+    "call_chain_weight": 0,
+    "semantic_similarity": 1
   },
   "task_config": {
     "default_args": {

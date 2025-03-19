@@ -6,10 +6,14 @@
 """
 import json
 import os
+import numpy as np
 import create_vector
-from find_imports import Config
+from config_class import Config
 import spacy
 import re
+import shutil
+
+nlp = spacy.load("en_core_web_md")
 
 
 def get_func_dependence(func1: create_vector.VectorNode, func2: create_vector.VectorNode) -> float:
@@ -29,8 +33,8 @@ def get_func_dependence(func1: create_vector.VectorNode, func2: create_vector.Ve
     for call_relation in call_relations2:
         if tuple(call_relation) == tuple(func1.function_id):
             count2 += 1
-    dependency1 = count1 / func2.total_calls * 1 / func2.children_count if func2.total_calls != 0 else 0
-    dependency2 = count2 / func2.total_calls * 1 / func2.children_count if func2.total_calls != 0 else 0
+    dependency1 = count1 / func2.total_calls if func2.total_calls != 0 else 0
+    dependency2 = count2 / func2.total_calls if func2.total_calls != 0 else 0
     alpha = 0.5
     beta = 0.5
     return alpha * dependency1 + beta * dependency2
@@ -43,7 +47,7 @@ def extract_nouns(text):
     :return: 所有的名词
     """
     # 加载英语模型
-    nlp = spacy.load("en_core_web_lg")
+
     doc = nlp(text)
 
     # 提取句子中的所有名词以及宾语
@@ -54,8 +58,8 @@ def extract_nouns(text):
 
     # 遍历词汇并提取名词
     for token in doc:
-        # 如果是名词，或者是宾语（dobj），也作为名词处理
-        if token.pos_ == "NOUN" or token.dep_ in ("dobj", "iobj"):
+        # 如果是名词，或者是宾语，也作为名词处理
+        if token.pos_ == "NOUN" or token.pos_ == "PROPN" or token.dep_ in ("dobj", "iobj"):
             nouns.append(token.text)
 
     return " ".join(nouns)
@@ -67,7 +71,7 @@ def calculate_similarity(phrase1, phrase2):
     doc1 = nlp(phrase1)
     doc2 = nlp(phrase2)
 
-    # 还原词形（Lemmatization）
+    # 还原词形
     lemma1 = " ".join([token.lemma_ for token in doc1])
     lemma2 = " ".join([token.lemma_ for token in doc2])
 
@@ -77,6 +81,37 @@ def calculate_similarity(phrase1, phrase2):
 
     similarity = doc1_lemma.similarity(doc2_lemma)
     return similarity
+
+
+def get_dependence(func_list, config):
+    """
+    计算函数之间的依赖度
+    :param func_list: 函数列表
+    :param config: 配置文件
+    :return: 无
+    """
+    func_count = len(func_list)
+    call_chain_numpy = np.zeros((func_count, func_count))
+    semantic_similarity_numpy = np.zeros((func_count, func_count))
+    for i in range(func_count):
+        for j in range(i + 1, func_count):
+            print(f'Calculating {i} -> {j}')
+            func1 = func_list[i]
+            func2 = func_list[j]
+            call_chain_numpy[i][j] = get_func_dependence(func1, func2)
+            call_chain_numpy[j][i] = call_chain_numpy[i][j]
+            semantic_similarity_numpy[i][j] = get_semantic_similarity(func1, func2,
+                                                                      config['semantic_similarity_weights'])
+            semantic_similarity_numpy[j][i] = semantic_similarity_numpy[i][j]
+
+    for i in range(len(func_list)):
+        for j in range(i + 1, len(func_list)):
+            print(f'{func_list[i].function_id[0]} -> {func_list[j].function_id[0]}: {semantic_similarity_numpy[i][j]}')
+
+    save_matrix_numpy(semantic_similarity_numpy,
+                      os.path.join(config['dependence_output_dir'], 'semantic_similarity_numpy.npy'))
+    save_matrix_numpy(call_chain_numpy,
+                      os.path.join(config['dependence_output_dir'], 'call_chain_numpy.npy'))
 
 
 def split_function_name(func_name):
@@ -93,7 +128,20 @@ def split_function_name(func_name):
     return ' '.join(words)
 
 
-def get_semantic_similarity(func1, func2, weights) -> float:
+def min_max_normalize(matrix):
+    """
+    Min-Max 归一化
+    :param matrix: 输入矩阵
+    :return: 归一化后的矩阵
+    """
+    min_val = np.min(matrix)
+    max_val = np.max(matrix)
+    if max_val == min_val:
+        return np.zeros_like(matrix)  # 避免除以零
+    return (matrix - min_val) / (max_val - min_val)
+
+
+def get_semantic_similarity(func1, func2, weights=None) -> float:
     """
     计算两个类之间的语义相似度
     :param func1: 类1
@@ -101,6 +149,12 @@ def get_semantic_similarity(func1, func2, weights) -> float:
     :param weights: 权重列表 [文件名+方法名权重, 数据库权重, 自定义库权重]
     :return: 语义相似度（范围 [0, 1]）
     """
+    if weights is None:
+        weights = {
+            'name_similarity': 0.55,
+            'database_similarity': 0.35,
+            'import_similarity': 0.1
+        }
 
     # 提取文件名和方法名
     func_name1 = split_function_name(func1.function_id[0])
@@ -119,6 +173,8 @@ def get_semantic_similarity(func1, func2, weights) -> float:
     database1 = set(func1.database_calls)
     database2 = set(func2.database_calls)
     database_sim = len(database1.intersection(database2)) / max(len(database1), len(database2), 1)
+    if len(database1) == 0 or len(database2) == 0:
+        database_sim = semantic_sim
 
     # 3. 计算自定义库调用的相似度
     imported_libraries1 = set(func1.imported_libraries)
@@ -135,23 +191,10 @@ def get_semantic_similarity(func1, func2, weights) -> float:
     return total_sim
 
 
-def get_class_dependence(class1, class2, config):
-    """
-    计算两个类之间的依赖度
-    :param class1: 类1
-    :param class2: 类2
-    :return: 依赖度
-    """
-    function_dependence = get_func_dependence(class1, class2)
-    semantic_similarity = get_semantic_similarity(class1, class2, config['semantic_similarity_weights'])
-    return function_dependence * config['total_similarity_weight']['call_chain_weight'] + semantic_similarity * \
-        config['total_similarity_weight']['semantic_similarity']
-
-
 def restore_from_map(json_path):
     """
     从json文件中恢复函数和类
-    :param map: map
+    :param json_path: json文件路径
     :return: 函数或类的一个字典，字典的键是四元组，值是一个VectorNode
     """
     with open(json_path, 'r') as f:
@@ -164,19 +207,36 @@ def restore_from_map(json_path):
     return result
 
 
+def save_matrix_numpy(matrix, path='./dependence_matrix.npy'):
+    """
+    保存矩阵为 Numpy 文件
+    :param matrix: 输入矩阵
+    :param path: 保存路径
+    """
+    np.save(path, matrix)
+
+
+def save_func_list(func_list, path='./func_list.json'):
+    """
+    保存函数列表为 JSON 文件
+    :param func_list: 函数列表
+    :param path: 保存路径
+    """
+    with open(path, 'w') as f:
+        json.dump([list(func.function_id) for func in func_list], f, indent=4)
+
+
 def main():
     create_vector.main()
     config_path = 'config/config.json'
     config = Config(config_path)
+    shutil.rmtree(config.config['dependence_output_dir'], ignore_errors=True)
+    os.makedirs(config.config['dependence_output_dir'], exist_ok=True)
     func_map = restore_from_map(os.path.join(config.config['vector_output_dir'], 'vector.json'))
     func_list = list(func_map.values())
-    func_count = len(func_list)
-    for i in range(func_count):
-        for j in range(i + 1, func_count):
-            func1 = func_list[i]
-            func2 = func_list[j]
-            dependency = get_class_dependence(func1, func2, config.config)
-            print(f"{func1.function_id[0]} vs {func2.function_id[0]}: 相似度 = {dependency:.4f}")
+    print([key[0] for key in func_map.keys()])
+    get_dependence(func_list, config.config)
+    save_func_list(func_list, os.path.join(config.config['dependence_output_dir'], 'func_list.json'))
 
 
 if __name__ == "__main__":
