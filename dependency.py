@@ -12,8 +12,7 @@ from config_class import Config
 import spacy
 import re
 import shutil
-
-nlp = spacy.load("en_core_web_md")
+import qwen_get_func_name
 
 
 def get_func_dependence(func1: create_vector.VectorNode, func2: create_vector.VectorNode) -> float:
@@ -40,10 +39,11 @@ def get_func_dependence(func1: create_vector.VectorNode, func2: create_vector.Ve
     return alpha * dependency1 + beta * dependency2
 
 
-def extract_nouns(text):
+def extract_nouns(text, nlp):
     """
-    识别出句子中所有的名词
+    识别出句子中所有的名词，会进行无关词的删除
     :param text: 输入的文本
+    :param nlp: spaCy NLP 对象
     :return: 所有的名词
     """
     # 加载英语模型
@@ -53,6 +53,12 @@ def extract_nouns(text):
     # 提取句子中的所有名词以及宾语
     nouns = []
 
+    saved_words = ['Controller', 'Service', 'Repository', 'Model', 'Entity', 'Manager', 'Util', 'Utils', 'Config',
+                   'Configurations', 'Configuration', 'Constants', 'Constant', 'Properties', 'Property', 'Handler',
+                   'Handlers', 'Interceptor', 'Interceptors', 'Filter', 'Filters', 'Listener', 'Listeners', 'Aspect',
+                   'Aspects', 'Advice', 'Advices', 'Exception', 'Exceptions', 'Error', 'Errors', 'Validator',
+                   'Validators', 'Mapper', 'Mappers', 'data', 'Data', 'result', 'Result', 'response', 'Response']
+
     if len(doc) == 1:
         return text  # 假设单个词直接作为名词返回
 
@@ -60,14 +66,15 @@ def extract_nouns(text):
     for token in doc:
         # 如果是名词，或者是宾语，也作为名词处理
         if token.pos_ == "NOUN" or token.pos_ == "PROPN" or token.dep_ in ("dobj", "iobj"):
-            nouns.append(token.text)
+            # 还原词形并去除无效词
+            if token.lemma_ not in saved_words:
+                nouns.append(token.lemma_)
 
     return " ".join(nouns)
 
 
-def calculate_similarity(phrase1, phrase2):
+def calculate_similarity(phrase1, phrase2, nlp):
     # 使用词形还原处理短语
-    nlp = spacy.load("en_core_web_md")
     doc1 = nlp(phrase1)
     doc2 = nlp(phrase2)
 
@@ -83,11 +90,12 @@ def calculate_similarity(phrase1, phrase2):
     return similarity
 
 
-def get_dependence(func_list, config):
+def get_dependence(func_list, config, nlp):
     """
     计算函数之间的依赖度
     :param func_list: 函数列表
     :param config: 配置文件
+    :param nlp: spaCy NLP 对象
     :return: 无
     """
     func_count = len(func_list)
@@ -100,8 +108,9 @@ def get_dependence(func_list, config):
             func2 = func_list[j]
             call_chain_numpy[i][j] = get_func_dependence(func1, func2)
             call_chain_numpy[j][i] = call_chain_numpy[i][j]
-            semantic_similarity_numpy[i][j] = get_semantic_similarity(func1, func2,
-                                                                      config['semantic_similarity_weights'])
+            semantic_similarity_numpy[i][j] = get_semantic_similarity(func1, func2, nlp,
+                                                                      config['semantic_similarity_weights'],
+                                                                      config['api_token'])
             semantic_similarity_numpy[j][i] = semantic_similarity_numpy[i][j]
 
     for i in range(len(func_list)):
@@ -141,12 +150,14 @@ def min_max_normalize(matrix):
     return (matrix - min_val) / (max_val - min_val)
 
 
-def get_semantic_similarity(func1, func2, weights=None) -> float:
+def get_semantic_similarity(func1, func2, nlp, weights=None, api_token=None) -> float:
     """
     计算两个类之间的语义相似度
     :param func1: 类1
     :param func2: 类2
+    :param nlp: spaCy NLP 对象
     :param weights: 权重列表 [文件名+方法名权重, 数据库权重, 自定义库权重]
+    :param api_token: API token
     :return: 语义相似度（范围 [0, 1]）
     """
     if weights is None:
@@ -156,18 +167,36 @@ def get_semantic_similarity(func1, func2, weights=None) -> float:
             'import_similarity': 0.1
         }
 
+    if api_token is None:
+        api_token = 'sk-jojfbmtngmlcmnkyaqhtmjvctlopjyiggdaoejpxfiyysrpk'
+
     # 提取文件名和方法名
-    func_name1 = split_function_name(func1.function_id[0])
-    func_name2 = split_function_name(func2.function_id[0])
+    func_name1 = split_function_name(func1.format_func_name)
+    func_name2 = split_function_name(func2.format_func_name)
     file_name1 = split_function_name(os.path.basename(func1.function_id[2]).removesuffix(".py"))
     file_name2 = split_function_name(os.path.basename(func2.function_id[2]).removesuffix(".py"))
 
-    # 1. 提取名词并计算文件名 + 方法名的语义相似度
+    # 1. 提取函数/类中的名词，计算语义相似度。如果函数/类中没有名词，就从文件名中找
     text1 = f"{func_name1}"
     text2 = f"{func_name2}"
-    nouns1 = extract_nouns(text1)  # 提取名词
-    nouns2 = extract_nouns(text2)  # 提取名词
-    semantic_sim = calculate_similarity(nouns1, nouns2)
+    nouns1 = extract_nouns(text1, nlp)
+    nouns2 = extract_nouns(text2, nlp)
+    if nouns1 == '':
+        file_name = file_name1.split('/')
+        for i in range(len(file_name), -1, -1):
+            nouns = extract_nouns(file_name[i], nlp)
+            if nouns != '':
+                nouns1 = nouns
+                break
+    if nouns2 == '':
+        file_name = file_name2.split('/')
+        for i in range(len(file_name), -1, -1):
+            nouns = extract_nouns(file_name[i], nlp)
+            if nouns != '':
+                nouns2 = nouns
+                break
+    # semantic_sim = calculate_similarity(nouns1, nouns2)
+    semantic_sim = qwen_get_func_name.judge_semantic_similarity(nouns1, nouns2, api_token)
 
     # 2. 计算数据库调用的相似度
     database1 = set(func1.database_calls)
@@ -228,6 +257,7 @@ def save_func_list(func_list, path='./func_list.json'):
 
 def main():
     create_vector.main()
+    nlp = spacy.load("en_core_web_md")
     config_path = 'config/config.json'
     config = Config(config_path)
     shutil.rmtree(config.config['dependence_output_dir'], ignore_errors=True)
@@ -235,7 +265,10 @@ def main():
     func_map = restore_from_map(os.path.join(config.config['vector_output_dir'], 'vector.json'))
     func_list = list(func_map.values())
     print([key[0] for key in func_map.keys()])
-    get_dependence(func_list, config.config)
+    for func in func_list:
+        func.format_func_name = qwen_get_func_name.format_function_name(func.function_id[0], config.config['api_token'])
+        print(func.format_func_name)
+    get_dependence(func_list, config.config, nlp)
     save_func_list(func_list, os.path.join(config.config['dependence_output_dir'], 'func_list.json'))
 
 

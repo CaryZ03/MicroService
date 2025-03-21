@@ -10,10 +10,11 @@
 3. 运行`analyze_repository.py`进行静态分析
 4. 运行`monkey_patch_trace.py`启动动态分析追踪
 5. 运行`call_flask.py`调用api
-6. 执行`dependence.py`获取节点之间的方法依赖度和语义依赖度
+6. 执行`dependency.py`获取节点之间的方法依赖度和语义依赖度
 7. 执行`get_k_means.py`进行聚类的划分
 
 #### 先决条件：
 
-由于windows的路径分隔符问题，该项目目前只支持在linux和macos下运行
+1. 由于windows的路径分隔符问题，该项目目前只支持在linux和macos下运行
+2. 由于当前的寻址方法，该项目需要修改import内容使其均满足是相对于根路径进行引入
 

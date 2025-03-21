@@ -9,12 +9,13 @@
   "trace_output_dir": "trace_results",
   "map_output_dir": "map_results",
   "dependence_output_dir": "dependence_results",
-  "semantic_similarity_weights":{
+  "api_token": "sk-jojfbmtngmlcmnkyaqhtmjvctlopjyiggdaoejpxfiyysrpk",
+  "semantic_similarity_weights": {
     "name_similarity": 0.55,
     "database_similarity": 0.35,
     "import_similarity": 0.1
   },
-  "total_similarity_weight":{
+  "total_similarity_weight": {
     "call_chain_weight": 0,
     "semantic_similarity": 1
   },

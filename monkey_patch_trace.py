@@ -16,6 +16,29 @@ from sqlalchemy import Engine
 from config_class import Config
 
 
+def extract_table_name(sql):
+    """
+    从 SQL 语句中提取表名。
+    """
+    # 匹配 FROM 子句中的表名（支持双引号或单引号）
+    match = re.search(r'FROM\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    # 匹配 INSERT INTO 子句中的表名（支持双引号或单引号）
+    match = re.search(r'INSERT\s+INTO\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    # 匹配 UPDATE 子句中的表名（支持双引号或单引号）
+    match = re.search(r'UPDATE\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    # 匹配 DELETE FROM 子句中的表名（支持双引号或单引号）
+    match = re.search(r'DELETE\s+FROM\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    return None
+
+
 class UniversalTracer:
     """
     一个通用的追踪器，可以针对flask和django等框架进行追踪。
@@ -48,28 +71,6 @@ class UniversalTracer:
         if self.enabled:
             sys.setprofile(None)
             self.enabled = False
-
-    def extract_table_name(self, sql):
-        """
-        从 SQL 语句中提取表名。
-        """
-        # 匹配 FROM 子句中的表名（支持双引号或单引号）
-        match = re.search(r'FROM\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
-        if match:
-            return match.group(1)
-        # 匹配 INSERT INTO 子句中的表名（支持双引号或单引号）
-        match = re.search(r'INSERT\s+INTO\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
-        if match:
-            return match.group(1)
-        # 匹配 UPDATE 子句中的表名（支持双引号或单引号）
-        match = re.search(r'UPDATE\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
-        if match:
-            return match.group(1)
-        # 匹配 DELETE FROM 子句中的表名（支持双引号或单引号）
-        match = re.search(r'DELETE\s+FROM\s+["\']?(\w+)["\']?', sql, re.IGNORECASE)
-        if match:
-            return match.group(1)
-        return None
 
     def trace_calls(self, frame, event, arg):
         """
@@ -130,7 +131,7 @@ class UniversalTracer:
             }
 
             if caller_function_name == 'get_all_users':
-                print(caller_function_name, called_function_name,caller_file,called_file)
+                print(caller_function_name, called_function_name, caller_file, called_file)
 
             self.thread_local.call_stack.append(call_info)
 
@@ -296,7 +297,7 @@ def setup_sqlalchemy_events(tracer):
     @event.listens_for(Engine, "before_execute")
     def before_execute(conn, clauseelement, multiparams, params):
         sql = str(clauseelement)
-        table_name = tracer.extract_table_name(sql)
+        table_name = extract_table_name(sql)
         if table_name:
             print(f"Executing SQL on table: {table_name}")
             db_info = {
@@ -340,6 +341,7 @@ def setup_sqlalchemy_events(tracer):
 
 if __name__ == '__main__':
     import drop_all_tables
+
     drop_all_tables.delete_all_table_data()
     CONFIG_FILE_PATH = 'config/config.json'
     config_data = Config(CONFIG_FILE_PATH)

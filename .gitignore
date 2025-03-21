@@ -14,5 +14,7 @@
 
 /bert_base_uncased
 
-test.py
+/test.py
+
+/tmp.py
 

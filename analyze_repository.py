@@ -19,6 +19,6 @@ def main(repo_dir, config_path):
 
 
 if __name__ == '__main__':
-    config_path='config/config.json'
-    remove_dir(config_path)
-    main('job', config_path)
+    CONFIG_PATH = 'config/config.json'
+    remove_dir(CONFIG_PATH)
+    main('job', CONFIG_PATH)

@@ -16,6 +16,7 @@ class InformationNode:
     """
     信息节点类，用于存储导入节点的信息
     """
+
     def __init__(self, import_node):
         self.importNode = import_node
         self.children = []
@@ -53,27 +54,28 @@ class InformationNode:
         node.father = tuple(data["father"]) if data["father"] else None
         return node
 
-    def analyze_tree(self, node, nodeMap):
+    def analyze_tree(self, node, node_map):
         global double_select
         if (node.importNode.func_name, node.importNode.fileName) not in double_select:
             double_select[(node.importNode.func_name, node.importNode.fileName)] = []
         double_select[(node.importNode.func_name, node.importNode.fileName)].append(
             (node.importNode.func_name, node.importNode.lineno, node.importNode.fileName, node.importNode.end_lineno))
-        nodeMap[(
+        node_map[(
             node.importNode.func_name, node.importNode.lineno, node.importNode.fileName,
             node.importNode.end_lineno)] = node
-        importNode = node.importNode
-        for child in importNode.children:
+        import_node = node.importNode
+        for child in import_node.children:
             tmp_child = InformationNode(child)
             node.children.append(tmp_child)
-            tmp_child.father = (importNode.func_name, importNode.lineno, importNode.fileName, importNode.end_lineno)
-            self.analyze_tree(tmp_child, nodeMap)
+            tmp_child.father = (import_node.func_name, import_node.lineno, import_node.fileName, import_node.end_lineno)
+            self.analyze_tree(tmp_child, node_map)
 
 
 class IONode:
     """
     I/O节点类，用于存储I/O操作的信息
     """
+
     def __init__(self):
         self.io_function = None
         self.file = None
@@ -108,6 +110,7 @@ class DBNode:
     """
     数据库节点类，用于存储数据库操作的信息
     """
+
     def __init__(self):
         self.db_function = None
         self.table = None
@@ -139,6 +142,7 @@ class TraceNode:
     """
     跟踪节点类，用于存储跟踪信息
     """
+
     def __init__(self):
         self.called_function_name = None
         self.called_file = None
@@ -352,14 +356,14 @@ def main():
     config_path = 'config/config.json'
     config = Config(config_path)
     root_dir = config.config['root_dir']
-    imports_result, nodeMap = get_imports_nodes(config.config['imports_output_dir'])
+    imports_result, node_map = get_imports_nodes(config.config['imports_output_dir'])
     trace_data = get_trace_data(config)
-    merge_result(trace_data, nodeMap, root_dir)
+    merge_result(trace_data, node_map, root_dir)
     map_output_dir_path = config.config['map_output_dir']
     shutil.rmtree(map_output_dir_path, ignore_errors=True)
     os.makedirs(map_output_dir_path, exist_ok=True)
     save_merged_results(imports_result, os.path.join(map_output_dir_path, 'merged_result.json'))
-    save_map_results(nodeMap, os.path.join(map_output_dir_path, 'map_result.json'))
+    save_map_results(node_map, os.path.join(map_output_dir_path, 'map_result.json'))
 
 
 if __name__ == '__main__':

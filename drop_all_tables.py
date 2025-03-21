@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, MetaData, Table
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 
 # 加载环境变量
@@ -8,9 +8,9 @@ load_dotenv()
 
 # 数据库配置
 HOSTNAME = os.getenv('DB_HOST', '182.92.100.66')  # 从环境变量读取，默认值为 '182.92.100.66'
-DATABASE = os.getenv('DB_NAME', 'autotracer')      # 从环境变量读取，默认值为 'autotracer'
-PORT = int(os.getenv('DB_PORT', 3306))            # 从环境变量读取，默认值为 3306
-USERNAME = os.getenv('DB_USER', 'autotracer')     # 从环境变量读取，默认值为 'autotracer'
+DATABASE = os.getenv('DB_NAME', 'autotracer')  # 从环境变量读取，默认值为 'autotracer'
+PORT = int(os.getenv('DB_PORT', 3306))  # 从环境变量读取，默认值为 3306
+USERNAME = os.getenv('DB_USER', 'autotracer')  # 从环境变量读取，默认值为 'autotracer'
 PASSWORD = os.getenv('DB_PASSWORD', 'BpGJmWWDWNn4R6AN')  # 从环境变量读取，默认值为 'BpGJmWWDWNn4R6AN'
 
 # 构建数据库 URI
@@ -26,6 +26,7 @@ session = Session()
 # 获取数据库元数据
 metadata = MetaData()  # 不传递 bind 参数
 metadata.reflect(bind=engine)  # 在 reflect 方法中传递 bind 参数
+
 
 def delete_all_table_data():
     """
@@ -44,6 +45,7 @@ def delete_all_table_data():
         print(f"删除表内容时出错: {e}")
     finally:
         session.close()
+
 
 if __name__ == '__main__':
     # 确认操作
