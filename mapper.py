@@ -221,11 +221,16 @@ def toRegex(name):
         {
             "var": r"{int}",
             "regex": r"\\d+"
-        }
+        },
+        {
+            "var": r"{str}",
+            "regex": r"[a-zA-Z0-9]+"
+        },
     ]
     
     for pattern in patterns:
         name = re.sub(pattern["var"], pattern["regex"], name)
+    # print(name)
     return name
     
     
@@ -247,10 +252,8 @@ def getNodeId(node):
         node_id = entry["name"] if entry else node_id
     return node_id
 
-    
 
-
-def addToGraph(G, spans, entries):
+def addToGraph(G, spans, entries, toJson=False):
     weight = 1
     for span in spans:
         nodes = getAttributes(span)
@@ -277,24 +280,24 @@ def addToGraph(G, spans, entries):
                     else:
                         G.add_edge(node_id, parent_node_id, weight=weight)
             else:
-                # entries += [node]
-                name = node["endpointName"]
-                entry = matchEntry(name, entries)
-                # print("Name:", name)
-                # print("Entry:", entry)
-                weight = entry["weight"] if entry else 1
-                # print("Weight:", weight)
+                if toJson:
+                    entries += [node]
+                else:
+                    name = node["endpointName"]
+                    entry = matchEntry(name, entries)
+                    weight = entry["weight"] if entry else 1
                 
     
     
 # 创建有向图
 G = nx.DiGraph()
 
+# entries = []
+
 # 读取 JSON 文件
-with open("entries.json", "r") as json_file:
+with open("entries_demo.json", "r") as json_file:
     entries = json.load(json_file)
     
-# entries = []
 print("Entries:", entries)
 
 services = queryServices()
@@ -309,7 +312,7 @@ for service in services:
 
 # print(json.dumps(nodes, indent=1))
 
-# nx.write_graphml(G, "graph-without-hikari.graphml")
+nx.write_graphml(G, "demo-with-weight.graphml")
 
 # import networkx as nx
 # G = nx.read_graphml("microservice_graph-without-hikari.graphml")
@@ -339,7 +342,7 @@ plt.show()
 # entries = [{"name": entry_name, "weight": 1} for entry_name in entry_names]
 
 # # 写入 JSON 文件
-# with open("entries.json", "w") as json_file:
+# with open("entries_demo.json", "w") as json_file:
 #     json.dump(entries, json_file, indent=4)  # 使用 indent 参数美化输出
         
         
