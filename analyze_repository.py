@@ -4,10 +4,11 @@ from config_class import Config
 import shutil
 
 
-def remove_dir(config_path):
-    config = Config(config_path)
+def remove_dir(config):
     shutil.rmtree(config.config['imports_output_dir'], ignore_errors=True)
+    shutil.rmtree(config.config['global_stmts_dir'], ignore_errors=True)
     os.makedirs(config.config['imports_output_dir'], exist_ok=True)
+    os.makedirs(config.config['global_stmts_dir'], exist_ok=True)
 
 
 def main(repo_dir, config_path):
@@ -20,5 +21,6 @@ def main(repo_dir, config_path):
 
 if __name__ == '__main__':
     CONFIG_PATH = 'config/config.json'
-    remove_dir(CONFIG_PATH)
-    main('job', CONFIG_PATH)
+    config = Config(CONFIG_PATH)
+    remove_dir(config)
+    main(config.config['relative_task_dir'], CONFIG_PATH)

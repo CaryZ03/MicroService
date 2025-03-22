@@ -15,7 +15,11 @@ def format_function_name(formal_func_name, token):
         "messages": [
             {
                 "role": "user",
-                "content": f"I now have a function name that may contain Chinese pinyin or English abbreviations. I hope you can return me a modified function name that turns them into complete English words and satisfies the camel hump principle. This is the function name: {formal_func_name}. Note that you only need to return the modified function name to me, without any other content"
+                "content": f"I now have a function name that may contain Chinese pinyin or English abbreviations. I "
+                           f"hope you can return me a modified function name that turns them into complete English "
+                           f"words and satisfies the camel hump principle. This is the function name: "
+                           f"{formal_func_name}. Note that you only need to return the modified function name to me, "
+                           f"without any other content"
             }
         ],
         "stream": False,
@@ -54,7 +58,11 @@ def judge_semantic_similarity(func_name1, func_name2, token):
         "messages": [
             {
                 "role": "user",
-                "content": f"I have two function names that may contain Chinese pinyin or English abbreviations. I hope you can return me a similarity score between 0 and 1 to indicate the semantic similarity between the two function names. The first function name is: {func_name1}. The second function name is: {func_name2}. Note that you only need to return the similarity score to me, without any other content"
+                "content": f"I have two function names that may contain Chinese pinyin or English abbreviations. I "
+                           f"hope you can return me a similarity score between 0 and 1 to indicate the semantic "
+                           f"similarity between the two function names. The first function name is: {func_name1}. The "
+                           f"second function name is: {func_name2}. Note that you only need to return the similarity "
+                           f"score to me, without any other content"
             }
         ],
         "stream": False,

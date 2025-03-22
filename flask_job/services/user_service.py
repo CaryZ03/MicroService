@@ -1,6 +1,6 @@
-from job.models.user_model import User
-from job.utils.database import db
-from job.tmp import testcase
+from flask_job.models.user_model import User
+from flask_job.utils.database import db
+from flask_job.tmp import testcase
 
 class UserService:
     @staticmethod

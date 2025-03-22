@@ -1,4 +1,4 @@
-from job.utils.database import db
+from flask_job.utils.database import db
 
 class Product(db.Model):
     __tablename__ = 'products'

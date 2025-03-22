@@ -52,7 +52,7 @@ class FuncRelationShip:
             'def_variables': list(self.def_variables),
             'global_variables': list(self.global_variables),
             'node_type': self.node_type,
-            'node': ast.dump(self.node) if self.node else None,
+            'node': astunparse.unparse(self.node) if self.node else None,
             'lineno': self.lineno,
             'end_lineno': self.end_lineno,
             'fileName': self.fileName,
@@ -84,6 +84,12 @@ class FuncRelationShip:
             child.father = func_node
         return func_node
 
+    def to_sim(self):
+        return {
+            'imports': [self.import_to_dict(imp) for imp in self.imports],
+            'node': astunparse.unparse(self.node) if self.node else None,
+        }
+
 
 def find_module_name(module_name, current_node_imports, imports):
     if len(current_node_imports) != 0:
@@ -99,10 +105,6 @@ def find_module_name(module_name, current_node_imports, imports):
     return None, None
 
 
-def print_node(node):
-    print(node.to_dict())
-
-
 class CodeAnalyzer(ast.NodeVisitor):
     def __init__(self, file_path=None):
         self.file_path = file_path
@@ -111,6 +113,7 @@ class CodeAnalyzer(ast.NodeVisitor):
         self.classes = []
         self.root_node = None
         self.current_node = None
+        self.global_map = []  # 全局语句映射
 
     def add_init_node(self, current_node):
         if current_node is None:
@@ -127,7 +130,7 @@ class CodeAnalyzer(ast.NodeVisitor):
                                                                                             kwonlyargs=[],
                                                                                             kw_defaults=[],
                                                                                             kwarg=None, defaults=[]),
-                                                        body=[], decorator_list=[]), self.file_path)
+                                                        body=[ast.Pass()], decorator_list=[]), self.file_path)
                 node.lineno = current_node.lineno
                 node.end_lineno = current_node.lineno
                 node.father = current_node
@@ -216,16 +219,33 @@ class CodeAnalyzer(ast.NodeVisitor):
         self.root_node = FuncRelationShip(tree, self.file_path)
         self.current_node = self.root_node
         self.visit(tree)
+        self.global_stmt_visit(tree)
+
+    def global_stmt_visit(self, node):
+        global_imports = []
+        for stmt in node.body:
+            if isinstance(stmt, ast.Import):
+                for alias in stmt.names:
+                    global_imports.append((alias.name if alias.asname is None else alias.asname, stmt))
+            elif isinstance(stmt, ast.ImportFrom):
+                for alias in stmt.names:
+                    global_imports.append((alias.name if alias.asname is None else alias.asname, stmt))
+            elif isinstance(stmt, ast.FunctionDef):
+                continue
+            elif isinstance(stmt, ast.ClassDef):
+                continue
+            else:
+                current_node = FuncRelationShip(stmt, self.file_path)
+                self.find_stmt_imports(stmt, self.imports, global_imports, current_node.imports, current_node)
+                self.global_map.append(current_node)
 
     def visit_Import(self, node):
         for alias in node.names:
             self.imports.append((alias.name if alias.asname is None else alias.asname, node))
-        self.generic_visit(node)
 
     def visit_ImportFrom(self, node):
         for alias in node.names:
             self.imports.append((alias.name if alias.asname is None else alias.asname, node))
-        self.generic_visit(node)
 
     def visit_FunctionDef(self, node):
         func_node = FuncRelationShip(node, self.file_path)
@@ -247,19 +267,30 @@ class CodeAnalyzer(ast.NodeVisitor):
         self.find_class_imports(class_node, tmp_imports)
         self.current_node = class_node.father
 
-    def print_tree(self, node):
-        print_node(node)
-        for child in node.children:
-            self.print_tree(child)
-
     def save_to_json(self, file_path):
         with open(file_path, 'w') as file:
             json.dump(self.root_node.to_dict(), file, indent=4)
 
-    def load_from_json(self, file_path):
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-        self.root_node = FuncRelationShip.from_dict(data, self.file_path)
+    def save_global_stmts(self, file_path):
+        with open(file_path, 'w') as file:
+            json.dump([node.to_sim() for node in self.global_map], file, indent=4)
+
+    def load_from_json(self, json_path):
+        """
+        从 JSON 文件加载数据并构建 FuncRelationShip 树。
+        :param json_path: JSON 文件的路径
+        """
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            # 构建 FuncRelationShip 树
+            self.root_node = FuncRelationShip.from_dict(data, self.file_path)
+        except Exception as e:
+            # 捕获异常并打印 json_path
+            print(f"Error loading JSON file: {json_path}")
+            print(f"Exception: {e}")
+            raise  # 重新抛出异常
 
 
 def main(input_file_path, config_path):
@@ -268,5 +299,13 @@ def main(input_file_path, config_path):
     analyzer.analyze()
     output_file_path = os.path.join(config.config['imports_output_dir'],
                                     input_file_path.replace('/', '&').replace('py', 'json'))
+    global_stmts_path = os.path.join(config.config['global_stmts_dir'],
+                                     input_file_path.replace('/', '&').replace('py', 'json'))
     analyzer.add_init_node(analyzer.root_node)
     analyzer.save_to_json(output_file_path)
+    analyzer.save_global_stmts(global_stmts_path)
+
+
+if __name__ == '__main__':
+    os.makedirs('imports_results', exist_ok=True)
+    main('django_task/django_job/myapp/apps.py', 'config/config.json')

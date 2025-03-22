@@ -1,6 +1,6 @@
-from job.models.order_model import Order
-from job.utils.database import db
-from job.tmp import testcase
+from flask_job.models.order_model import Order
+from flask_job.utils.database import db
+from flask_job.tmp import testcase
 
 class OrderService:
     @staticmethod

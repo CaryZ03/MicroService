@@ -1,9 +1,9 @@
 from flask import Flask
-from job.utils.database import db, init_db
-from job.controllers.user_controller import user_blueprint
-from job.controllers.order_controller import order_blueprint
-from job.controllers.product_controller import product_blueprint
-from job.config import Config
+from flask_job.utils.database import db, init_db
+from flask_job.controllers.user_controller import user_blueprint
+from flask_job.controllers.order_controller import order_blueprint
+from flask_job.controllers.product_controller import product_blueprint
+from flask_job.config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)

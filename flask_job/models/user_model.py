@@ -1,4 +1,4 @@
-from job.utils.database import db
+from flask_job.utils.database import db
 
 class User(db.Model):
     __tablename__ = 'users'

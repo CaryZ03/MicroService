@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from job.services.order_service import OrderService
+from flask_job.services.order_service import OrderService
 
 order_blueprint = Blueprint('order', __name__)
 

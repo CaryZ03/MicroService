@@ -1,5 +1,5 @@
-from job.models.product_model import Product
-from job.utils.database import db
+from flask_job.models.product_model import Product
+from flask_job.utils.database import db
 
 class ProductService:
     @staticmethod

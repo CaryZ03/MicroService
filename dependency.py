@@ -53,11 +53,9 @@ def extract_nouns(text, nlp):
     # 提取句子中的所有名词以及宾语
     nouns = []
 
-    saved_words = ['Controller', 'Service', 'Repository', 'Model', 'Entity', 'Manager', 'Util', 'Utils', 'Config',
-                   'Configurations', 'Configuration', 'Constants', 'Constant', 'Properties', 'Property', 'Handler',
-                   'Handlers', 'Interceptor', 'Interceptors', 'Filter', 'Filters', 'Listener', 'Listeners', 'Aspect',
-                   'Aspects', 'Advice', 'Advices', 'Exception', 'Exceptions', 'Error', 'Errors', 'Validator',
-                   'Validators', 'Mapper', 'Mappers', 'data', 'Data', 'result', 'Result', 'response', 'Response']
+    saved_words = ['property', 'util', 'manager', 'result', 'advice', 'response', 'filter', 'config', 'interceptor',
+                   'handler', 'validator', 'aspect', 'configuration', 'exception', 'view', 'listener', 'error', 'model',
+                   'controller', 'mapper', 'service', 'setting', 'data', 'constant', 'route', 'entity', 'repository']
 
     if len(doc) == 1:
         return text  # 假设单个词直接作为名词返回
@@ -67,8 +65,8 @@ def extract_nouns(text, nlp):
         # 如果是名词，或者是宾语，也作为名词处理
         if token.pos_ == "NOUN" or token.pos_ == "PROPN" or token.dep_ in ("dobj", "iobj"):
             # 还原词形并去除无效词
-            if token.lemma_ not in saved_words:
-                nouns.append(token.lemma_)
+            if token.lemma_.lower() not in saved_words:
+                nouns.append(token.lemma_.lower())
 
     return " ".join(nouns)
 

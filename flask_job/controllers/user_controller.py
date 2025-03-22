@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from job.services.user_service import UserService
+from flask_job.services.user_service import UserService
 
 user_blueprint = Blueprint('user', __name__)
 

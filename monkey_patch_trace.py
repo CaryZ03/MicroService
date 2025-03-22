@@ -12,7 +12,6 @@ import re
 import importlib
 import ast
 from sqlalchemy import Engine
-
 from config_class import Config
 
 
@@ -105,17 +104,18 @@ class UniversalTracer:
                 cls = frame.f_locals.get('self', None).__class__
                 module_name = cls.__module__
                 module = importlib.import_module(module_name)
-                called_file = module.__file__
-                class_name = cls.__name__
+                if hasattr(module, '__file__'):
+                    called_file = module.__file__
+                    class_name = cls.__name__
 
-                if called_lineno == 1:
-                    with open(called_file, 'r', encoding='utf-8') as file:
-                        code = file.read()
-                        tree = ast.parse(code)
-                        for node in ast.walk(tree):
-                            if isinstance(node, ast.ClassDef) and node.name == class_name:
-                                called_lineno = node.lineno
-                                break
+                    if called_lineno == 1:
+                        with open(called_file, 'r', encoding='utf-8') as file:
+                            code = file.read()
+                            tree = ast.parse(code)
+                            for node in ast.walk(tree):
+                                if isinstance(node, ast.ClassDef) and node.name == class_name:
+                                    called_lineno = node.lineno
+                                    break
 
             call_info = {
                 'caller_function_name': caller_function_name,
@@ -130,7 +130,7 @@ class UniversalTracer:
                 'db_nodes': []
             }
 
-            if caller_function_name == 'get_all_users':
+            if called_function_name == 'calculate_sum':
                 print(caller_function_name, called_function_name, caller_file, called_file)
 
             self.thread_local.call_stack.append(call_info)
@@ -222,9 +222,42 @@ class UniversalTracer:
 
         if config.task_type == 'django':
             patch_django(self)
+            # 这里本来也想要处理成类似下面的flask那样的，但是由于一些神秘原因，我如果通过函数调用就不能够正常使用
+            from django.db.backends.signals import connection_created
+            from django.db.backends.utils import CursorWrapper
+            from django.dispatch import receiver
+            def sql_callback(execute, sql, params=None):
+                """
+                回调函数，用于捕获 SQL 查询。
+                """
+                add_database_before_execute(self, sql)
+                # 调用原始的 execute 方法
+                return execute(sql, params)
+
+            @receiver(connection_created)
+            def setup_sql_callback(sender, connection, **kwargs):
+                """
+                连接信号，将回调函数绑定到数据库游标。
+                """
+                # 获取原始的游标工厂函数
+                original_cursor = connection.cursor
+
+                # 定义一个新的游标工厂函数
+                def cursor_factory():
+                    # 使用原始游标工厂函数创建游标
+                    cursor = original_cursor()
+                    # 将游标包装到 CursorWrapper 中
+                    wrapped_cursor = CursorWrapper(cursor, connection)
+                    # 替换游标的 execute 方法
+                    wrapped_cursor.execute = lambda sql, params=None: sql_callback(
+                        cursor.execute, sql, params
+                    )
+                    return wrapped_cursor
+
+                connection.cursor = cursor_factory
         elif config.task_type == 'flask':
             patch_flask(self)
-            setup_sqlalchemy_events(codeTracer)
+            setup_sqlalchemy_events(self)
 
         task_config = {}
         task_args = {}
@@ -234,6 +267,7 @@ class UniversalTracer:
             task_args.update(task_config['default_args'])
         parser = argparse.ArgumentParser()
         args = parser.parse_args([])
+
         for key, value in task_args.items():
             setattr(args, key.replace('-', '_'), value)
 
@@ -246,7 +280,7 @@ class UniversalTracer:
 def patch_flask(tracer):
     """
     用于追踪 Flask 的请求处理过程。
-    :param tracer:
+    :param tracer: 共享的UniversalTracer对象
     :return: 无返回值
     """
     from flask import Flask
@@ -268,22 +302,66 @@ def patch_flask(tracer):
 def patch_django(tracer):
     """
     用于追踪 Django 的请求处理过程。
-    :param tracer:
-    :return: 无返回值
+    :param tracer: 共享的UniversalTracer对象
+    :return:
     """
-    from django.core.handlers.wsgi import WSGIHandler
-    original_call = WSGIHandler.__call__
+    from django.middleware.common import CommonMiddleware
 
-    def traced_call(self, environ, start_response):
+    original_call = CommonMiddleware.__call__
+
+    def __call__(self, request):
         tracer.start_tracing()
         try:
-            result = original_call(self, environ, start_response)
+            response = original_call(self, request)
         finally:
             tracer.stop_tracing()
             tracer.save_to_json()
-        return result
+        return response
 
-    WSGIHandler.__call__ = traced_call
+    CommonMiddleware.__call__ = __call__
+
+
+def add_database_before_execute(tracer, sql):
+    table_name = extract_table_name(sql)
+    if table_name:
+        print(f"Executing SQL on table: {table_name}")
+        db_info = {
+            'db_function': 'execute',
+            'table': table_name,
+            'sql': sql,
+            'start_time': time.time(),
+            'exec_time': None
+        }
+        call_stack = getattr(tracer.thread_local, "call_stack", None)
+        if call_stack and len(call_stack) > 0:
+            for item in list(reversed(call_stack)):
+                if (tracer.config.config['task_dir'] in item['caller_file']
+                        and tracer.config.config['venv_dir'] not in item['caller_file']):
+                    item.setdefault("db_nodes", []).append(db_info)
+                    print(item)
+                    break
+        else:
+            tracer.db_data[threading.current_thread().ident].append(db_info)
+
+
+def add_database_after_execute(tracer, sql):
+    end_time = time.time()
+    call_stack = getattr(tracer.thread_local, "call_stack", None)
+    updated = False
+    if call_stack and len(call_stack) > 0:
+        for item in list(reversed(call_stack)):
+            if (tracer.config.config['task_dir'] in item['called_file'] and
+                    tracer.config.config['venv_dir'] not in item['called_file']):
+                for db_info in item.get("db_nodes", []):
+                    if db_info["sql"] == sql and db_info["exec_time"] is None:
+                        db_info["exec_time"] = end_time - db_info["start_time"]
+                        updated = True
+                        break
+    if not updated:
+        for db_info in tracer.db_data[threading.current_thread().ident]:
+            if db_info["sql"] == sql and db_info["exec_time"] is None:
+                db_info["exec_time"] = end_time - db_info["start_time"]
+                break
 
 
 def setup_sqlalchemy_events(tracer):
@@ -297,52 +375,18 @@ def setup_sqlalchemy_events(tracer):
     @event.listens_for(Engine, "before_execute")
     def before_execute(conn, clauseelement, multiparams, params):
         sql = str(clauseelement)
-        table_name = extract_table_name(sql)
-        if table_name:
-            print(f"Executing SQL on table: {table_name}")
-            db_info = {
-                'db_function': 'execute',
-                'table': table_name,
-                'sql': sql,
-                'start_time': time.time(),
-                'exec_time': None
-            }
-            call_stack = getattr(tracer.thread_local, "call_stack", None)
-            if call_stack and len(call_stack) > 0:
-                for item in list(reversed(call_stack)):
-                    if (tracer.config.config['task_dir'] in item['called_file']
-                            and tracer.config.config['venv_dir'] not in item['called_file']):
-                        item.setdefault("db_nodes", []).append(db_info)
-                        break
-            else:
-                tracer.db_data[threading.current_thread().ident].append(db_info)
+        add_database_before_execute(tracer, sql)
 
     @event.listens_for(Engine, "after_execute")
     def after_execute(conn, clauseelement, multiparams, params, result):
-        end_time = time.time()
         sql_str = str(clauseelement)
-        call_stack = getattr(tracer.thread_local, "call_stack", None)
-        updated = False
-        if call_stack and len(call_stack) > 0:
-            for item in list(reversed(call_stack)):
-                if (tracer.config.config['task_dir'] in item['called_file'] and
-                        tracer.config.config['venv_dir'] not in item['called_file']):
-                    for db_info in item.get("db_nodes", []):
-                        if db_info["sql"] == sql_str and db_info["exec_time"] is None:
-                            db_info["exec_time"] = end_time - db_info["start_time"]
-                            updated = True
-                            break
-        if not updated:
-            for db_info in tracer.db_data[threading.current_thread().ident]:
-                if db_info["sql"] == sql_str and db_info["exec_time"] is None:
-                    db_info["exec_time"] = end_time - db_info["start_time"]
-                    break
+        add_database_after_execute(tracer, sql_str)
 
 
 if __name__ == '__main__':
-    import drop_all_tables
-
-    drop_all_tables.delete_all_table_data()
+    # import drop_all_tables
+    #
+    # drop_all_tables.delete_all_table_data()
     CONFIG_FILE_PATH = 'config/config.json'
     config_data = Config(CONFIG_FILE_PATH)
     shutil.rmtree(config_data.config['trace_output_dir'], ignore_errors=True)

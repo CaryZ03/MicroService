@@ -304,6 +304,7 @@ def merge_result(trace_data, node_map, root_dir):
                     called_tuple = None
                     caller_tuple = None
 
+
                     if called_func in ('open', 'read', 'write', 'close'):
                         io_node = IONode()
                         io_node.io_function = called_func
@@ -321,19 +322,21 @@ def merge_result(trace_data, node_map, root_dir):
                                 caller_node = node_map[caller_tuple]
                                 caller_node.io_nodes.extend(item.io_nodes)
 
-                    if (called_func, called_path) in double_select:
-                        for call_tuple in double_select[(called_func, called_path)]:
-                            if call_tuple[1] <= called_lineno <= call_tuple[3]:
-                                called_tuple = call_tuple
+                    if (caller_func, caller_path) in double_select:
+                        for call_tuple in double_select[(caller_func, caller_path)]:
+                            if call_tuple[1] <= caller_lineno <= call_tuple[3]:
+                                caller_tuple = call_tuple
                                 break
-                        if called_tuple is not None:
-                            called_node = node_map[called_tuple]
-                            called_node.db_nodes.extend(item.db_nodes)
-                            called_node.io_nodes.extend(item.io_nodes)
+                        if caller_tuple is not None:
+                            caller_node = node_map[caller_tuple]
+                            caller_node.db_nodes.extend(item.db_nodes)
+                            caller_node.io_nodes.extend(item.io_nodes)
+
 
                     if (called_func, called_path) not in double_select or (
                             caller_func, caller_path) not in double_select:
                         continue
+
 
                     for call_tuple in double_select[(called_func, called_path)]:
                         if call_tuple[1] <= called_lineno <= call_tuple[3]:
@@ -343,6 +346,10 @@ def merge_result(trace_data, node_map, root_dir):
                         if call_tuple[1] <= caller_lineno <= call_tuple[3]:
                             caller_tuple = call_tuple
                             break
+
+
+                    if caller_func == 'index':
+                        print(called_tuple, caller_tuple)
 
                     if called_tuple is not None and caller_tuple is not None:
                         called_node = node_map[called_tuple]
