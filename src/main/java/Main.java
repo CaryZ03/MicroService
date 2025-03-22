@@ -2,6 +2,9 @@ import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 
+import codegen.CodeMerger;
+import codegen.DeepSeekApiClient;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
@@ -9,7 +12,7 @@ import java.util.*;
 public class Main {
     // 配置参数
     private static final String PROJECT_ROOT = "./testProject";
-    private static final String TARGET_METHOD = "public static int calculate(int a, int b)";
+    private static final String TARGET_METHOD = "public int add(int a, int b)";
     private static final String BACKUP_EXT = ".bak";
 
     public static void main(String[] args) {
@@ -30,15 +33,12 @@ public class Main {
             System.out.println("API代码生成成功\n"+generatedCode);
 
             // 5. 合并代码
-            String mergedCode = CodeMerger.mergeCode(originalCode, generatedCode);
+            String cleanedCode = CodeMerger.mergeCode(originalCode, generatedCode, PROJECT_ROOT); // 传递项目根目录
 
             // 6. 验证语法
-            validateSyntax(mergedCode);
+            validateSyntax(cleanedCode);
 
-            // 7. 保存修改
-            Files.writeString(targetFile, mergedCode, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("代码合并成功，已保存修改");
-
+            System.out.println("API代码已生成到指定包路径");
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
             restoreBackup(findLatestBackup());
