@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d1" for="node" attr.name="count" attr.type="long"/>
+<key id="d0" for="node" attr.name="execution_time" attr.type="long"/>
+<graph edgedefault="directed"><node id="Mysql/JDBC/Connection/close">
+  <data key="d0">20</data>
+  <data key="d1">1</data>
+</node>
+<node id="POST:/order-details">
+  <data key="d0">55</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)">
+  <data key="d0">41</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)">
+  <data key="d0">41</data>
+  <data key="d1">1</data>
+</node>
+<node id="HikariCP/Connection/getConnection">
+  <data key="d0">9</data>
+  <data key="d1">1</data>
+</node>
+<node id="Mysql/JDBC/PreparedStatement/executeUpdate">
+  <data key="d0">59</data>
+  <data key="d1">1</data>
+</node>
+<node id="Mysql/JDBC/Connection/commit">
+  <data key="d0">74</data>
+  <data key="d1">1</data>
+</node>
+<node id="HikariCP/Connection/close">
+  <data key="d0">0</data>
+  <data key="d1">1</data>
+</node>
+<node id="GET:/orders/id/1">
+  <data key="d0">951</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.controller.OrderController.getOrderById(java.lang.Long)">
+  <data key="d0">939</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.OrderService.getOrderById(java.lang.Long)">
+  <data key="d0">938</data>
+  <data key="d1">1</data>
+</node>
+<node id="Mysql/JDBC/PreparedStatement/executeQuery">
+  <data key="d0">137</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)">
+  <data key="d0">906</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)">
+  <data key="d0">6</data>
+  <data key="d1">1</data>
+</node>
+<node id="POST:/categories">
+  <data key="d0">39</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)">
+  <data key="d0">25</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)">
+  <data key="d0">25</data>
+  <data key="d1">1</data>
+</node>
+<node id="POST:/products">
+  <data key="d0">96</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)">
+  <data key="d0">46</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)">
+  <data key="d0">46</data>
+  <data key="d1">1</data>
+</node>
+<node id="POST:/users/register">
+  <data key="d0">76</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)">
+  <data key="d0">53</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)">
+  <data key="d0">52</data>
+  <data key="d1">1</data>
+</node>
+<node id="POST:/orders">
+  <data key="d0">2530</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)">
+  <data key="d0">554</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)">
+  <data key="d0">552</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.UserService.getUserById(java.lang.Long)">
+  <data key="d0">294</data>
+  <data key="d1">1</data>
+</node>
+<node id="com.example.demo.service.ProductService.getProductById(java.lang.Long)">
+  <data key="d0">53</data>
+  <data key="d1">1</data>
+</node>
+<node id="Mysql/JDBC/Statement/executeQuery">
+  <data key="d0">0</data>
+  <data key="d1">1</data>
+</node>
+<edge source="com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)" target="POST:/order-details"/>
+<edge source="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)" target="com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)"/>
+<edge source="HikariCP/Connection/getConnection" target="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)"/>
+<edge source="HikariCP/Connection/getConnection" target="com.example.demo.service.OrderService.getOrderById(java.lang.Long)"/>
+<edge source="HikariCP/Connection/getConnection" target="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"/>
+<edge source="HikariCP/Connection/getConnection" target="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"/>
+<edge source="HikariCP/Connection/getConnection" target="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)"/>
+<edge source="HikariCP/Connection/getConnection" target="com.example.demo.service.UserService.getUserById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeUpdate" target="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeUpdate" target="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeUpdate" target="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeUpdate" target="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeUpdate" target="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.OrderService.getOrderById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.UserService.getUserById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.ProductService.getProductById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/Connection/commit" target="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"/>
+<edge source="HikariCP/Connection/close" target="POST:/order-details"/>
+<edge source="HikariCP/Connection/close" target="GET:/orders/id/1"/>
+<edge source="HikariCP/Connection/close" target="POST:/categories"/>
+<edge source="HikariCP/Connection/close" target="POST:/products"/>
+<edge source="HikariCP/Connection/close" target="POST:/users/register"/>
+<edge source="HikariCP/Connection/close" target="POST:/orders"/>
+<edge source="com.example.demo.controller.OrderController.getOrderById(java.lang.Long)" target="GET:/orders/id/1"/>
+<edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="com.example.demo.controller.OrderController.getOrderById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeQuery" target="com.example.demo.service.OrderService.getOrderById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeQuery" target="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeQuery" target="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeQuery" target="com.example.demo.service.UserService.getUserById(java.lang.Long)"/>
+<edge source="Mysql/JDBC/PreparedStatement/executeQuery" target="com.example.demo.service.ProductService.getProductById(java.lang.Long)"/>
+<edge source="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)" target="com.example.demo.service.OrderService.getOrderById(java.lang.Long)"/>
+<edge source="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)" target="com.example.demo.service.OrderService.getOrderById(java.lang.Long)"/>
+<edge source="com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)" target="POST:/categories"/>
+<edge source="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)" target="com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)"/>
+<edge source="com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)" target="POST:/products"/>
+<edge source="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)" target="com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)"/>
+<edge source="com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)" target="POST:/users/register"/>
+<edge source="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)" target="com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)"/>
+<edge source="com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)" target="POST:/orders"/>
+<edge source="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)" target="com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)"/>
+<edge source="com.example.demo.service.UserService.getUserById(java.lang.Long)" target="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"/>
+<edge source="com.example.demo.service.ProductService.getProductById(java.lang.Long)" target="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"/>
+</graph></graphml>
