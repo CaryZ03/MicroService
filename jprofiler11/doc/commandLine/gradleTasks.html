@@ -1,0 +1,223 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Gradle Tasks</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.commandLine.gradleTasks';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Gradle Tasks</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/snapshotExecutables.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/antTasks.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      JProfiler supports profiling from Gradle with special tasks. In addition. JProfiler offers a number of
+      <a href="../commandLine/snapshotExecutables.html">command line executables for working with snapshots</a>
+      that have corresponding Gradle tasks.
+    </p>
+
+    <h3>Using Gradle tasks</h3>
+    <p>
+      To make the JProfiler Gradle tasks available in a Gradle build file, you can use the <code>plugins</code>
+      block
+    </p>
+    <div class="pre-container"><pre>plugins {
+    id 'com.jprofiler' version 'X.Y.Z'
+}</pre></div>
+    <p>
+      If you do not want to use the Gradle plugin repository for this purpose, the Gradle plugin is distributed
+      in the file <code>bin/gradle.jar</code>.
+    </p>
+    <p>
+      Next, you have to tell the JProfiler Gradle plugin where JProfiler is installed.
+    </p>
+    <div class="pre-container"><pre>jprofiler {
+    installDir = file('/path/to/jprofiler/home')
+}</pre></div>
+
+    <h3>Profiling from Gradle</h3>
+    <p>
+      With tasks of type <code>com.jprofiler.gradle.JavaProfile</code> you can profile any Java process.
+      This class extends Gradle's built-in <code>JavaExec</code>, so you can use the same arguments for
+      configuring the process. For profiling tests, use tasks of type <code>com.jprofiler.gradle.TestProfile</code>
+      that extend the Gradle <code>Test</code> task.
+    </p>
+    <p>
+      Without any further configuration, both tasks start an interactive profiling session where the profiling
+      agent waits on the default port 8849 for a connection from the JProfiler GUI. For offline profiling, you have to
+      add a couple of attributes that are shown in the table below.
+    </p>
+    <div>&nbsp;</div>
+    <table class="doc with-borders"><tr><th>Attribute</th><th>Description</th><th>Required</th></tr><tr><td>offline</td><td>
+          Whether the profiling run should be in offline mode.
+        </td><td rowspan="2" align="center">
+          No, <code>offline</code> and <code>nowait</code> cannot both be <code>true</code>.
+        </td></tr><tr><td>nowait</td><td>
+          Whether profiling should start immediately or whether the profiled JVM should wait for a connection from
+          the JProfiler GUI.
+        </td></tr><tr><td>sessionId</td><td>
+          Defines the session ID from which profiling settings should be taken. Has no effect if neither
+          <code>nowait</code> nor offline are set because in that case the profiling session is selected in the GUI.
+        </td><td align="center">
+          Required if
+          <ul><li><code>offline</code> is set</li><li><code>nowait</code> is set for a 1.5 JVM</li></ul>
+        </td></tr><tr><td>configFile</td><td>
+          Defines the config file from which the profiling settings should be read.
+        </td><td align="center">No</td></tr><tr><td>port</td><td>
+          Defines the port number on which the profiling agent should listen for a connection from the JProfiler GUI.
+          This must be the same as the port configured in the remote session configuration.
+          If not set or zero, the default port (8849) will be used.  Has no effect if <code>offline</code> is set
+          because in that case there is no connection from the GUI.
+        </td><td align="center">No</td></tr><tr><td>debugOptions</td><td>
+          If you want to pass any additional library parameters for tuning or debugging purposes,
+          you can do that with this attribute.
+        </td><td align="center">No</td></tr></table><div>&nbsp;</div>
+    <p>
+      An example for profiling a Java class with a main method that is compiled by the containing project is given
+      below:
+    </p>
+    <div class="pre-container"><pre>task run(type: com.jprofiler.gradle.JavaProfile) {
+    main = 'com.mycorp.MyMainClass'
+    classpath sourceSets.main.runtimeClasspath
+    offline = true
+    sessionId = 80
+    configFile = file('path/to/jprofiler_config.xml')
+}</pre></div>
+    <p>
+      You can see a runnable example of this task in the <code>api/samples/offline</code> sample project. Unlike the
+      standard <code>JavaExec</code> task, the <code>JavaProfile</code> task can also be started in the background
+      by calling <code>createProcess()</code> on it. See the <code>api/samples/mbean</code> sample project for a
+      demonstration of this feature.
+    </p>
+    <p>
+      If you need the VM parameter that is required for profiling, the
+      <code>com.jprofiler.gradle.SetAgentpathProperty</code> task will assign it to a property whose name is
+      configured with the <code>propertyName</code> attribute. Applying the JProfiler plugin automatically adds a
+      task of this type named <code>setAgentPathProperty</code> to your project. For getting the VM parameter that
+      would be used in the previous example, you can simply add
+    </p>
+    <div class="pre-container"><pre>setAgentPathProperty {
+    propertyName = 'profilingVmParameter'
+    offline = true
+    sessionId = 80
+    configFile = file('path/to/jprofiler_config.xml')
+}</pre></div>
+    <p>
+      to your project and add a dependency to <code>setAgentPathProperty</code> to some other task. Then you can
+      use the project property <code>profilingVmParameter</code> in the execution phase of that task. When assigning the
+      property to other task properties, surround its usage with a <code>doFirst {...}</code> code block in order to
+      make sure that you are in the Gradle execution phase and not in the configuration phase.
+    </p>
+
+    <h3>Exporting data from snapshots</h3>
+    <p>
+      The <code>com.jprofiler.gradle.Export</code> task can be used to export views from a saved snapshot and
+      replicates the arguments of the <code class="executable">bin/jpexport</code>
+      <a href="../commandLine/snapshotExecutables.html">command line tool</a>.
+      It supports the following attributes:
+    </p><div>&nbsp;</div>
+    <table class="doc with-borders"><tr><th>Attribute</th><th>Description</th><th>Required</th></tr><tr><td>snapshotFile</td><td>
+          The path to the snapshot file. This must be a file with a <code>.jps</code>
+          extension.
+        </td><td align="center">Yes</td></tr><tr><td>ignoreErrors</td><td>
+          Ignore errors that occur when options for a view cannot be set and continue with the next view. The default
+          value is <code>false</code>, meaning that the export is terminated when the first error occurs.
+        </td><td align="center">No</td></tr><tr><td>csvSeparator</td><td>
+          The field separator character for the CSV exports. Defaults to ",".
+        </td><td align="center">No</td></tr><tr><td>obfuscator</td><td>
+          Deobfuscate class and method names for the selected obfuscator. Defaults to "none", for other values the
+          <code>mappingFile</code> option has to be specified. One of  <code>none</code>,
+          <code>proguard</code> or <code>yguard</code>.
+        </td><td align="center">
+          No
+        </td></tr><tr><td>mappingFile</td><td>
+          The mapping file for the selected obfuscator. May only be set if the <code>obfuscator</code> attribute
+          is specified.
+        </td><td align="center">
+          Only if <code>obfuscator</code> is specified
+        </td></tr></table><div>&nbsp;</div>
+    <p>
+      On the export task, you call the <code>views</code> method and pass a closure to it in which you call
+      <code>view(name, file[, options])</code> one or multiple times. Each call to <code>view</code> produces one
+      output file. The <code>name</code> argument is the view name. For a list of available view names, please see
+      the help page on the <code class="executable">jpexport</code>
+      <a href="../commandLine/snapshotExecutables.html">command line executable</a>.
+      The argument <code>file</code> is the output file, either an absolute file or a file relative to the project.
+      Finally, the optional <code>options</code> argument is a map with the export options for the selected view.
+    </p>
+    <p>
+      An example for using the export task is:
+    </p>
+    <div class="pre-container"><pre>task export(type: com.jprofiler.gradle.Export) {
+    snapshotFile = file('snapshot.jps')
+    views {
+        view('CallTree', 'callTree.html')
+        view('HotSpots', 'hotSpots.html',
+            [threadStatus: 'all', expandBacktraces: 'true'])
+    }
+}</pre></div>
+
+    <h3>Comparing snapshots</h3>
+    <p>
+      Like the <code class="executable">bin/jpcompare</code>
+      <a href="../commandLine/snapshotExecutables.html">command line tool</a>, the
+      <code>com.jprofiler.gradle.Compare</code> task can compare two or more snapshots.
+      It attributes are:
+    </p><div>&nbsp;</div>
+    <table class="doc with-borders"><tr><th>Attribute</th><th>Description</th><th>Required</th></tr><tr><td>snapshotFiles</td><td>
+          The snapshot files that should be compared. You can pass any <code>Iterable</code> containing
+          objects that gradle resolves to file collections.
+        </td><td align="center">Yes</td></tr><tr><td>sortByTime</td><td>
+          If set to <code>true</code> all supplied snapshots files are sorted by their file modification time,
+          otherwise they are compared in the order they were specified in the <code>snapshotFiles</code>
+          attribute.
+        </td><td align="center">No</td></tr><tr><td>ignoreErrors</td><td>
+          Ignore errors that occur when options for a comparison cannot be set and continue with the next comparison.
+          The default value is <code>false</code>, meaning the export is terminated when the first error occurs.
+        </td><td align="center">No</td></tr></table><div>&nbsp;</div>
+    <p>
+      Just like exported views are defined for the <code>Export</code> task, the <code>Compare</code> task
+      has a <code>comparisons</code> method where nested calls to <code>comparison(name, file[, options])</code>
+      define the comparisons that should be performed. The list of available comparison names is available on
+      the help page of the <code class="executable">jpcompare</code>
+      <a href="../commandLine/snapshotExecutables.html">command line executable</a>.
+    </p>
+    <p>
+      An example for using the compare task is:
+    </p>
+    <div class="pre-container"><pre>task compare(type: com.jprofiler.gradle.Compare) {
+    snapshotFiles = files('snapshot1.jps', 'snapshot2.jps')
+    comparisons {
+        comparison('CallTree', 'callTree.html')
+        comparison('HotSpots', 'hotSpots.csv',
+            [valueSummation: 'total', format: 'csv'])
+    }
+}</pre></div>
+    <p>
+      or, if you want to create a telemetry comparison for multiple snapshots:
+    </p>
+    <div class="pre-container"><pre>task compare(type: com.jprofiler.gradle.Compare) {
+    snapshotFiles = fileTree(dir: 'snapshots', include: '*.jps')
+    sortByTime = true
+    comparisons {
+        comparison('TelemetryHeap', 'heap.html', [valueType: 'maximum'])
+        comparison('ProbeTelemetry', 'jdbc.html', [probeId: 'JdbcProbe'])
+    }
+}</pre></div>
+
+    <h3>Analyzing heap snapshots</h3>
+    <p>
+      The gradle task <code>com.jprofiler.gradle.Analyze</code> has the same functionality as the
+      <code class="executable">bin/jpanalyze</code>
+      <a href="../commandLine/snapshotExecutables.html">command line tool</a>.
+    </p>
+    <p>
+      The task has a <code>snapshotFiles</code> attribute like the <code>Compare</code> task to specify
+      the processed snapshots and <code>obfuscator</code> and <code>mappingfile</code>
+      attributes like the  <code>Export</code> task for deobfuscation. The attributes
+      <code>removeUnreferenced</code>, <code>retainSoft</code>, <code>retainWeak</code>,
+      <code>retainPhantom</code>, <code>retainFinalizer</code> and <code>retained</code>
+      correspond the arguments of the command line tool.
+    </p>
+    <p>
+      An example for using the <code>Analyze</code> task is given below:
+    </p>
+    <div class="pre-container"><pre>task analyze(type: com.jprofiler.gradle.Analyze) {
+    snapshotFiles = fileTree(dir: 'snapshots', include: '*.jps')
+    retainWeak = true
+    obfuscator = 'proguard'
+    mappingFile = file('obfuscation.txt')
+}</pre></div>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/snapshotExecutables.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/antTasks.html" title="key: k"></a></div></div></div></body></html>

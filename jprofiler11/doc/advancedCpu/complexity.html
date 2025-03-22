@@ -1,0 +1,63 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Complexity Analysis</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.advancedCpu.complexity';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Complexity Analysis</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedCpu/methodStatistics.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedCpu/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../advancedCpu/callTracer.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      The complexity analysis view allows you to investigate the algorithmic complexity of selected methods
+      depending on their method parameters.
+    </p>
+    <p>
+      To refresh the details on big O notation, an
+      <a href="https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/" target="_blank">introduction to algorithmic complexity</a>
+      and a comparative guide to <a href="http://bigocheatsheet.com/" target="_blank">complexities for common algorithms</a>
+      are recommended readings.
+    </p>
+
+    <p>
+      First, you have to select one or more methods that should be monitored.
+    </p>
+    <p><img src="../images/ui/complexity_config.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <p>
+      For each method, you can then enter a script whose return value of type
+      <code>long</code> is used as the complexity for the current method call. For example, if one of the method
+      parameters of type <code>java.util.Collection</code> is named <code>inputs</code>, the script
+      could be <code>inputs.size()</code>.
+    </p>
+    <p><img src="../images/ui/complexity_script.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+
+    <p>
+      Complexity recording is independent of CPU recording. You can start and stop complexity recording directly
+      in the complexity analysis view or by using a
+      <a href="../main/recording.html">recording profile or a trigger action</a>.
+      After recording has been stopped, a graph with the results is displayed plotting the complexities on the x-axis
+      against the execution times on the y-axis. To reduce memory requirements, JProfiler can combine different
+      complexities and execution times into common buckets. The drop-down at the top allows you to switch
+      between the different configured methods.
+    </p>
+    <p>
+      The graph is a bubble chart, where the size of each data point is proportional to the amount of measurements
+      in it. If all measurements are distinct, you will see a regular scatter chart. In the other extreme, if all
+      method invocations have the same complexity and execution time, you will see a single large circle.
+    </p>
+    <p><img src="../images/ui/complexity_analysis.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+
+    <p>
+      If there are at least 3 data points, a curve fit with common complexities is shown. JProfiler
+      tries curve fits from several common complexities and initially shows you the best fit. The drop-down for the
+      curve fits allows you to show other curve fit models as well. The R<sup>2</sup> value embedded in the
+      description of the curve fit shows you how good the fit is. The models in the drop-down are sorted in
+      descending order with respect to R<sup>2</sup>, so the best model is always the first item.
+    </p>
+    <p><img src="../images/ui/complexity_fits.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 583px"></p>
+    <p>
+      Note that R<sup>2</sup> can be negative, because it is just a notation and not really the square of anything.
+      Negative values indicate a fit that is worse than a fit with a constant line. The constant line fit always has
+      an R<sup>2</sup> value of 0 and a perfect fit has a value of 1.
+    </p>
+    <p>
+      You can export the parameters of the currently displayed fit by choosing the "Properties" option in the
+      export dialog. For automated analysis in a quality assurance environment, the
+      <a href="../commandLine/snapshotExecutables.html">command line export</a> supports the properties format
+      as well.
+    </p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedCpu/methodStatistics.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedCpu/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../advancedCpu/callTracer.html" title="key: k"></a></div></div></div></body></html>

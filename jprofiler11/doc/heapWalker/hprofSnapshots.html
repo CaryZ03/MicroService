@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>HPROF and PHD Heap Snapshots</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.heapWalker.hprofSnapshots';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>HPROF And PHD Heap Snapshots</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../heapWalker/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../heapWalker/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/overhead.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      The HotSpot JVM and the Android Runtime both support heap snapshots in the HPROF format,
+      The IBM J9 JVM writes such snapshots in the PHD format. PHD files do not contain garbage collector roots,
+      so JProfiler simulates classes as roots. Finding class loader memory leaks may be difficult
+      with a PHD file.
+    </p>
+    <p>
+      Native heap snapshots can be saved without the profiling agent and incur a lower overhead than JProfiler
+      heap snapshots, because they are saved without the constraints of a general purpose API. On the flip side, the
+      native heap snapshots support less functionality than JProfiler heap snapshots. For example, allocation recording
+      information is not available, so you cannot see where objects have been allocated. HPROF and PHD snapshots can be
+      opened in JProfiler with<i>Session-&gt;Open Snapshot</i>, just like you would open a JProfiler
+      snapshot. Only the heap walker will be available, all other sections will be grayed out.
+    </p>
+    <p>
+      In a live session, you can create and open an HPROF/PHD heap snapshot by invoking
+      <i>Profiling-&gt;Save HPROF/PHD Heap Snapshot</i>. For
+      <a href="../main/offline.html">offline profiling</a>, there is a "Create an HPROF heap dump" trigger action.
+      It is usually used with the "Out of memory exception" trigger to save an HPROF snapshot when an
+      <code>OutOfMemoryError</code> is thrown.
+    </p>
+    <p><img src="../images/ui/hprof_trigger_oom_save_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      This corresponds to the
+      <a href="http://docs.oracle.com/javase/9/troubleshoot/command-line-options1.htm#JSTGD592" target="_blank">VM parameter</a>
+    </p>
+    <div class="pre-container"><pre>-XX:+HeapDumpOnOutOfMemoryError</pre></div>
+    <p>
+      that is supported by HotSpot JVMs.
+    </p>
+    <p>
+      An alternative way to extract an HPROF heap dump from a running system is via the command line tool
+      <code class="executable">jmap</code>
+      that is part of the JRE. Its invocation syntax
+    </p>
+    <div class="pre-container"><pre>jmap -dump:live,format=b,file=&lt;filename&gt; &lt;PID&gt;</pre></div>
+    <p>
+      is difficult to remember and requires you to use the <code class="executable">jps</code> executable to find out
+      the PID first. JProfiler ships with an interactive command line executable
+      <code class="executable">bin/jpdump</code>
+      that is much more convenient. It lets you select a process, can connect to processes running as a service on
+      Windows, has no problems with mixed 32-bit/64-bit JVMs and auto-numbers HPROF snapshot files. Execute it with
+      the <code>-help</code> option to get more information.
+    </p>
+    <p>
+      Taking HPROF heap snapshots without loading the profiling agent is also supported in the JProfiler GUI.
+      When attaching to a process, locally or remotely, you always have the possibility to just take an HPROF
+      heap snapshot.
+    </p>
+    <p><img src="../images/ui/hprof_heap_dump_only_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 656px"></p>
+    <p>
+      HPROF snapshots can contain thread dumps. When an HPROF snapshot was saved as a consequence of an
+      <code>OutOfMemoryError</code>, the thread dump may be able to convey what part of the application was
+      active at the time of the error. The thread that triggered the error is marked with a special icon.
+    </p>
+    <p><img src="../images/ui/hprof_oome_thread_dump.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../heapWalker/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../heapWalker/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/overhead.html" title="key: k"></a></div></div></div></body></html>

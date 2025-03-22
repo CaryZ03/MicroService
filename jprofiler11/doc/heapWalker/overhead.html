@@ -1,0 +1,54 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Minimizing Overhead In The Heap Walker</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.heapWalker.overhead';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Minimizing Overhead In The Heap Walker</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../heapWalker/hprofSnapshots.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../heapWalker/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/referenceFiltering.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      For small heaps, taking a heap snapshot takes a couple of seconds, but for very large heaps, this can be
+      a lengthy process. Insufficient free physical memory can make the calculations a lot slower. For example,
+      if the JVM has a 50 GB heap and you are analyzing the heap dump on your local machine with only 5 GB of free
+      physical memory, JProfiler cannot hold certain indices in memory and the processing time increases
+      disproportionately.
+    </p>
+    <p>
+      Because JProfiler mainly uses native memory for the heap analysis, it is not recommended to increase
+      the <code>-Xmx</code> value in the <code>bin/jprofiler.vmoptions</code> file unless you have experienced
+      an <code>OutOfMemoryError</code> and JProfiler has instructed you to make such a modification. Native memory
+      will be used automatically if it is available. After the analysis has completed and the internal database has
+      been built, the native memory will be released.
+    </p>
+    <p>
+      For a live snapshot, the analysis is calculated immediately after taking the heap dump. When you save a snapshot,
+      the analysis is saved to a directory with the suffix <code>.analysis</code> next to the snapshot file. When
+      you open the snapshot file, the heap walker will be available very quickly. If you delete the
+      <code>.analysis</code>
+      directory, the calculation will be performed again when the snapshot is opened, so if you
+      send the snapshot to somebody else, you don't have to send the analysis directory along with it.
+    </p>
+    <p>
+      If you want to save memory on disk or if the generated <code>.analysis</code> directories are inconvenient,
+      you can disable their creation in the general settings.
+    </p>
+    <p><img src="../images/ui/heap_walker_general_settings_snapshots.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 616px"></p>
+    <p>
+      HPROF snapshots and JProfiler snapshots that were saved with <a href="../main/offline.html">offline profiling</a>
+      do not have an  <code>.analysis</code> directory next to them, because the analysis is performed by the JProfiler
+      UI and not by the profiling agent. If you do not want to wait for the calculation when opening such snapshots,
+      the <code class="executable">jpanalyze</code> command line executable can be used to
+      <a href="../commandLine/snapshotExecutables.html">pre-analyze</a>
+      snapshots.
+    </p>
+    <p>
+      It is advisable to open snapshots from writable directories. When you open a snapshot without an analysis,
+      and its directory is not writable, a temporary location is used for the analysis. The calculation then has to
+      be repeated each time the snapshot is opened.
+    </p>
+    <p>
+      A big part of the analysis is the calculation of retained sizes. If the processing time is too long and you
+      don't need the retained sizes, you can disable their calculation in the overhead options of the heap walker
+      options dialog. In addition to retained sizes, the "Biggest objects" view will not be available either in that
+      case. Not recording primitive data makes the heap snapshot smaller, but you will not be able to
+      see them in the reference views. The same options are presented when opening snapshots if you choose
+      <i>Customize analysis</i> in the file chooser dialog.
+    </p>
+    <p><img src="../images/ui/heap_walker_options_dialog_overhead.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 446px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../heapWalker/hprofSnapshots.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../heapWalker/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/referenceFiltering.html" title="key: k"></a></div></div></div></body></html>

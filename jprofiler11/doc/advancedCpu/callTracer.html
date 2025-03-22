@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Call Tracer</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.advancedCpu.callTracer';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Call Tracer</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedCpu/complexity.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedCpu/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../advancedCpu/javaScriptXhr.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Method call recording in the call tree cumulates calls with the same call stacks. Keeping precise chronological
+      information is usually not feasible because the memory requirements are huge and the volume of the recorded
+      data makes any interpretation quite difficult.
+    </p>
+    <p>
+      However, in limited circumstances, it makes sense to trace calls and keep the entire chronological sequence.
+      For example, you may want to analyze the precise interlacing of method calls of several cooperating threads.
+      A debugger cannot step through such a use case. Alternatively, you would like to analyze a series of method
+      invocations, but be able to go back and forth and not just see them once like in the debugger. JProfiler
+      provides this functionality with the call tracer.
+    </p>
+    <p>
+      The call tracer has a separate recording action that can be activated in the call tracer view,
+      with a <a href="../main/recording.html">trigger</a> or with the <a href="../main/offline.html">profiling API</a>.
+      To avoid problems with excessive memory consumption, a cap is set on the maximum number of collected
+      call traces. That cap is configurable in the view settings. The rate of collected traces heavily depends on your
+      filter settings.
+    </p>
+    <p>
+      Call tracing only works when the method call recording type is set to instrumentation. Sampling does
+      not keep track of single method calls, so it is technically not possible to collect call traces with sampling.
+      Calls into compact-filtered classes are recorded in the call tracer, just like in the call tree. If you just
+      want to focus on your own classes, you can exclude these calls in the view settings.
+    </p>
+    <p><img src="../images/ui/call_tracer_cap.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 373px"></p>
+
+    <p>
+      The traced method calls are displayed in a tree with three levels that make it easier to skip
+      related calls by collapsing them. The three groups are
+      <img src="../images/threads_16.png" alt="" srcset="../images/threads_16.png 1x,../images/threads_16@2x.png 2x" style="vertical-align: middle">&nbsp;threads,
+      <img src="../images/call_package_16.png" alt="" srcset="../images/call_package_16.png 1x,../images/call_package_16@2x.png 2x" style="vertical-align: middle">&nbsp;packages
+      and <img src="../images/call_class_16.png" alt="" srcset="../images/call_class_16.png 1x,../images/call_class_16@2x.png 2x" style="vertical-align: middle">&nbsp;classes. Each time
+      the current value for any of these groups changes, a new grouping node is created.
+    </p>
+    <p>
+      At the lowest level there are <img src="../images/method_start_16.png" alt="" srcset="../images/method_start_16.png 1x,../images/method_start_16@2x.png 2x" style="vertical-align: middle">&nbsp;method entry
+      and <img src="../images/method_stop_16.png" alt="" srcset="../images/method_stop_16.png 1x,../images/method_stop_16@2x.png 2x" style="vertical-align: middle">&nbsp;method exit nodes. Below the table with the
+      call traces, the stack trace of the currently selected method trace is shown. If call traces
+      into other methods have been recorded from the current method or if another thread interrupts the current method,
+      the entry and exit nodes for the that method will not be adjacent. You can navigate on the method level only by
+      using the <i>Previous Method</i> and <i>Next Method</i> actions.
+    </p>
+    <p><img src="../images/ui/call_tracer_method_navigation.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+
+    <p>
+      The timing that is displayed on the traces and all grouping nodes refers to the first trace by default, but can
+      be changed to show relative times since the previous node. If the previous node is the parent node, that
+      difference will be zero. Also available is the option to show relative times with respect to the previous node
+      of the same type.
+    </p>
+    <p>
+      Even with appropriate filters, a huge number of traces can be collected in a very short time. To eliminate traces
+      that are of no interest, the call tracer allows you to quickly trim the displayed data. For example, certain
+      threads might not be relevant or traces in certain packages or classes might not be interesting. Also, recursive
+      method invocations can occupy a lot of space and you might want to eliminate those single methods only.
+    </p>
+    <p>
+      You can hide nodes by selecting them and pressing the delete key. All other instances of the selected nodes
+      and all associated child nodes will be hidden as well. At the top of the view you can see how many call traces
+      out of all the recorded traces are still shown. To show hidden nodes again, you can click on the
+      <i>Show Hidden</i> tool bar button.
+    </p>
+    <p><img src="../images/ui/call_tracer_hide_actions.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 788px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedCpu/complexity.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedCpu/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../advancedCpu/javaScriptXhr.html" title="key: k"></a></div></div></div></body></html>

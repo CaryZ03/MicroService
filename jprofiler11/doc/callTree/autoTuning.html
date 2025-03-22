@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Auto-Tuning And Ignored Methods</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.callTree.autoTuning';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Auto-Tuning And Ignored Methods</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../callTree/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../callTree/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/requestTracking.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      If the method call recording type is set to instrumentation, all methods of profiled classes are instrumented.
+      This creates significant overhead for methods that have very short execution times. If such methods are called
+      very frequently,  the measured time of those method will be far to high. Also, due to the instrumentation, the
+      hot spot compiler might be prevented from optimizing them. In extreme cases, such methods become the dominant
+      hot spots although this is not true for an uninstrumented run. An example is the method of an XML parser that
+      reads the next character. Such a method returns very quickly, but may be invoked millions of times in a short
+      time span.
+    </p>
+    <p>
+      This problem is not present when the method call recording type is set to sampling. However, sampling does
+      not provide invocations counts, only shows longer method calls and several views do not have their full
+      functionality when sampling is used.
+    </p>
+    <p>
+      To alleviate the problem with instrumentation, JProfiler has a mechanism called
+      auto-tuning. From time to time, the profiling agent checks for methods with high instrumentation overhead and
+      transmits them to the JProfiler GUI. In the status bar, an entry alerting to the presence of overhead hot spots
+      will be shown.
+    </p>
+    <p><img src="../images/ui/auto_tuning_status_bar.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 800px"></p>
+    <p>
+      You can click on that status bar entry to review the detected overhead hot spots and
+      choose to accept them into the list of ignored methods. These ignored methods will then not be instrumented.
+      When a session is terminated, the same dialog is shown.
+    </p>
+    <p><img src="../images/ui/auto_tuning_hotspots_dialog.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <p>
+      After you apply the new profiling settings, all ignored methods will be missing in the call tree. Their
+      execution time will be added to the self time of the calling method. If later on you find that some ignored
+      methods are indispensable in the profiling views, you can remove them in the <i>Ignored Methods</i> tab
+      in the session settings.
+    </p>
+    <p><img src="../images/ui/auto_tuning_ignored_methods.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      The default configuration for ignored methods includes the call site classes for Groovy that are used
+      for the dynamic method dispatch, but make it difficult to follow the actual call chain.
+    </p>
+    <p>
+      If you want to manually add ignored methods, you can do so in the session settings, but a much easier way
+      is to select a method in the call tree and invoke the <i>Ignore Method</i> action from the context menu.
+    </p>
+    <p><img src="../images/ui/auto_tuning_call_tree_filter_actions.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      In the filter settings, you can also ignore entire classes or packages by setting the type of the filter entry
+      to "Ignored". The <i>Add Filter From Selection</i> menu contains actions that depend on the
+      selected node and suggest ignoring the class or packages up to the top-level package. Depending on whether
+      the selected node is compact-profiled or profiled, you also see actions for changing the filter to the
+      opposite type.
+    </p>
+    <p>
+      In case you don't want to see any messages about auto-tuning, you can disable it in the profiling settings.
+      Also, you can configure the criteria for determining an overhead hot spot. A method is considered an overhead
+      hot spot if both of the following conditions are met:
+    </p>
+    <ul><li>
+        The total time of all its invocations exceeds a threshold in per mille of the entire total time
+        in the thread
+      </li><li>
+        Its average time is lower than an absolute threshold in microseconds
+      </li></ul>
+    <p><img src="../images/ui/auto_tuning_settings.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../callTree/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../callTree/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/requestTracking.html" title="key: k"></a></div></div></div></body></html>

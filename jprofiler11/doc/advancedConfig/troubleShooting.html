@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Trouble Shooting Connection Problems</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.advancedConfig.troubleShooting';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Trouble Shooting Connection Problems</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedConfig/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedConfig/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../advancedConfig/scripts.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      When a profiling session cannot be established, the first thing to do is to have a look at the terminal output of
+      the profiled application or application server. For application servers, the stderr stream is often written to a
+      log file. This may be a separate log file and not the main log file of the application server. For example, the
+      Websphere application server writes a <code>native_stderr.log</code> file where only the stderr output is
+      included. Depending on the content of the stderr output, the search for the problem takes different directions:
+    </p>
+
+    <h3>Connection problems</h3>
+    <p>
+      If stderr contains <code>"Waiting for connection ..."</code>, the configuration of the profiled application
+      is ok. The problem might then be related to the following questions:
+    </p>
+    <ul><li>
+        Did you forget to start the "Attach to remote JVM" session in the JProfiler GUI on your local machine?
+        Unless the profiling agent is configured to start up immediately with the "nowait" option, it will wait until
+        the JProfiler GUI connects before letting the VM continue to startup.
+      </li><li>
+        Is the host name or the IP address configured correctly in the session settings?
+      </li><li>
+        Did you configure a wrong communication port? The communication port has nothing to do with HTTP or other
+        standard port numbers and must not be the same as any port that is already in use. For the profiled application,
+        the communication port is defined as an option to the profiling VM parameter. With the VM parameter
+        <code>-agentpath:&lt;path to jprofilerti library&gt;=port=25000</code>, a port of 25000 would be used.
+      </li><li>
+        Is there a firewall between the local machine and the remote machine? There may be firewalls for incoming as
+        well as for outgoing connections or even firewalls on gateway machines in the middle.
+      </li></ul>
+
+    <h3>Port binding problems</h3>
+    <p>
+      If stderr contains an error message about not being able to bind a socket, the port is already in use.
+      In that case, check the following questions:
+    </p>
+    <ul><li>
+        Did you start the profiled application multiple times? Each profiled application needs a separate communication
+        port.
+      </li><li>
+        Are there any zombie java processes of previous profiling runs that are blocking the port?
+      </li><li>
+        Is there a different application that is using the communication port?
+      </li></ul>
+    <p>
+      If there are no lines in stderr that are prefixed with <code>JProfiler&gt;</code> and your application or
+      application server starts up normally, the <code>-agentpath:[path to jprofilerti library]</code>
+      VM parameter has not been included in the Java call. You should find out which java call in your startup script
+      is actually executed and add the VM parameters there.
+    </p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedConfig/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedConfig/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../advancedConfig/scripts.html" title="key: k"></a></div></div></div></body></html>

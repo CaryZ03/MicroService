@@ -1,0 +1,288 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Injected Probes</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.customProbes.injectedProbes';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Injected Probes</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../customProbes/scriptProbes.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../customProbes/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../customProbes/embeddedProbes.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Similarly to script probes, injected probes define interception handlers for selected methods.
+      However, injected probes are developed outside of the JProfiler GUI in your IDE and rely on the
+      injected probe API that is provided by JProfiler. The API is licensed under the permissive Apache License,
+      version 2.0, making it easy distribute the associated artifacts.
+    </p>
+    <p>
+      The best way to get started with injected probes is to study the example in the
+      <code>api/samples/simple-injected-probe</code> directory of your JProfiler installation.
+      Execute <code>../gradlew</code> in that directory to compile and run it. The gradle
+      build file <code>build.gradle</code> contains further information about the sample. The example in
+      <code>api/samples/advanced-injected-probe</code> shows more features of the probe system, including
+      control objects.
+    </p>
+
+    <h3>Development environment</h3>
+    <p>
+      The probe API that you need for developing an injected probe is contained in the single artifact with maven
+      coordinates
+    </p>
+    <div class="pre-container"><pre>group: com.jprofiler
+artifact: jprofiler-probe-injected
+version: &lt;JProfiler version&gt;</pre></div>
+    <p>
+      where the JProfiler version corresponding to this manual is 11.0.2.
+    </p>
+    <p>
+      Jar, source and javadoc artifacts are published to the repository at
+    </p>
+    <div class="pre-container"><pre>https://maven.ej-technologies.com/repository</pre></div>
+    <p>
+      You can either add the probe API to your development class path with a build tool like Gradle or Maven, or
+      use the JAR file
+    </p>
+    <div class="pre-container"><pre>api/jprofiler-probe-injected.jar</pre></div>
+    <p>
+      in the JProfiler installation.
+    </p>
+    <p>
+      To browse the Javadoc, go to
+    </p>
+    <div class="pre-container"><pre>api/javadoc/index.html</pre></div>
+    <p>
+      That javadoc combines the javadoc for
+      all APIs that are published by JProfiler. The overview for the <code>com.jprofiler.api.probe.injected</code>
+      package is a good starting point for exploring the API.
+    </p>
+
+    <h3>Probe structure</h3>
+    <p>
+      An injected probe is a class annotated with <code>com.jprofiler.api.probe.injected.Probe</code>. The attributes
+      of that annotation expose configuration options for the entire probe. For example, if you create a lot of probe
+      events that are not interesting for individual inspection, the <code>events</code> attribute allows you
+      to disable the probe events view and reduce overhead.
+    </p>
+    <div class="pre-container"><pre>@Probe(name = "Foo", description = "Shows foo server requests", events = "false")
+public class FooProbe {
+    ...
+}</pre></div>
+    <p>
+      To the probe class, you add specially annotated static methods in order to define interception handlers.
+      The <code>PayloadInterception</code> annotation creates payloads while the <code>SplitInterception</code>
+      annotation splits the call tree. The return value of the handler is used as the payload or the split string,
+      depending on the annotation.  Like for script probes, if you return <code>null</code>, the interception has
+      no effect. Timing information is automatically calculated for the intercepted method.
+    </p>
+    
+    
+      <div class="pre-container"><pre>@Probe(name = "FooBar")
+public class FooProbe {
+    @PayloadInterception(
+        invokeOn = InvocationType.ENTER,
+        method = @MethodSpec(className = "com.bar.Database",
+                             methodName = "processQuery",
+                             parameterTypes = {"com.bar.Query"},
+                             returnType = "void"))
+    public static String fooRequest(@Parameter(0) Query query) {
+        return query.getVerbose();
+    }
+
+    @SplitInterception(
+        method = @MethodSpec(className = "com.foo.Server",
+                             methodName = "handleRequest",
+                             parameterTypes = {"com.foo.Request"},
+                             returnType = "void"))
+    public static String barQuery(@Parameter(0) Request request) {
+        return request.getPath();
+    }
+}</pre></div>
+    
+    <p>
+      As you can see in the above example, both annotations have a <code>method</code> attribute for defining the
+      intercepted methods with a <code>MethodSpec</code>. In contrast to script probes, the <code>MethodSpec</code>
+      can have an empty class name, so all methods with a particular signature are intercepted, regardless of the class
+      name. Alternatively, you can use the <code>subtypes</code> attribute of the <code>MethodSpec</code>
+      to intercept entire class hierarchies.
+    </p>
+    <p>
+      Unlike for script probes where all parameters are available automatically, the handler methods declare parameters
+      to request values of interest. Each parameter is annotated with an annotation from the
+      <code>com.jprofiler.api.probe.injected.parameter</code> package, so the profiling agent knows which object
+      or primitive value has to be passed to the method. For example, annotating a parameter of the handler method with
+      <code>@Parameter(0)</code> injects the first parameter of the intercepted method.
+    </p>
+    <p>
+      Method parameters of the intercepted method are available for all interception types. Payload interceptions
+      can access the return value with <code>@ReturnValue</code> or a thrown exception  with <code>@ExceptionValue</code>
+      if you tell the profiling agent to intercept the exit rather than the entry of the method. This is done with the
+      <code>invokeOn</code> attribute of the <code>PayloadInterception</code> annotation.
+    </p>
+    <p>
+      In contrast to script probes, injected probes handlers can be called for recursive invocations of the intercepted
+      method if you set the <code>reentrant</code> attribute of the interception annotation to
+      <code>true</code>. With a parameter of type <code>ProbeContext</code> in your handler method, you
+      can control the probes's behavior for nested invocations by calling <code>ProbeContext.getOuterPayload()</code>
+      or <code>ProbeContext.restartTiming()</code>.
+    </p>
+
+    <h3>Advanced interceptions</h3>
+    <p>
+      Sometimes a single interception is not sufficient to collect all necessary information for building the probe
+      string. For that purpose, your probe can contain an arbitrary number of interception handlers annotated with
+      <code>Interception</code> that do not create payloads or splits. Information can be stored in static fields of
+      your probe class. For thread safety in a multi-threaded environment, you should use <code>ThreadLocal</code>
+      instances for storing reference types and the atomic numeric types from the
+      <code>java.util.concurrent.atomic</code> package for maintaining counters.
+    </p>
+    <p>
+      Under some circumstances, you need interceptions for both method entry and method exit. A common case is if you
+      maintain state variables like <code>inMethodCall</code> that modify the behavior of another interception.
+      You can set <code>inMethodCall</code> to <code>true</code> in the entry interception, which is the default
+      interception type. Now you define another static method directly below that interception and annotate it
+      with <code>@AdditionalInterception(invokeOn = InvocationType.EXIT)</code>. The intercepted method is taken from
+      the interception handler above, so you do not have to specify it again. In the method body, you can
+      set your <code>inMethodCall</code> variable to <code>false</code>.
+    </p>
+    
+    
+      <div class="pre-container"><pre>...
+
+private static final ThreadLocal&lt;Boolean&gt; inMethodCall =
+    ThreadLocal.withInitial(() -&gt; Boolean.FALSE);
+
+@Interception(
+    invokeOn = InvocationType.ENTER,
+    method = @MethodSpec(className = "com.foo.Server",
+                         methodName = "internalCall",
+                         parameterTypes = {"com.foo.Request"},
+                         returnType = "void"))
+public static void guardEnter() {
+    inMethodCall.set(Boolean.TRUE);
+}
+
+@AdditionalInterception(InvocationType.EXIT)
+public static void guardExit() {
+    inMethodCall.set(Boolean.FALSE);
+}
+
+@SplitInterception(
+      method = @MethodSpec(className = "com.foo.Server",
+                           methodName = "handleRequest",
+                           parameterTypes = {"com.foo.Request"},
+                           returnType = "void"),
+      reentrant = true)
+public static String splitRequest(@Parameter(0) Request request) {
+    if (!inMethodCall.get()) {
+        return request.getPath();
+    } else {
+        return null;
+    }
+}
+
+...</pre></div>
+    
+    <p>
+      You can see a working example of this use case in
+      <code>api/samples/advanced-injected-probe/src/main/java/AdvancedAwtEventProbe.java</code>.
+    </p>
+
+    <h3>Control objects</h3>
+    <p>
+      The control objects view is not visible unless the <code>controlObjects</code> attribute of the
+      <code>Probe</code> annotation is set to <code>true</code>. For working with control objects you have to
+      obtain a <code>ProbeContext</code> by declaring a parameter of that type in your handler method.
+      The sample code below shows how to open a control object and associate it with a probe event.
+    </p>
+    
+    
+      <div class="pre-container"><pre>@Probe(name = "Foo", controlObjects = true, customTypes = MyEventTypes.class)
+public class FooProbe {
+    @Interception(
+            invokeOn = InvocationType.EXIT,
+            method = @MethodSpec(className = "com.foo.ConnectionPool",
+                         methodName = "createConnection",
+                         parameterTypes = {},
+                         returnType = "com.foo.Connection"))
+    public static void openConnection(ProbeContext pc, @ReturnValue Connection c) {
+        pc.openControlObject(c, c.getId());
+    }
+
+    @PayloadInterception(
+            invokeOn = InvocationType.EXIT,
+            method = @MethodSpec(className = "com.foo.ConnectionPool",
+                         methodName = "createConnection",
+                         parameterTypes = {"com.foo.Query", "com.foo.Connection"},
+                         returnType = "com.foo.Connection"))
+    public static Payload handleQuery(
+        ProbeContext pc, @Parameter(0) Query query, @Parameter(1) Connection c) {
+        return pc.createPayload(query.getVerbose(), c, MyEventTypes.QUERY);
+    }
+
+    ...
+
+}</pre></div>
+    
+    <p>
+      Control objects have a defined lifetime and the probe view records their open and close times in the timeline and
+      the control objects view. If possible, you should open and close control objects explicitly by calling
+      <code>ProbeContext.openControlObject()</code> and <code>ProbeContext.closeControlObject()</code>.
+      Otherwise you have to declare a static method annotated with <code>@ControlObjectName</code> that resolves the
+      display names of control objects.
+    </p>
+    <p>
+      Probe events can be associated with control objects if your handler method returns instances of
+      <code>Payload</code> instead of <code>String</code>. The <code>ProbeContext.createPayload()</code>
+      method takes a control object and a probe event type. The enum with the allowed event types has to be
+      registered with the <code>customTypes</code> attribute of the <code>Probe</code> annotation.
+    </p>
+    <p>
+      Control objects have to be specified at the start of the time measurement which corresponds to the method entry.
+      In some cases, the name of payload string will only be available at method exit, because it depends on the
+      return value or other interceptions. In that case, you can use
+      <code>ProbeContext.createPayloadWithDeferredName()</code> to create a payload object without a name.
+      Define an interception handler annotated with <code>@AdditionalInterception(invokeOn = InvocationType.EXIT)</code>
+      right below and return a <code>String</code> from that method, it will then automatically be used as the
+      payload string.
+    </p>
+
+    <h3>Overriding the thread state</h3>
+    <p>
+      When measuring execution times for database drivers or native connectors to external resources, it sometimes
+      becomes necessary to tell JProfiler to put some methods into a different thread state. For example, it is useful
+      to have database calls in the "Net I/O" thread state. If the communication mechanism does not use the standard
+      Java I/O facilities, but some native mechanism, this will not automatically be the case.
+    </p>
+    <p>
+      With a pair of <code>ThreadState.NETIO.enter()</code> and <code>ThreadState.exit()</code> calls, the profiling
+      agent adjusts the thread state accordingly.
+    </p>
+    
+    
+      <div class="pre-container"><pre>...
+
+@Interception(invokeOn = InvocationType.ENTER, method = ...)
+public static void enterMethod(ProbeContext probeContext, @ThisValue JComponent component) {
+    ThreadState.NETIO.enter();
+}
+
+@AdditionalInterception(InvocationType.EXIT)
+public static void exitMethod() {
+    ThreadState.exit();
+}
+
+...</pre></div>
+    
+
+    <h3>Deployment</h3>
+    <p>
+      There are two ways to deploy injected probes, depending on whether you want to put them on the classpath or not.
+      With the VM parameter
+    </p>
+    <div class="pre-container"><pre>-Djprofiler.probeClassPath=...</pre></div>
+    <p>
+      a separate probe class path is set up by the profiling agent. The probe classpath can contain directories
+      and class files, separated with ';' on Windows and ':' on other platforms. The profiling agent will scan
+      the probe classpath and find all probe definitions.
+    </p>
+    <p>
+      If it's easier for you to place the probe classes on the classpath, you can set the VM parameter
+    </p>
+    <div class="pre-container"><pre>-Djprofiler.customProbes=...</pre></div>
+    to a comma-separated list of fully qualified class names. For each of these class names, the profiling agent
+    will try to load an injected probe.
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../customProbes/scriptProbes.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../customProbes/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../customProbes/embeddedProbes.html" title="key: k"></a></div></div></div></body></html>

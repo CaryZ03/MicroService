@@ -1,0 +1,73 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Introduction to JProfiler</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.introduction';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Introduction To JProfiler</h2></div><div class="header-nav"><div class="nav-wrapper"></div><div class="nav-wrapper"><a class="nav-right" href="../main/architecture.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <h3>What is JProfiler?</h3>
+    <p>
+      JProfiler is a professional tool for analyzing what is going on inside a running JVM. You can use it in
+      development, for quality assurance and for firefighting missions when your production system experiences problems.
+    </p>
+    <p>
+      There are four main topics that JProfiler deals with:
+    </p>
+    <ul><li><p><span class="sectionTitle">Method calls</span></p>
+        This is commonly called "CPU profiling". Method calls can be measured and visualized in different ways.
+        The analysis of method calls helps you to understand what your application is doing and find ways to
+        improve its performance.
+      </li><li><p><span class="sectionTitle">Allocations</span></p>
+        Analyzing objects on the heap with respect to their allocations, reference chains and garbage collection
+        falls into the category of "memory profiling". This functionality enables you to fix memory leaks, use less
+        memory in general and allocate fewer temporary objects.
+      </li><li><p><span class="sectionTitle">Threads and locks</span></p>
+        Threads can hold locks, for example by synchronizing on an object. When multiple threads cooperate, deadlocks
+        can occur and JProfiler can visualize them for you. Also, locks can be contended, meaning that threads
+        have to wait before they can acquire them. JProfiler provides insight into threads and their various
+        locking situations.
+      </li><li><p><span class="sectionTitle">Higher level subsystems</span></p>
+        Many performance problems occur on a higher semantic level. For example, with JDBC calls, you probably want to
+        find out which SQL statement is the slowest. For subsystems like that, JProfiler offers "probes" that attach
+        specific payloads to the call tree.
+      </li></ul>
+    <p>
+      JProfiler's UI is delivered as a desktop application. You can interactively profile a live JVM or profile
+      automatically without using the UI. Profiling data is persisted in snapshots that can be opened with the
+      JProfiler UI. In addition, command line tools and build tool integrations help you with automating profiling
+      sessions.
+    </p>
+
+    <h3>How do I continue?</h3>
+    <p>
+      This documentation is intended to be read in sequence, with later help topics building on the content of previous
+      ones.
+    </p>
+    <p>
+      First, a technical overview over the <a href="../main/architecture.html">architecture</a> will help you
+      to understand how profiling works.
+    </p>
+    <p>
+      The help topics on <a href="../main/installing.html">installing JProfiler</a> and
+      <a href="../main/profiling.html">profiling JVMs</a> will get you up and running.
+    </p>
+    <p>
+      Following that, the discussion of <a href="../main/recording.html">data recording</a> and
+      <a href="../main/snapshots.html">snapshots</a> take you to a level of understanding where you can
+      explore JProfiler on your own.
+    </p>
+    <p>
+      Subsequent chapters build your expertise with respect to different functionality in JProfiler. The
+      sections at the end are optional readings that should be consulted if you need certain
+      features.
+    </p>
+    <p>
+      We appreciate your feedback. If you feel that there's a lack of documentation in a certain
+      area or if you find inaccuracies in the documentation, please don't hesitate to contact us
+      at <a href="mailto:support@ej-technologies.com" target="_blank">support@ej-technologies.com</a>.
+    </p>
+    
+      <p>
+        If you are using the keyboard for navigation, press <code>F4</code> to switch between the index and the
+        content area. The keys <code>j</code> and <code>k</code> move between help topics and the keys
+        <code>u</code> and <code>d</code> move up and down when there is a hierarchy of chapters.
+      </p>
+    
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"></div><div class="nav-wrapper"><a class="nav-right" href="../main/architecture.html" title="key: k"></a></div></div></div></body></html>

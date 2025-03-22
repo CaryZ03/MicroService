@@ -1,0 +1,550 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Command Line Executables For Working With Snapshots</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.commandLine.snapshotExecutables';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Command Line Executables For Working With Snapshots</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/profilingExecutables.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/gradleTasks.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      When using <a href="../main/offline.html">offline profiling</a> to save snapshots programmatically,
+      it may also be necessary to programmatically extract data or reports from those snapshots.
+      JProfiler offers two separate command line executables, one for exporting views from a snapshot and one for
+      comparing snapshots.
+    </p>
+
+    <h3>Exporting views from a snapshot</h3>
+    <p>
+      The executable <code>bin/jpexport</code> exports view data to various formats. If you execute it with
+      the <code>-help</code> option, you will get information on the available view names and view options.
+      For reasons of conciseness, duplicate help texts in the output below have been omitted.
+    </p>
+    
+    <div class="pre-container"><pre>Usage: jpexport "snapshot file" [global options]
+              "view name" [options] "output file"
+              "view name" [options] "output file" ...
+
+where "snapshot file" is a snapshot file with one of the extensions:
+           .jps, .hprof, .hpz, .phd
+      "view name" is one of the view names listed below
+      [options] is a list of options in the format -option=value
+      "output file" is the output file for the export
+
+Global options:
+    -obfuscator=none|proguard|yguard
+        Deobfuscate for the selected obfuscator. Defaults to "none", for other
+        values the mappingFile option has to be specified.
+    -mappingfile=&lt;file&gt;
+        The mapping file for the selected obfuscator.
+    -outputdir=&lt;output directory&gt;
+        Base directory to be used when the output file for a view is a
+        relative file.
+    -ignoreerrors=true|false
+        Ignore errors that occur when options for a view cannot be set and
+        continue with the next view. The default value is "false", i.e. the
+        export is terminated, when the first error occurs.
+    -csvseparator=&lt;separator character&gt;
+        The field separator character for the CSV exports. Defaults to ','.
+
+Available view names and options:
+* TelemetryHeap, TelemetryObjects, TelemetryThroughput, TelemetryGC,
+  TelemetryClasses, TelemetryThreads, TelemetryCPU
+  options:
+    -format=html|csv
+        Determines the output format of the exported file. If not present, the
+        export format will be determined from the extension of the output
+        file.
+    -minwidth=&lt;number of pixels&gt;
+        Minimum width of the graph in pixels. The default value is 800.
+    -minheight=&lt;number of pixels&gt;
+        Minimum height of the graph in pixels. The default value is 600.
+
+* Bookmarks, ThreadMonitor, CurrentMonitorUsage, MonitorUsageHistory
+  options:
+    -format=html|csv
+
+* AllObjects
+  options:
+    -format=html|csv
+    -viewfilters=&lt;comma-separated list&gt;
+        Sets view filters for the export. If you set view filters, only the
+        specified packages and their sub-packages will be displayed by the
+        exported view.
+    -viewfiltermode=startswith|endswith|contains|equals
+        Sets the view filter mode. The default value is contains.
+    -viewfilteroptions=casesensitive
+        Boolean options for the view filter. By default, no options are set.
+    -aggregation=class|package|component
+        Selects the aggregation level for the export. The default value is
+        classes.
+    -expandpackages=true|false
+        Expand package nodes in the package aggregation level to show
+        contained classes. The default value is "false". Has no effect for
+        other aggregation levels and with csv output format.
+
+* RecordedObjects
+  like AllObjects, but with additional options:
+    -liveness=live|gc|all
+        Selects the liveness mode for the export, i.e. whether to display live
+        objects, garbage collected objects or both. The default value is live
+        objects.
+
+* AllocationTree
+  options:
+    -format=html|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -aggregation=method|class|package|component
+        Selects the aggregation level for the export. The default value is
+        methods.
+    -viewmode=tree|treemap
+        Selects the view mode for the export. The default value is "tree".
+    -width=&lt;number of pixels&gt;
+        Minimum width of the tree map in pixels. The default value is 800.
+        Only relevant if "viewmode" is set to "tree".
+    -height=&lt;number of pixels&gt;
+        Minimum height of the tree map in pixels. The default value is 600.
+        Only relevant if "viewmode" is set to "tree".
+    -class=&lt;fully qualified class name&gt;
+        Specifies the class for which the allocation data should be
+        calculated. If empty, allocations of all classes will be shown. Cannot
+        be used together with the package option.
+    -package=&lt;fully qualified package name&gt;
+        Specifies the package for which the allocation data should be
+        calculated. If empty, allocations of all packages will be shown.
+        Cannot be used together with the class option.
+    -liveness=live|gc|all
+
+* AllocationHotSpots
+  options:
+    -format=html|csv|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -aggregation=method|class|package|component
+    -class=&lt;fully qualified class name&gt;
+    -package=&lt;fully qualified package name&gt;
+    -liveness=live|gc|all
+    -unprofiledclasses=separately|addtocalling
+        Selects if unprofiled classes should be shown separately or be added
+        to the calling class. The default value is to show unprofiled classes
+        separately.
+    -valuesummation=self|total
+        Determines how the times for hot spots are calculated. Defaults to
+        "self".
+    -expandbacktraces=true|false
+        Expand backtraces in HTML or XML format. The default value is "false".
+
+* ClassTracker
+  like TelemetryHeap, but with additional options:
+    -class
+        The tracked class. If missing, the first tracked class is exported.
+
+* CallTree
+  options:
+    -format=html|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -aggregation=method|class|package|component
+    -viewmode=tree|treemap
+    -width=&lt;number of pixels&gt;
+    -height=&lt;number of pixels&gt;
+    -threadgroup=&lt;name of thread group&gt;
+        Selects the thread group for the export. If you specify thread as well
+        , the thread will only be searched in this thread group, otherwise the
+        entire thread group will be shown.
+    -thread=&lt;name of thread&gt;
+        Selects the thread for the export. By default, the call tree is merged
+        for all threads.
+    -threadstatus=all|running|waiting|blocking|netio
+        Selects the thread status for the export. The default value is
+        "running".
+
+* HotSpots
+  options:
+    -format=html|csv|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -aggregation=method|class|package|component
+    -threadgroup=&lt;name of thread group&gt;
+    -thread=&lt;name of thread&gt;
+    -threadstatus=all|running|waiting|blocking|netio
+    -expandbacktraces=true|false
+    -unprofiledclasses=separately|addtocalling
+    -valuesummation=self|total
+
+* MethodStatistics
+  options:
+    -format=html|csv
+    -threadstatus=all|running|waiting|blocking|netio
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+
+* Complexity
+  options:
+    -format=html|csv|properties
+    -fit=best|constant|linear|quadratic|cubic|exponential|logarithmic|n_log_n
+        The fit that should be exported. The default value is "best". No curve
+        fitting data is exported to CSV.
+    -method=&lt;method name&gt;
+        The method name for which the complexity graph should be exported. If
+        not given, the first method will be exported. Otherwise, the first
+        method name that starts with the given text will be exported.
+    -width=&lt;number of pixels&gt;
+    -height=&lt;number of pixels&gt;
+
+* ThreadHistory
+  like TelemetryHeap, but with changed options:
+    -format=html
+
+* MonitorUsageStatistics
+  options:
+    -format=html|csv
+    -type=monitors|threads|classes
+        Selects the entity for which the monitor statistics should be
+        calculated. The default value is "monitors".
+
+* ProbeTimeLine
+  like ThreadHistory, but with additional options:
+    -probeid=&lt;id&gt;
+        The internal ID of the probe that should be exported. Run "jpexport
+        --listProbes" to list all available built-in probes and for an
+        explanation of custom probe names.
+
+* ProbeControlObjects
+  options:
+    -probeid=&lt;id&gt;
+    -format=html|csv
+
+* ProbeCallTree
+  options:
+    -probeid=&lt;id&gt;
+    -format=html|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals|wildcard|regex
+    -viewfilteroptions=exclude,casesensitive
+    -aggregation=method|class|package|component
+    -viewmode=tree|treemap
+    -width=&lt;number of pixels&gt;
+    -height=&lt;number of pixels&gt;
+    -threadgroup=&lt;name of thread group&gt;
+    -thread=&lt;name of thread&gt;
+    -threadstatus=all|running|waiting|blocking|netio
+        Selects the thread status for the export. The default value is "all".
+
+* ProbeHotSpots
+  options:
+    -probeid=&lt;id&gt;
+    -format=html|csv|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals|wildcard|regex
+    -viewfilteroptions=exclude,casesensitive
+    -aggregation=method|class|package|component
+    -threadgroup=&lt;name of thread group&gt;
+    -thread=&lt;name of thread&gt;
+    -threadstatus=all|running|waiting|blocking|netio
+    -expandbacktraces=true|false
+
+* ProbeTelemetry
+  like TelemetryHeap, but with additional options:
+    -probeid=&lt;id&gt;
+    -telemetrygroup
+        Sets the one-based index of the telemetry group that should be
+        exported. This refers to the entries that you see in the drop-down
+        list above the probe telemetry view. The default value is "1".
+
+* ProbeEvents
+  options:
+    -probeid=&lt;id&gt;
+    -format=html|csv|xml
+
+* ProbeTracker
+  like TelemetryHeap, but with additional options:
+    -probeid=&lt;id&gt;
+    -index=&lt;number&gt;
+        Sets the zero-based index of the drop-down list that contains the
+        tracked elements. The default value is 0.</pre></div>
+    <p>
+      Some examples for using the export executable are:
+    </p>
+    <div class="pre-container"><pre>jpexport test.jps TelemetryHeap heap.html
+
+jpexport test.jps RecordedObjects -aggregation=package -expandpackages=true objects.html
+
+jpexport test.jps -ignoreerrors=true -outputdir=/tmp/export
+         RecordedObjects objects.csv
+         AllocationTree -class=java.lang.String allocations.xml</pre></div>
+
+    <h3>Comparing snapshots</h3>
+    <p>
+      The executable <code>bin/jpcompare</code> <a href="../main/compare.html">compares different snapshots</a> and
+      exports them to HTML or a machine-readable format. Its <code>-help</code> output is reproduced below,
+      again without any duplicate explanations.
+    </p>
+    
+    <div class="pre-container"><pre>Usage: jpcompare "snapshot file"[,"snapshot file",...] [global options]
+              "comparison name" [options] "output file"
+              "comparison name" [options] "output file" ...
+
+where "snapshot file" is a snapshot file with one of the extensions:
+           .jps, .hprof, .hpz, .phd
+      "comparison name" is one of the comparison names listed below
+      [options] is a list of options in the format -option=value
+      "output file" is the output file for the export
+
+Global options:
+    -outputdir=&lt;output directory&gt;
+        Base directory to be used when the output file for a comparison is a
+        relative file.
+    -ignoreerrors=true|false
+        Ignore errors that occur when options for a comparison cannot be set
+        and continue with the next comparison. The default value is "false",
+        i.e. the export is terminated, when the first error occurs.
+    -csvseparator=&lt;separator character&gt;
+        The field separator character for the CSV exports. Defaults to ','.
+    -sortbytime=false|true
+        Sort the specified snapshot files by modification time. The default
+        value is false.
+    -listfile=&lt;filename&gt;
+        Read a file that contains the paths of the snapshot files, one
+        snapshot file per line.
+
+Available comparison names and options:
+* Objects
+  options:
+    -format=html|csv
+        Determines the output format of the exported file. If not present, the
+        export format will be determined from the extension of the output
+        file.
+    -viewfilters=&lt;comma-separated list&gt;
+        Sets view filters for the export. If you set view filters, only the
+        specified packages and their sub-packages will be displayed by the
+        exported view.
+    -viewfiltermode=startswith|endswith|contains|equals
+        Sets the view filter mode. The default value is contains.
+    -viewfilteroptions=casesensitive
+        Boolean options for the view filter. By default, no options are set.
+    -objects=all|recorded|heapwalker
+        Compare all objects (JVMTI only) or recorded objects, or objects in
+        the heap walker. The default is all objects for .jps files and
+        heapwalker for HPROF files.
+    -aggregation=class|package|component
+        Selects the aggregation level for the export. The default value is
+        classes.
+    -liveness=live|gc|all
+        Selects the liveness mode for the export, i.e. whether to display live
+        objects, garbage collected objects or both. The default value is live
+        objects.
+
+* AllocationHotSpots
+  options:
+    -format=html|csv
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -classselection
+        Calculate the comparison for a specific class or package. Specify a
+        package with a wildcard, like 'java.awt.*'.
+    -aggregation=method|class|package|component
+        Selects the aggregation level for the export. The default value is
+        methods.
+    -liveness=live|gc|all
+    -unprofiledclasses=separately|addtocalling
+        Selects if unprofiled classes should be shown separately or be added
+        to the calling class. The default value is to show unprofiled classes
+        separately.
+    -valuesummation=self|total
+        Determines how the times for hot spots are calculated. Defaults to
+        "self".
+
+* AllocationTree
+  options:
+    -format=html|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -classselection
+    -aggregation=method|class|package|component
+    -liveness=live|gc|all
+
+* HotSpots
+  options:
+    -format=html|csv
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -firstthreadselection
+        Calculate the comparison for a specific thread or thread group.
+        Specify thread groups like 'group.*' and threads in specific thread
+        groups like 'group.thread'. Escape dots in thread names with
+        backslashes.
+    -secondthreadselection
+        Calculate the comparison for a specific thread or thread group. Only
+        available if 'firstthreadselection' is set. If empty, the same value
+        as for 'firstthreadselection' will be used. Specify thread groups like
+        'group.*' and threads in specific thread groups like 'group.thread'.
+        Escape dots in thread names with backslashes.
+    -threadstatus=all|running|waiting|blocking|netio
+        Selects the thread status for the export. The default value is
+        "running".
+    -aggregation=method|class|package|component
+    -differencecalculation=total|average
+        Selects the difference calculation method for call times. The default
+        value is total times.
+    -unprofiledclasses=separately|addtocalling
+    -valuesummation=self|total
+
+* CallTree
+  options:
+    -format=html|xml
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals
+    -viewfilteroptions=casesensitive
+    -firstthreadselection
+    -secondthreadselection
+    -threadstatus=all|running|waiting|blocking|netio
+    -aggregation=method|class|package|component
+    -differencecalculation=total|average
+
+* TelemetryHeap
+  options:
+    -format=html|csv
+    -minwidth=&lt;number of pixels&gt;
+        Minimum width of the graph in pixels. The default value is 800.
+    -minheight=&lt;number of pixels&gt;
+        Minimum height of the graph in pixels. The default value is 600.
+    -valuetype=current|maximum|bookmark
+        Type of the value that is calculated for each snapshot. Default is the
+        current value.
+    -bookmarkname
+        If valuetype is set to 'bookmark', the name of the bookmark for which
+        the value should be calculated.
+    -measurements=maximum,free,used
+        Measurements that are shown in the comparison graph. Concatenate
+        multiple values with commas. The default value is 'used'.
+    -memorytype=heap|nonheap
+        Type of the memory that should be analyzed. Default is 'heap'.
+    -memorypool
+        If a special memory pool should be analyzed, its name can be specified
+        with this parameter. The default is empty, i.e. no special memory
+        pool.
+
+* TelemetryObjects
+  options:
+    -format=html|csv
+    -minwidth=&lt;number of pixels&gt;
+    -minheight=&lt;number of pixels&gt;
+    -valuetype=current|maximum|bookmark
+    -bookmarkname
+    -measurements=total,nonarrays,arrays
+        Measurements that are shown in the comparison graph. Concatenate
+        multiple values with commas. The default value is 'total'.
+
+* TelemetryClasses
+  like TelemetryObjects, but with changed options:
+    -measurements=total,filtered,unfiltered
+
+* TelemetryThreads
+  like TelemetryObjects, but with changed options:
+    -measurements=total,runnable,blocked,netio,waiting
+
+* ProbeHotSpots
+  options:
+    -format=html|csv
+    -viewfilters=&lt;comma-separated list&gt;
+    -viewfiltermode=startswith|endswith|contains|equals|wildcard|regex
+    -viewfilteroptions=exclude,casesensitive
+    -firstthreadselection
+    -secondthreadselection
+    -threadstatus=all|running|waiting|blocking|netio
+    -aggregation=method|class|package|component
+    -differencecalculation=total|average
+    -probeid=&lt;id&gt;
+        The internal ID of the probe that should be exported. Run "jpexport
+        --listProbes" to list all available built-in probes and for an
+        explanation of custom probe names.
+
+* ProbeCallTree
+  like ProbeHotSpots, but with changed options:
+    -format=html|xml
+
+* ProbeTelemetry
+  like TelemetryObjects, but with additional or changed options:
+    -measurements
+        The one-based indices of the measurements in the telemetry group that
+        are shown in the comparison graph. Concatenate multiple values with
+        commas, like "1,2". The default value is to show all measurements.
+    -probeid=&lt;id&gt;
+    -telemetrygroup
+        Sets the one-based index of the telemetry group that should be
+        exported. This refers to the entries that you see in the drop-down
+        list above the probe telemetry view. The default value is "1".</pre></div>
+
+    <h3>Automatic output formats</h3>
+    <p>
+      Most views and comparisons support multiple output formats. By default, the output format
+      is deduced from the extension of the output file:
+    </p>
+    <ul><li><p><span class="sectionTitle">.html</span></p>
+        The view or comparison is exported as an HTML file. A directory named <code>jprofiler_images</code>
+        will be created that contains images used in the HTML page.
+      </li><li><p><span class="sectionTitle">.csv</span></p>
+        <p>
+          The data is exported as CSV data where the first line contains the column names.
+        </p>
+        <p>
+          When using Microsoft Excel, CSV is not a stable format. Microsoft Excel on
+          Windows takes the separator character from the regional settings. JProfiler uses a semicolon as
+          the separator in locales that use a comma as a decimal separator and a comma in locales that use
+          a dot as a decimal separator. If you need to override the CSV separator character you can
+          do so by setting the global <code>csvseparator</code> option.
+        </p>
+      </li><li><p><span class="sectionTitle">.xml</span></p>
+        The data is exported as XML. The data format is self-descriptive.
+      </li></ul>
+    <p>
+      If you would like to use different extensions, you can use the <code>format</code> option to override
+      the choice of the output format.
+    </p>
+
+    <h3>Analyzing snapshots</h3>
+    <p>
+      If the generated snapshots have heap dumps in them, you can use the <code class="executable">bin/jpanalyze</code>
+      executable to <a href="../main/heapWalker.html">prepare the heap dump analysis in advance</a>.
+      Opening the snapshot in the JProfiler GUI will then be very fast. The usage information of the tool is
+      shown below:
+    </p>
+    <div class="pre-container"><pre>Usage: jpanalyze [options] "snapshot file" ["snapshot file" ...]
+
+where "snapshot file" is a snapshot file with one of the extensions:
+           .jps, .hprof, .hpz, .phd
+      [options] is a list of options in the format -option=value
+
+Options:
+    -obfuscator=none|proguard|yguard
+        Deobfuscate for the selected obfuscator. Defaults to "none", for other
+        values the mappingFile option has to be specified.
+    -mappingfile=&lt;file&gt;
+        The mapping file for the selected obfuscator.
+    -removeunreferenced=true|false
+        If unreferenced or weakly referenced objects should be removed.
+    -retained=true|false
+        Calculate retained sizes (biggest objects). removeunreferenced will be
+        set to true.
+    -retainsoft=true|false
+        If unreferenced objects are removed, specifies if soft references
+        should be retained.
+    -retainweak=true|false
+        If unreferenced objects are removed, specifies if weak references
+        should be retained.
+    -retainphantom=true|false
+        If unreferenced objects are removed, specifies if phantom references
+        should be retained.
+    -retainfinalizer=true|false
+        If unreferenced objects are removed, specifies if finalizer references
+        should be retained.</pre></div>
+    <p>
+      The <code>removeUnreferenced</code>, the <code>retained</code> and all the <code>retain*</code>
+      command line options correspond to the options in the heap walker options dialog.
+    </p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/profilingExecutables.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/gradleTasks.html" title="key: k"></a></div></div></div></body></html>

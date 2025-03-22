@@ -1,0 +1,125 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Snapshots</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.snapshots';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Snapshots</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/recording.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/telemetries.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Until now, we have only looked at live sessions where the JProfiler GUI obtains the data from the
+      profiling agent that is running inside the profiled JVM. JProfiler also supports snapshots where all
+      profiling data is written to a file. This can be of advantage in several scenarios:
+    </p>
+    <ul><li>
+        You record profiling data automatically, for example as part of a test so that connecting with a JProfiler GUI
+        is not possible.
+      </li><li>
+        You want to compare profiling data from different profiling sessions or look at older recordings.
+      </li><li>
+        You want to share profiling data with somebody else.
+      </li></ul>
+    <p>
+      Snapshots include data from all recordings, including heap snapshots. To save disk space, snapshots are compressed,
+      except for heap walker data which has to remain uncompressed to allow for direct memory mapping.
+    </p>
+
+    <h3>Saving and opening snapshots in the JProfiler GUI</h3>
+    <p>
+      When you are profiling a live session, you can create snapshots with the <i>Save Snapshot</i> tool bar button.
+      JProfiler pulls all profiling data from the remote agent and saves it to a local file with a ".jps" extension.
+      You can save multiple such snapshots during the course of a live session. They are not opened automatically
+      and you can continue to profile.
+    </p>
+    <p><img src="../images/ui/save_snapshot.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 1000px"></p>
+    <p>
+      Saved snapshots are added automatically to the <i>File-&gt;Recent Snapshots</i> menu,
+      so you can conveniently open a snapshot that you have just saved. When opening a snapshot while the live
+      session is still running, you have a choice of terminating the live session or opening another JProfiler
+      window.
+    </p>
+    <p><img src="../images/ui/snapshot_open_target_window.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 386px"></p>
+    <p>
+      When you use the snapshot comparison feature in JProfiler, the list of snapshots is populated with all the
+      the snapshots that you have saved for the current live session. This makes it easy to compare different
+      use cases.
+    </p>
+    <p><img src="../images/ui/compare_snapshots_list.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      In general, you can open snapshots by invoking <i>Session-&gt;Open Snapshot</i> from the
+      main menu or by double-clicking the snapshot file in the file manager. JProfiler's IDE integrations
+      also support opening JProfiler snapshots through the generic <i>Open File</i> actions in the IDEs themselves.
+      In that case, you get source code navigation into the IDE instead of the built-in source code viewer.
+    </p>
+    <p>
+      When you open a snapshot, all the recording actions are disabled and only views with recorded data
+      are available. To discover what kind of data has been recorded, hover the mouse over the recording label
+      in the status bar.
+    </p>
+    <p><img src="../images/ui/snapshots_recording_status.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 1000px"></p>
+
+    <h3>Profiling short-lived programs</h3>
+    <p>
+      For a live session, all profiling data resides in the process of the profiled JVM. So when the profiled JVM is
+      terminated, the profiling session in JProfiler is closed as well. To continue profiling when a JVM exits,
+      you have two options, both of which can be activated in the session startup dialog.
+    </p>
+    <p><img src="../images/ui/session_startup_vm_exit_mode.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <ul><li>
+        You can prevent the JVM from actually exiting and keep it artificially alive as long as the JProfiler
+        GUI is connected. This may be undesirable when you are profiling a test case from the IDE and want to see the
+        status and total time in the test console of the IDE.
+      </li><li>
+        You can ask JProfiler to save a snapshot when the JVM terminates and switch to it immediately.
+        The snapshot is temporary and will be discarded when you close the session unless you use the
+        <i>Save Snapshot</i> action first.
+      </li></ul>
+
+    <h3>Saving snapshots with triggers</h3>
+    <p>
+      The final result of an automated profiling session is always a snapshot or a series of snapshots.
+      In triggers, you can add a "Save a snapshot" action that saves the snapshot on the machine where
+      the profiled JVM is running. When the trigger runs during a live session, the snapshot is also saved on the
+      remote machine and may not include parts of the data that have already been transmitted to the JProfiler GUI.
+    </p>
+    <p>
+      There are two basic strategies for saving snapshots with triggers:
+    </p>
+    <ul><li>
+        For test cases, start recording in the "JVM startup" trigger and add a "JVM exit" trigger to save the snapshot
+        when the JVM is terminated.
+      </li><li>
+        For exceptional conditions like the "CPU load threshold" trigger or for periodic profiling with a "Timer trigger",
+        save the snapshot after recording some data with a "Sleep" action in between.
+      </li></ul>
+    <p><img src="../images/ui/save_snapshot_trigger_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+
+    <h3>HPROF heap snapshots</h3>
+    <p>
+      In situations where taking a heap snapshot produces too much overhead or consumes too much memory, you can
+      use the HPROF heap snapshots that the JVM offers as a built-in feature.
+      Because the profiling agent is not required for this operation, this is interesting for analyzing memory problems
+      in JVMs that are running in production.
+    </p>
+    <p>
+      With JProfiler, there are three ways to obtain such snapshots:
+    </p>
+    <ul><li>
+        For live sessions, the JProfiler GUI offers an action in the main menu to trigger an HPROF heap dump.
+        <p><img src="../images/ui/save_hprof_snapshot.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 1000px"></p>
+      </li><li>
+        JProfiler has a special "Out of memory exception" trigger to save an HPROF snapshot when an
+        <code>OutOfMemoryError</code> is thrown. This corresponds to the
+        <a href="http://docs.oracle.com/javase/9/troubleshoot/command-line-options1.htm#JSTGD592" target="_blank">VM parameter</a>
+<div class="pre-container"><pre>-XX:+HeapDumpOnOutOfMemoryError</pre></div>
+        that is supported by HotSpot JVMs.
+        <p><img src="../images/ui/hprof_trigger_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+      </li><li>
+        <p>
+          The <a href="http://download.oracle.com/javase/6/docs/technotes/tools/share/jmap.html" target="_blank">jmap executable in the JDK</a>
+          can be used to extract an HPROF heap dump from a running JVM.
+        </p>
+        <p>
+          JProfiler includes the command line tool <code class="executable">jpdump</code> that is more versatile than jmap. It
+          lets you select a process, can connect to processes running as a service on Windows, has no problems with
+          mixed 32-bit/64-bit JVMs and auto-numbers HPROF snapshot files. Execute it with the <code>-help</code>
+          option for more information.
+        </p>
+      </li></ul>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/recording.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/telemetries.html" title="key: k"></a></div></div></div></body></html>
