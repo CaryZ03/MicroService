@@ -15,7 +15,7 @@ public class CodeMerger {
     private static final Pattern MARKDOWN_CODE_BLOCK = Pattern.compile("```java\\n(.*?)\\n```", Pattern.DOTALL);
 
     @SuppressWarnings("deprecation")
-    public static String mergeCode(String original, String generated, String projectRoot) {
+    public static String writeController(String original, String generated, String projectRoot) {
         try {
             String cleanedCode = cleanGeneratedCode(generated);
             System.out.println("cleanedCode: " + cleanedCode);

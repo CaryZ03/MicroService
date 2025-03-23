@@ -1,8 +1,12 @@
-package codegen;
+package tool;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
+/*
+ * 用于查找指定方法是否存在于Java文件中
+ * 使用方法: MethodFinder.containsMethod(cu, "public void test()")
+ */
 public class MethodFinder extends VoidVisitorAdapter<Void> {
     private String targetName;
     private boolean found = false;

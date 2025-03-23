@@ -84,35 +84,32 @@ public class DeepSeekApiClient {
      */
     public static String generateClientCode(String originalCall) throws IOException {
         String template = """
-                将以下本地方法调用转换为使用RestTemplate的API调用，严格遵循以下要求：
-                            
-                # 规范要求
-                1. 使用Spring的RestTemplate
-                2. 参数通过URL参数传递（POST请求）
-                3. 响应结构使用ApiResponse类：
-                   class ApiResponse<T> {
-                       private int code;
-                       private String message;
-                       private T data;
-                       // getters
-                   }
-                4. 返回代码结构示例：
-                    public {ReturnType} {methodName}(...) {
-                        RestTemplate restTemplate = new RestTemplate();
-                        // 请求逻辑
-                    }
-                5. 只返回Java代码，不要解释
-                               
-                # 输入调用：
-                %s
-                 
-                 """;
+        请将以下方法调用转换为直接接口调用代码，要求：
+        1. 使用RestTemplate直接发起POST请求
+        2. 保持单行调用结构
+        3. 参数按顺序转为JSON请求体
+        4. 自动提取返回值的data字段
+        5. 只返回Java代码，不要解释
+        
+        示例输入：
+        int result = calculator.calculate(5, 8);
+        
+        示例输出：
+        int result = restTemplate.postForObject(
+            "http://service-host/api/v1/calculate",
+            Map.of("a", a, "b", b),
+            ApiResponse.class
+        ).getData();
+
+        需要转换的原始调用：
+        %s
+        """;
 
         String prompt = String.format(template, originalCall);
 
         ChatRequest request = new ChatRequest();
         request.model = "deepseek-chat";
-        request.messages = List.of(new Message("system", "你是一个Java微服务架构专家，专门生成Spring风格的API客户端代码"), new Message("user", prompt));
+        request.messages = List.of(new Message("system", "你是一个Java微服务架构专家，专门生成内联接口调用代码"), new Message("user", prompt));
         request.max_tokens = 1024;
 
         String response = sendRequest(CHAT_API, request);

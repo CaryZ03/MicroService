@@ -14,6 +14,7 @@ public class Main {
     private static final String PROJECT_ROOT = "./testProject";
     private static final String TARGET_METHOD = "public int add(int a, int b)";
     private static final String BACKUP_EXT = ".bak";
+    private static final String API_BASE_URL = "http://api-service:8080/api/v1";
 
     public static void main(String[] args) {
         try {
@@ -33,11 +34,12 @@ public class Main {
             System.out.println("API代码生成成功\n"+generatedCode);
 
             // 5. 合并代码
-            String cleanedCode = CodeMerger.mergeCode(originalCode, generatedCode, PROJECT_ROOT); // 传递项目根目录
+            String cleanedCode = CodeMerger.writeController(originalCode, generatedCode, PROJECT_ROOT); // 传递项目根目录
 
             // 6. 验证语法
             validateSyntax(cleanedCode);
 
+            // 7. 输出结果
             System.out.println("API代码已生成到指定包路径");
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
