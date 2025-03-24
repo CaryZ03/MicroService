@@ -1,6 +1,7 @@
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.expr.MethodCallExpr;
 
 import codegen.CodeMerger;
 import codegen.DeepSeekApiClient;
@@ -8,6 +9,7 @@ import codegen.DeepSeekApiClient;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     // 配置参数
@@ -15,6 +17,7 @@ public class Main {
     private static final String TARGET_METHOD = "public int add(int a, int b)";
     private static final String BACKUP_EXT = ".bak";
     private static final String API_BASE_URL = "http://api-service:8080/api/v1";
+    private static final String TARGET_METHOD_CALL = "add";
 
     public static void main(String[] args) {
         try {
@@ -41,6 +44,19 @@ public class Main {
 
             // 7. 输出结果
             System.out.println("API代码已生成到指定包路径");
+        
+            // 8. 查找所有包含目标调用的文件
+            List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, TARGET_METHOD_CALL);
+            System.out.println("找到目标调用位于: " + targetFiles);
+
+            for (Path file : targetFiles) {
+                // 生成客户端代码
+                String clientCode = DeepSeekApiClient.generateClientCode(
+                    Files.readString(file)
+                );
+                // 合并调用替换
+                CodeMerger.replaceMethodCalls(file, TARGET_METHOD_CALL, clientCode);     
+            }
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
             restoreBackup(findLatestBackup());
@@ -50,6 +66,22 @@ public class Main {
             restoreBackup(findLatestBackup());
         }
     }
+
+    private static List<Path> findMethodCallFiles(String projectPath, String methodName) throws IOException {
+    return Files.walk(Paths.get(projectPath))
+            .filter(p -> p.toString().endsWith(".java"))
+            .filter(p -> containsMethodCall(p, methodName))
+            .collect(Collectors.toList());
+}
+
+private static boolean containsMethodCall(Path filePath, String methodName) {
+    try {
+        CompilationUnit cu = StaticJavaParser.parse(filePath);
+        return cu.findAll(MethodCallExpr.class).stream()
+                .anyMatch(mce -> mce.getNameAsString().equals(methodName));
+    } catch (Exception e) {
+        return false;
+    }}
 
     private static Path findTargetFile(String projectPath, String methodSignature) throws Exception {
         return Files.walk(Paths.get(projectPath))

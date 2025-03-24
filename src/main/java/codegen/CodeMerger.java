@@ -2,14 +2,20 @@ package codegen;
 import com.github.javaparser.*;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.stmt.ExpressionStmt;
+import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.*;
+import java.util.stream.Collectors;
 
 public class CodeMerger {
     private static final Pattern MARKDOWN_CODE_BLOCK = Pattern.compile("```java\\n(.*?)\\n```", Pattern.DOTALL);
@@ -51,6 +57,58 @@ public class CodeMerger {
             throw new RuntimeException("代码合并失败: " + e.getMessage());
         }
     }
+
+    // 新增客户端调用合并方法
+    public static void replaceMethodCalls(Path sourceFile, String methodName, String generatedCode) throws IOException {
+        CompilationUnit cu = LexicalPreservingPrinter.setup(StaticJavaParser.parse(sourceFile));
+        
+        // 1. 添加必要的import
+        if (!cu.getImports().stream().anyMatch(i -> i.getNameAsString().equals("org.springframework.web.client.RestTemplate"))) {
+            cu.addImport("org.springframework.web.client.RestTemplate").addImport("import com.example.testProject.api.ApiResponse;");
+        }
+        if (!cu.getImports().stream().anyMatch(i -> i.getNameAsString().equals("java.util.Map"))) {
+            cu.addImport("java.util.Map");
+        }
+
+        // 2. 转换方法调用
+        cu.findAll(MethodCallExpr.class).stream()
+            .filter(mce -> mce.getNameAsString().equals(methodName))
+            .forEach(mce -> {
+                // 构建新的方法调用表达式
+                String args = mce.getArguments().stream()
+                    .map(arg -> arg.toString())
+                    .collect(Collectors.joining(", "));
+
+                String newCall = String.format(
+                    "new RestTemplate().postForObject(\"%s\", Map.of(%s), ApiResponse.class).getData()",
+                    buildApiUrl(methodName),
+                    buildParameters(mce.getArguments())
+                );
+
+                // 替换原始调用
+                mce.replace(StaticJavaParser.parseExpression(newCall));
+            });
+
+        // 3. 保存修改后的文件
+        Files.write(sourceFile, cu.toString().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    private static String buildApiUrl(String methodName) {
+        return String.format("http://service-host/api/v1/%s", methodNameToPath(methodName));
+    }
+
+    private static String methodNameToPath(String methodName) {
+        return methodName.replaceAll("([a-z])([A-Z])", "$1-$2").toLowerCase();
+    }
+
+    private static String buildParameters(NodeList<Expression> arguments) {
+        List<String> params = new ArrayList<>();
+        for (int i = 0; i < arguments.size(); i++) {
+            params.add(String.format("\"arg%d\", %s", i, arguments.get(i)));
+        }
+        return String.join(", ", params);
+    }
+
 
     private static String cleanGeneratedCode(String generated) {
         // 清理Markdown代码块
