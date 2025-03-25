@@ -1,4 +1,5 @@
 package codegen;
+
 import com.github.javaparser.*;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
@@ -33,8 +34,9 @@ public class CodeMerger {
                     .orElse("cyx: if you see this,it's wrong from CodeMerger"); // 默认包名
 
             // 提取控制器类
-    //        ClassOrInterfaceDeclaration controller = generatedCu.getClassByName(".*Controller")
-    //                .orElseThrow(() -> new RuntimeException("未找到生成的控制器类"));
+            // ClassOrInterfaceDeclaration controller =
+            // generatedCu.getClassByName(".*Controller")
+            // .orElseThrow(() -> new RuntimeException("未找到生成的控制器类"));
             Optional<ClassOrInterfaceDeclaration> controllerOpt = generatedCu
                     .findAll(ClassOrInterfaceDeclaration.class)
                     .stream()
@@ -42,8 +44,7 @@ public class CodeMerger {
                     .findFirst();
 
             ClassOrInterfaceDeclaration controller = controllerOpt.orElseThrow(
-                    () -> new RuntimeException("未找到Controller类，请检查生成代码是否符合命名规范（以Controller结尾）")
-            );
+                    () -> new RuntimeException("未找到Controller类，请检查生成代码是否符合命名规范（以Controller结尾）"));
 
             // 构建目标路径
             Path outputPath = Paths.get(projectRoot, "src/main/java",
@@ -58,43 +59,52 @@ public class CodeMerger {
         }
     }
 
-    // 新增客户端调用合并方法
-    public static void replaceMethodCalls(Path sourceFile, String methodName, String generatedCode) throws IOException {
+    public static void replaceMethodCalls(Path sourceFile, String methodName,
+            String returnType, List<String> paramNames) throws IOException {
         CompilationUnit cu = LexicalPreservingPrinter.setup(StaticJavaParser.parse(sourceFile));
-        
+
         // 1. 添加必要的import
-        if (!cu.getImports().stream().anyMatch(i -> i.getNameAsString().equals("org.springframework.web.client.RestTemplate"))) {
-            cu.addImport("org.springframework.web.client.RestTemplate").addImport("import com.example.testProject.api.ApiResponse;");
-        }
-        if (!cu.getImports().stream().anyMatch(i -> i.getNameAsString().equals("java.util.Map"))) {
-            cu.addImport("java.util.Map");
-        }
+        addImportIfMissing(cu, "org.springframework.web.client.RestTemplate");
+        addImportIfMissing(cu, "com.example.testProject.api.ApiResponse");
+        addImportIfMissing(cu, "java.util.Map");
 
         // 2. 转换方法调用
         cu.findAll(MethodCallExpr.class).stream()
-            .filter(mce -> mce.getNameAsString().equals(methodName))
-            .forEach(mce -> {
-                // 构建新的方法调用表达式
-                String args = mce.getArguments().stream()
-                    .map(arg -> arg.toString())
-                    .collect(Collectors.joining(", "));
+                .filter(mce -> mce.getNameAsString().equals(methodName))
+                .forEach(mce -> {
+                    // 构建类型转换表达式
+                    String castExpr = String.format("(%s)", returnType);
 
-                String newCall = String.format(
-                    "new RestTemplate().postForObject(\"%s\", Map.of(%s), ApiResponse.class).getData()",
-                    buildApiUrl(methodName),
-                    buildParameters(mce.getArguments())
-                );
+                    // 构建参数映射
+                    String params = paramNames.stream()
+                            .map(name -> "\"" + name + "\", " + name)
+                            .collect(Collectors.joining(", "));
 
-                // 替换原始调用
-                mce.replace(StaticJavaParser.parseExpression(newCall));
-            });
+                    // 构建新的调用表达式
+                    String newCall = String.format(
+                            "%snew RestTemplate().postForObject(\"%s\", Map.of(%s), ApiResponse.class).getData()",
+                            castExpr,
+                            buildApiUrl(methodName),
+                            params);
 
-        // 3. 保存修改后的文件
+                    // 替换并保留原始参数变量名
+                    mce.replace(StaticJavaParser.parseExpression(newCall));
+                });
+
+        // 3. 保存修改
         Files.write(sourceFile, cu.toString().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
     }
 
+    private static void addImportIfMissing(CompilationUnit cu, String importName) {
+        if (cu.getImports().stream().noneMatch(i -> i.getNameAsString().equals(importName))) {
+            cu.addImport(importName);
+        }
+    }
+
     private static String buildApiUrl(String methodName) {
-        return String.format("http://service-host/api/v1/%s", methodNameToPath(methodName));
+        // 驼峰转路径（如：calculateSum -> calculate-sum）
+        return "http://service-host/api/v1/" +
+                methodName.replaceAll("([a-z0-9])([A-Z])", "$1-$2").toLowerCase();
     }
 
     private static String methodNameToPath(String methodName) {
@@ -108,7 +118,6 @@ public class CodeMerger {
         }
         return String.join(", ", params);
     }
-
 
     private static String cleanGeneratedCode(String generated) {
         // 清理Markdown代码块

@@ -9,6 +9,8 @@ import codegen.DeepSeekApiClient;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -18,6 +20,8 @@ public class Main {
     private static final String BACKUP_EXT = ".bak";
     private static final String API_BASE_URL = "http://api-service:8080/api/v1";
     private static final String TARGET_METHOD_CALL = "add";
+
+
 
     public static void main(String[] args) {
         try {
@@ -34,28 +38,28 @@ public class Main {
 
             // 4. 生成API代码
             String generatedCode = DeepSeekApiClient.generateServiceCode(originalCode);
-            System.out.println("API代码生成成功\n"+generatedCode);
+            System.out.println("API代码生成成功\n" + generatedCode);
 
             // 5. 合并代码
-            String cleanedCode = CodeMerger.writeController(originalCode, generatedCode, PROJECT_ROOT); // 传递项目根目录
+            String cleanedCode = CodeMerger.writeController(originalCode, generatedCode, PROJECT_ROOT);
 
             // 6. 验证语法
             validateSyntax(cleanedCode);
 
             // 7. 输出结果
             System.out.println("API代码已生成到指定包路径");
-        
-            // 8. 查找所有包含目标调用的文件
-            List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, TARGET_METHOD_CALL);
-            System.out.println("找到目标调用位于: " + targetFiles);
 
+            // 8. 查找并替换所有方法调用
+            MethodSignature signature = parseMethodSignature(TARGET_METHOD);
+            List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, signature.methodName);
+            
             for (Path file : targetFiles) {
-                // 生成客户端代码
-                String clientCode = DeepSeekApiClient.generateClientCode(
-                    Files.readString(file)
+                CodeMerger.replaceMethodCalls(
+                    file,
+                    signature.methodName,
+                    signature.returnType,
+                    signature.paramNames
                 );
-                // 合并调用替换
-                CodeMerger.replaceMethodCalls(file, TARGET_METHOD_CALL, clientCode);     
             }
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
@@ -68,20 +72,46 @@ public class Main {
     }
 
     private static List<Path> findMethodCallFiles(String projectPath, String methodName) throws IOException {
-    return Files.walk(Paths.get(projectPath))
-            .filter(p -> p.toString().endsWith(".java"))
-            .filter(p -> containsMethodCall(p, methodName))
-            .collect(Collectors.toList());
-}
+        return Files.walk(Paths.get(projectPath))
+                .filter(p -> p.toString().endsWith(".java"))
+                .filter(p -> containsMethodCall(p, methodName))
+                .collect(Collectors.toList());
+    }
 
-private static boolean containsMethodCall(Path filePath, String methodName) {
-    try {
-        CompilationUnit cu = StaticJavaParser.parse(filePath);
-        return cu.findAll(MethodCallExpr.class).stream()
-                .anyMatch(mce -> mce.getNameAsString().equals(methodName));
-    } catch (Exception e) {
-        return false;
-    }}
+    // 修正后的方法签名解析
+    private static MethodSignature parseMethodSignature(String signature) {
+        Pattern pattern = Pattern.compile(
+                "^\\s*(?:public|protected|private|static)?\\s+" +
+                "(\\S+)\\s+" +      // 返回类型
+                "(\\w+)\\s*" +      // 方法名
+                "\\(([^)]*)\\)" +   // 参数列表
+                "\\s*$"             // 结束符
+        );
+
+        Matcher matcher = pattern.matcher(signature);
+        if (matcher.find()) {
+            String returnType = matcher.group(1);
+            String methodName = matcher.group(2);
+            List<String> params = Arrays.stream(matcher.group(3).split(","))
+                    .map(String::trim)
+                    .filter(p -> !p.isEmpty())
+                    .map(p -> p.split("\\s+")[1]) // 提取参数名
+                    .collect(Collectors.toList());
+
+            return new MethodSignature(returnType, methodName, params);
+        }
+        throw new IllegalArgumentException("无效的方法签名: " + signature);
+    }
+
+    private static boolean containsMethodCall(Path filePath, String methodName) {
+        try {
+            CompilationUnit cu = StaticJavaParser.parse(filePath);
+            return cu.findAll(MethodCallExpr.class).stream()
+                    .anyMatch(mce -> mce.getNameAsString().equals(methodName));
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     private static Path findTargetFile(String projectPath, String methodSignature) throws Exception {
         return Files.walk(Paths.get(projectPath))
@@ -141,5 +171,17 @@ private static boolean containsMethodCall(Path filePath, String methodName) {
         public MethodNotFoundException(String message) {
             super(message);
         }
+    }
+}
+
+class MethodSignature {
+    String returnType;
+    String methodName;
+    List<String> paramNames;
+
+    public MethodSignature(String returnType, String methodName, List<String> paramNames) {
+        this.returnType = returnType;
+        this.methodName = methodName;
+        this.paramNames = paramNames;
     }
 }
