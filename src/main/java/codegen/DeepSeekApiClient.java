@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DeepSeekApiClient {
-    private static final String COMPLETION_API = "https://api.deepseek.com/beta/completions";
     private static final String CHAT_API = "https://api.deepseek.com/beta/chat/completions";
     private static final String API_KEY = "sk-9496fcd1ba2849d49ff8da5e4d0e3a9c";
     private static final Gson gson = new Gson();
@@ -84,26 +83,26 @@ public class DeepSeekApiClient {
      */
     public static String generateClientCode(String originalCall) throws IOException {
         String template = """
-        请将以下方法调用转换为直接接口调用代码，要求：
-        1. 使用RestTemplate直接发起POST请求
-        2. 保持单行调用结构
-        3. 参数按顺序转为JSON请求体
-        4. 自动提取返回值的data字段
-        5. 只返回Java代码，不要解释
-        
-        示例输入：
-        int result = calculator.calculate(5, 8);
-        
-        示例输出：
-        int result = restTemplate.postForObject(
-            "http://service-host/api/v1/calculate",
-            Map.of("a", a, "b", b),
-            ApiResponse.class
-        ).getData();
+                请将以下方法调用转换为直接接口调用代码，要求：
+                1. 使用RestTemplate直接发起POST请求
+                2. 保持单行调用结构
+                3. 参数按顺序转为JSON请求体
+                4. 自动提取返回值的data字段
+                5. 只返回Java代码，不要解释
 
-        需要转换的原始调用：
-        %s
-        """;
+                示例输入：
+                int result = calculator.calculate(5, 8);
+
+                示例输出：
+                int result = restTemplate.postForObject(
+                    "http://service-host/api/v1/calculate",
+                    Map.of("a", a, "b", b),
+                    ApiResponse.class
+                ).getData();
+
+                需要转换的原始调用：
+                %s
+                """;
 
         String prompt = String.format(template, originalCall);
 
@@ -117,86 +116,17 @@ public class DeepSeekApiClient {
         return resp.choices.get(0).message.content;
     }
 
-
-    public static String performCodeOperation(CodeOperation operation, String code,
-                                              String additionalParams) throws IOException {
-        switch (operation) {
-            case CODE_COMPLETION:
-                return handleCodeCompletion(code);
-            case CODE_EXPLANATION:
-                return handleCodeExplanation(code);
-            case TEST_GENERATION:
-                return handleTestGeneration(code);
-            case CODE_REFACTOR:
-                return handleCodeRefactor(code, additionalParams);
-            case FUNCTION_TO_API:
-                return generateServiceCode(code);
-            default:
-                throw new IllegalArgumentException("Unsupported operation");
-        }
-    }
-
-    private static String handleCodeCompletion(String code) throws IOException {
-        int splitPoint = code.length() / 2;
-        String prefix = code.substring(0, splitPoint);
-        String suffix = code.substring(splitPoint);
-
-        CompletionRequest request = new CompletionRequest();
-        request.model = "deepseek-chat";
-        request.prompt = prefix;
-        request.suffix = suffix;
-        request.max_tokens = 1024;
-        request.temperature = 0;
-
-        String response = sendRequest(COMPLETION_API, request);
-        ApiResponse resp = gson.fromJson(response, ApiResponse.class);
-        return prefix + resp.text + suffix;
-    }
-
-    private static String handleCodeExplanation(String code) throws IOException {
-        ChatRequest request = new ChatRequest();
-        request.model = "deepseek-chat";
-        request.messages = List.of(
-                new Message("user", "请解释以下代码：\n" + code)
-        );
-        request.max_tokens = 512;
-
-        String response = sendRequest(CHAT_API, request);
-        ApiResponse resp = gson.fromJson(response, ApiResponse.class);
-        return resp.choices.get(0).message.content;
-    }
-
-    private static String handleTestGeneration(String code) throws IOException {
-        ChatRequest request = new ChatRequest();
-        request.model = "deepseek-chat";
-        request.messages = List.of(
-                new Message("user", "为以下代码生成JUnit测试：\n" + code)
-        );
-        request.max_tokens = 1024;
-
-        String response = sendRequest(CHAT_API, request);
-        ApiResponse resp = gson.fromJson(response, ApiResponse.class);
-        return resp.choices.get(0).message.content;
-    }
-
-    private static String handleCodeRefactor(String code, String instruction) throws IOException {
-        ChatRequest request = new ChatRequest();
-        request.model = "deepseek-chat";
-        request.messages = List.of(
-                new Message("user", "根据以下要求重构代码：" + instruction + "\n代码：\n" + code)
-        );
-        request.max_tokens = 1024;
-
-        String response = sendRequest(CHAT_API, request);
-        ApiResponse resp = gson.fromJson(response, ApiResponse.class);
-        return resp.choices.get(0).message.content;
-    }
-
+    /*
+     * 发送请求，辅助方法
+     * 
+     * @param url 请求地址
+     * @param requestBody 请求体
+     * @return 响应体
+     */
     private static String sendRequest(String url, Object requestBody) throws IOException {
         RequestBody body = RequestBody.create(
                 gson.toJson(requestBody),
-                MediaType.parse("application/json")
-        );
+                MediaType.parse("application/json"));
 
         Request request = new Request.Builder()
                 .url(url)
@@ -213,43 +143,12 @@ public class DeepSeekApiClient {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            if (!isNetworkAvailable()) {
-                System.err.println("网络不可用，请检查连接");
-                return;
-            }
-
-            String SAMPLE_FUNCTION =
-                    "public int calculate(int a, int b) {\n"
-                            + "    // 复杂业务逻辑\n"
-                            + "    return a * b + 1024;\n"
-                            + "}";
-
-            String SAMPLE_CALL =
-                    "int result = calculator.calculate(5, 8);";
-
-//            // 使用示例
-//            System.out.println("解释结果：");
-//            System.out.println(performCodeOperation(CodeOperation.CODE_EXPLANATION, code, null));
-//
-//            System.out.println("\n测试用例：");
-//            System.out.println(performCodeOperation(CodeOperation.TEST_GENERATION, code, null));
-//
-//            System.out.println("\n重构结果：");
-//            System.out.println(performCodeOperation(CodeOperation.CODE_REFACTOR, code, "添加参数校验"));
-
-            System.out.println("\nAPI服务端代码：");
-            System.out.println(generateServiceCode(SAMPLE_FUNCTION));
-
-            System.out.println("\nAPI客户端代码：");
-            System.out.println(generateClientCode(SAMPLE_CALL));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static boolean isNetworkAvailable() {
+    /*
+     * 检查网络是否可用
+     * 
+     * @return 网络是否可用
+     */
+    public static boolean isNetworkAvailable() {
         try {
             OkHttpClient tempClient = new OkHttpClient.Builder()
                     .connectTimeout(5, TimeUnit.SECONDS)

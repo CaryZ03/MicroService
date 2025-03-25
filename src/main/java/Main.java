@@ -18,13 +18,21 @@ public class Main {
     private static final String PROJECT_ROOT = "./testProject";
     private static final String TARGET_METHOD = "public int add(int a, int b)";
     private static final String BACKUP_EXT = ".bak";
-    private static final String API_BASE_URL = "http://api-service:8080/api/v1";
-    private static final String TARGET_METHOD_CALL = "add";
-
-
 
     public static void main(String[] args) {
         try {
+            // 0. 检查环境
+            if (!DeepSeekApiClient.isNetworkAvailable()) {
+                System.err.println("网络不可用，请检查连接");
+                return;
+            } else {
+                System.out.println("网络已连接");
+            }
+            if (!Files.exists(Paths.get(PROJECT_ROOT))) {
+                System.err.println("项目路径不存在: " + PROJECT_ROOT);
+                return;
+            }
+
             // 1. 查找目标方法所在文件
             Path targetFile = findTargetFile(PROJECT_ROOT, TARGET_METHOD);
             System.out.println("找到目标方法位于: " + targetFile);
@@ -52,14 +60,13 @@ public class Main {
             // 8. 查找并替换所有方法调用
             MethodSignature signature = parseMethodSignature(TARGET_METHOD);
             List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, signature.methodName);
-            
+
             for (Path file : targetFiles) {
                 CodeMerger.replaceMethodCalls(
-                    file,
-                    signature.methodName,
-                    signature.returnType,
-                    signature.paramNames
-                );
+                        file,
+                        signature.methodName,
+                        signature.returnType,
+                        signature.paramNames);
             }
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
@@ -71,6 +78,13 @@ public class Main {
         }
     }
 
+    /*
+     * 查找包含指定方法调用的文件
+     * 
+     * @param projectPath 项目路径
+     * @param methodName  方法名
+     * @return 符合条件的文件列表
+     */
     private static List<Path> findMethodCallFiles(String projectPath, String methodName) throws IOException {
         return Files.walk(Paths.get(projectPath))
                 .filter(p -> p.toString().endsWith(".java"))
@@ -78,14 +92,19 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    // 修正后的方法签名解析
+    /*
+     * 解析方法签名
+     * 
+     * @param signature 方法签名
+     * @return 方法签名对象
+     */
     private static MethodSignature parseMethodSignature(String signature) {
         Pattern pattern = Pattern.compile(
                 "^\\s*(?:public|protected|private|static)?\\s+" +
-                "(\\S+)\\s+" +      // 返回类型
-                "(\\w+)\\s*" +      // 方法名
-                "\\(([^)]*)\\)" +   // 参数列表
-                "\\s*$"             // 结束符
+                        "(\\S+)\\s+" + // 返回类型
+                        "(\\w+)\\s*" + // 方法名
+                        "\\(([^)]*)\\)" + // 参数列表
+                        "\\s*$" // 结束符
         );
 
         Matcher matcher = pattern.matcher(signature);
@@ -103,6 +122,13 @@ public class Main {
         throw new IllegalArgumentException("无效的方法签名: " + signature);
     }
 
+    /*
+     * 检查文件是否包含指定方法调用
+     * 
+     * @param filePath    文件路径
+     * @param methodName  方法名
+     * @return 是否包含
+     */
     private static boolean containsMethodCall(Path filePath, String methodName) {
         try {
             CompilationUnit cu = StaticJavaParser.parse(filePath);

@@ -3,9 +3,7 @@ package codegen;
 import com.github.javaparser.*;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
-import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter;
 
 import java.io.File;
@@ -105,18 +103,6 @@ public class CodeMerger {
         // 驼峰转路径（如：calculateSum -> calculate-sum）
         return "http://service-host/api/v1/" +
                 methodName.replaceAll("([a-z0-9])([A-Z])", "$1-$2").toLowerCase();
-    }
-
-    private static String methodNameToPath(String methodName) {
-        return methodName.replaceAll("([a-z])([A-Z])", "$1-$2").toLowerCase();
-    }
-
-    private static String buildParameters(NodeList<Expression> arguments) {
-        List<String> params = new ArrayList<>();
-        for (int i = 0; i < arguments.size(); i++) {
-            params.add(String.format("\"arg%d\", %s", i, arguments.get(i)));
-        }
-        return String.join(", ", params);
     }
 
     private static String cleanGeneratedCode(String generated) {

@@ -11,9 +11,12 @@ public class AddController {
         try {
             int result = new Add().add(a, b);
             return ApiResponse.success(result);
-        } catch (IllegalArgumentException e) {
-            return ApiResponse.fail(400, e.getMessage());
         } catch (Exception e) {
+            return ApiResponse.error(500, "Internal server error");
+        }
+    }
+}
+ch (Exception e) {
             return ApiResponse.fail(500, "Internal server error");
         }
     }
