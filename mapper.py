@@ -71,7 +71,7 @@ def queryTraces(serviceId):
     }
     """
     
-    time_gap = timedelta(minutes=300)
+    time_gap = timedelta(hours=72)
     current_time = datetime.now()
     former_time = current_time - time_gap
     
@@ -300,6 +300,8 @@ with open("entries_demo.json", "r") as json_file:
     
 print("Entries:", entries)
 
+spanss = []
+
 services = queryServices()
 # print(json.dumps(services, indent=1))
 for service in services:
@@ -307,8 +309,14 @@ for service in services:
     # print(json.dumps(traces, indent=1))
     for trace in traces:
         spans = queryTrace(trace["traceIds"][0])
+        spanss.append(spans)
         addToGraph(G, spans, entries)
     break
+
+with open("spans.json", "w") as outfile:
+    json.dump(spanss, outfile, indent=4)
+
+# print(json.dumps(spanss, indent=1))
 
 # print(json.dumps(nodes, indent=1))
 
