@@ -45,7 +45,7 @@ public class Main {
             String originalCode = Files.readString(targetFile);
 
             // 4. 生成API代码
-            String generatedCode = DeepSeekApiClient.generateServiceCode(originalCode);
+            String generatedCode = DeepSeekApiClient.generateServiceCode(targetFile,originalCode);
             System.out.println("API代码生成成功\n" + generatedCode);
 
             // 5. 合并代码
@@ -57,17 +57,17 @@ public class Main {
             // 7. 输出结果
             System.out.println("API代码已生成到指定包路径");
 
-            // 8. 查找并替换所有方法调用
-            MethodSignature signature = parseMethodSignature(TARGET_METHOD);
-            List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, signature.methodName);
+            // // 8. 查找并替换所有方法调用
+            // MethodSignature signature = parseMethodSignature(TARGET_METHOD);
+            // List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, signature.methodName);
 
-            for (Path file : targetFiles) {
-                CodeMerger.replaceMethodCalls(
-                        file,
-                        signature.methodName,
-                        signature.returnType,
-                        signature.paramNames);
-            }
+            // for (Path file : targetFiles) {
+            //     CodeMerger.replaceMethodCalls(
+            //             file,
+            //             signature.methodName,
+            //             signature.returnType,
+            //             signature.paramNames);
+            // }
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
             restoreBackup(findLatestBackup());
