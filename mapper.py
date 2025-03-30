@@ -302,23 +302,29 @@ print("Entries:", entries)
 
 spanss = []
 
-services = queryServices()
-# print(json.dumps(services, indent=1))
-for service in services:
-    traces = queryTraces(service["id"])
-    # print(json.dumps(traces, indent=1))
-    for trace in traces:
-        spans = queryTrace(trace["traceIds"][0])
-        spanss.append(spans)
-        addToGraph(G, spans, entries)
-    break
+# services = queryServices()
+# # print(json.dumps(services, indent=1))
+# for service in services:
+#     traces = queryTraces(service["id"])
+#     # print(json.dumps(traces, indent=1))
+#     for trace in traces:
+#         spans = queryTrace(trace["traceIds"][0])
+#         spanss.append(spans)
+#         addToGraph(G, spans, entries)
+#     break
 
-with open("spans.json", "w") as outfile:
-    json.dump(spanss, outfile, indent=4)
+# with open("spans.json", "w") as outfile:
+#     json.dump(spanss, outfile, indent=4)
 
-# print(json.dumps(spanss, indent=1))
 
-# print(json.dumps(nodes, indent=1))
+with open("spans.json", "r") as infile:
+    spanss = json.load(infile)
+
+# 打印读取的数据
+print(spanss)
+
+for spans in spanss:
+    addToGraph(G, spans, entries)
 
 nx.write_graphml(G, "demo-with-weight.graphml")
 
