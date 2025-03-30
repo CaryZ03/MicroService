@@ -2,23 +2,30 @@ import requests
 import zipfile
 import io
 
+baseDir = "demo1"
+groupId = "com.example"
+artifactId = "demo"
+name = artifactId
+packageName = groupId + '.' + artifactId
+
+
 # 定义请求参数
 url = "https://start.spring.io/starter.zip"
 params = {
     "type": "maven-project",
     "language" : "java",
     "bootVersion" : "3.4.4",
-    "baseDir": "demo3",
-    # "groupId": "com.example",
-    # "artifactId": "hihi",
-    "name": "demo3",
+    "baseDir": baseDir,
+    "groupId": groupId,
+    "artifactId": artifactId,
+    "name": name,
     "description": "Demo project for Spring Boot",
-    "packageName": "com.eample.hihi",
+    "packageName": packageName,
     "packaging": "jar",
     "javaVersion": "17"
 }
 
-# D:\Projects\MicroService\work\myapp\{baseDir}\src\main\java\{groupId}\demo
+# D:\Projects\MicroService\work\myapp\{baseDir}\src\main\java\{packageName}\{name}Application.java
 
 # 发送请求并下载文件
 response = requests.get(url, params=params, stream=True)
@@ -27,7 +34,7 @@ if response.status_code == 200:
     zip_file = zipfile.ZipFile(io.BytesIO(response.content))
     
     # 解压文件
-    extract_to_path = "myapp"
+    extract_to_path = "microservices"
     zip_file.extractall(extract_to_path)
     
     print("Spring Boot Maven project downloaded and extracted successfully.")
