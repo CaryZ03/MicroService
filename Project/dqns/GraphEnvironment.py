@@ -1,148 +1,126 @@
 import networkx as nx
+import community as community_louvain
+import math
+
 from typing import List, Dict, Tuple
-import numpy as np
+
+from entities.Node import Node
+from entities.MicroService import MicroService
 
 class GraphEnvironment:
     def __init__(self, graph: nx.Graph):
-        self.graph = graph
-        self.nodes = list(graph.nodes())
-        self.num_nodes = len(self.nodes)
+
+        # initialize the graph and its nodes.
+        self.graph: nx.DiGraph = graph
+        self.nodes: Dict[int, Node] = {}
+        self.microservices: Dict[int, MicroService] = {}
+
         self.current_node_index = 0
-        self.node_id_to_index = {node: idx for idx, node in enumerate(self.nodes)}
-        self.current_node = self.nodes[self.current_node_index]
-        
-        # 初始化所有节点的类别为 -1（未分类）
-        self.node_categories = {node: -1 for node in self.nodes}
-        
-        # 初始化节点特征
-        self.node_features = {}
-        for node in self.nodes:
-            if 'feature' in graph.nodes[node]:
-                self.node_features[node] = np.array(graph.nodes[node]['feature'], dtype=np.float32)
-            else:
-                self.node_features[node] = np.random.rand(10).astype(np.float32)
-        
-        # 构建邻接表
-        self.adjacency_list = {node: [] for node in self.nodes}
-        for u, v in graph.edges():
-            self.adjacency_list[u].append(v)
-            self.adjacency_list[v].append(u)
+        self.node_microservice: Dict[int, int] = {}
+
+        # at the beginning, each node belongs to one microservice.
+        ind = -1
+        for node_name, data in self.graph.nodes(data=True):
+            ind += 1
+            self.nodes[ind] = Node(node_name, data['execution_time'], data['count'])
+            self.microservices[ind] = MicroService(ind)
+            self.node_microservice[ind] = ind
+
+        self.node_count = ind + 1
+
+        print("init graph environment successfully.")
+        print("the node count: ", self.node_count)
+
+        self.best_reward: float = -math.inf
+        self.best_partition: Dict[int, int] = {}
             
-    def reset(self) -> np.ndarray:
+    def reset(self) ->None:
         self.current_node_index = 0
-        self.current_node = self.nodes[self.current_node_index]
-        # 重新初始化所有节点的类别为 -1
-        self.node_categories = {node: -1 for node in self.nodes}
-        return self.get_state(self.current_node)
+        for i in range(self.node_count):
+            self.node_microservice[i] = i
     
-    def get_state(self, node: str) -> np.ndarray:
-        return self.node_features[node]
+    def get_node_cnt(self) -> int:
+        return self.node_count
     
-    def step(self, action: int) -> Tuple[np.ndarray, float, bool, str]:
-        if action == 0:
-            new_category: int = max(self.node_categories.values(), default=0) + 1
-            self.node_categories[self.current_node] = new_category
-        else:
-            self.node_categories[self.current_node] = action
+    def get_state(self) -> Dict[int, int]:
+        return self.node_microservice
+    
+    def step(self, action: int) -> Tuple[Dict[int, int], float, bool, str]:
+        # func that we are going to move to target_service
+        func_id, target_service = action // self.node_count, action % self.node_count
         
+        # the origin node microservice dict.
+        node_microservice_before: Dict[int, int] = self.node_microservice.copy()
+        self.node_microservice[func_id] = target_service
+        # the updated node microservice dict.
+        node_microservice_after: Dict[int, int] = self.node_microservice.copy()
+
+        reward: float = self._calculate_step_reward(node_microservice_before, node_microservice_after)
+
+        # learning the greatest microservice node by node.
         self.current_node_index += 1
-        if self.current_node_index >= self.num_nodes:
-            done: bool = True
-            reward: float = self._calculate_final_reward()
-            next_node: str = ""
-        else:
-            done: bool = False
-            reward: float = self._calculate_step_reward()
-            self.current_node = self.nodes[self.current_node_index]
-            next_node: str = self.current_node
-        
-        next_state: np.ndarray = self.get_state(next_node) if not done else np.zeros_like(self.get_state(self.current_node))
+
+        done: bool = self.current_node_index >= self.node_count
+        next_node: str = self.nodes[self.current_node_index] if not done else "NONE"
+        next_state: Dict[int, int] = node_microservice_after
+
         return next_state, reward, done, next_node
-    
-    def _calculate_step_reward(self) -> float:
-        current_category: int = self.node_categories.get(self.current_node, -1)
-        reward: float = 0.0
-        neighbors: List[str] = self.adjacency_list.get(self.current_node, [])
-        
-        # 邻居类别一致性奖励（考虑边的方向）
-        for neighbor in neighbors:
-            neighbor_category: int = self.node_categories.get(neighbor, -1)
-            if neighbor_category == current_category and current_category != -1:
-                reward += 0.2
-            else:
-                reward -= 0.5
-        
-        # 基于模块化度量的奖励
-        modularity_contribution: float = self._calculate_modularity_contribution()
-        reward += modularity_contribution * 0.5
-        
-        # 类别平衡奖励
-        category_sizes: Dict[int, int] = {}
-        for node, cat in self.node_categories.items():
-            if cat != -1:
-                category_sizes[cat] = category_sizes.get(cat, 0) + 1
-        max_size: int = max(category_sizes.values()) if category_sizes else 0
-        avg_size: float = max_size / len(category_sizes) if category_sizes else 0
-        if current_category != -1 and category_sizes.get(current_category, 0) > avg_size * 1.5:
-            reward -= 1  # 处罚过大类别
-        
-        # 鼓励形成多个类别
-        if current_category == max(self.node_categories.values()):
-            reward -= 1.0
-        
-        # 处罚类别数量过少
-        if len(set(self.node_categories.values())) < 2:
-            reward -= 1.0
-        
-        # 处罚类别数量过多
-        if len(set(self.node_categories.values())) > 10:
-            reward -= 0.5
-        
-        # 奖励类别内部的有向边
-        for u, v in self.graph.edges():
-            category_u: int = self.node_categories.get(u, -1)
-            category_v: int = self.node_categories.get(v, -1)
-            if category_u == category_v and category_u != -1:
-                reward += 0.15
-        
+
+    def _calculate_step_reward(self, node_microservice_before: Dict[int, int],
+                               node_microservice_after: Dict[int, int]) -> float:
+        reward = 0.0
+
+        cross_edges_before = self._count_cross_service_edges(node_microservice_before)
+        modularity_before = self._calculate_modularity(node_microservice_before)
+
+        cross_edges_after = self._count_cross_service_edges(node_microservice_after)
+        modularity_after = self._calculate_modularity(node_microservice_after)
+
+        delta_cross = cross_edges_before - cross_edges_after
+        delta_modularity = modularity_after - modularity_before
+        # print("delta modularity: ", delta_modularity)
+
+        reward += delta_cross * 1.0
+        reward += delta_modularity * 10000.0
+
+        # Balance reward
+        # category_sizes = {}
+        # for node, cat in node_microservice_after.items():
+        #     category_sizes[cat] = category_sizes.get(cat, 0) + 1
+
+        # avg_size = sum(category_sizes.values()) / len(category_sizes)
+        # for size in category_sizes.values():
+        #     if size > avg_size * 1.5:
+        #         reward -= 1.0
+
+        num_services = len(set(node_microservice_after.values()))
+        if num_services < 2:
+            reward -= 10.0
+        elif num_services > 12:
+            reward -= 5.0
+
         return reward
-    
-    def _calculate_modularity_contribution(self) -> float:
-        """
-        计算当前分类对模块化度量的贡献。
-        """
-        edges: List[Tuple[str, str]] = list(self.graph.edges())
-        total_edges: int = len(edges)
-        if total_edges == 0:
-            return 0.0
-        
-        # 计算类别内部边数
-        internal_edges: int = 0
-        for u, v in edges:
-            if self.node_categories.get(u, -1) == self.node_categories.get(v, -1) and self.node_categories.get(u, -1) != -1:
-                internal_edges += 1
-        
-        # 模块化度量
-        modularity: float = internal_edges / total_edges - ((len(set(self.node_categories.values())) - 1) / total_edges)
-        return modularity
-    
-    def _calculate_final_reward(self) -> float:
-        total_reward: float = 0.0
-        num_communities: int = len(set(self.node_categories.values()))
-        
-        # 基于类别内部边数计算奖励
+
+    def _count_cross_service_edges(self, node_microservice: Dict[int, int]) -> int:
+        cross_edges = 0
         for u, v in self.graph.edges():
-            if self.node_categories.get(u, -1) == self.node_categories.get(v, -1) and self.node_categories.get(u, -1) != -1:
-                total_reward += 1.0
-        
-        # 基于模块化度量的奖励
-        modularity: float = self._calculate_modularity_contribution()
-        total_reward += modularity * 2.0
-        
-        # 鼓励适当数量的类别
-        if num_communities < 2:
-            total_reward -= 10.0  # 处罚类别数量过少
-        elif num_communities > 15:
-            total_reward -= 5.0  # 处罚类别数量过多
-        
-        return total_reward
+            if node_microservice.get(u) != node_microservice.get(v):
+                cross_edges += 1
+        return cross_edges
+
+    def _calculate_modularity(self, node_microservice: Dict[int, int]) -> float:
+        G_undirected = self.graph.to_undirected()
+        communities = {}
+        for node_index, microservice_index in node_microservice.items():
+            node_name = self.nodes[node_index].get_node_name()
+            communities[node_name] = microservice_index
+
+        return community_louvain.modularity(communities, G_undirected)
+    
+    def update_best_partition(self, total_reward: float, node_microservice: Dict[int, int]) -> None:
+        if total_reward > self.best_reward:
+            self.best_reward = total_reward
+            self.best_partition = node_microservice
+
+    def get_best_partition(self) -> Dict[int, int]:
+        return self.best_partition

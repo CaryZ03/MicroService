@@ -1,17 +1,13 @@
 class Node:
-    def __init__(self, name, executionTime, count):
+    def __init__(self, name: str, executionTime: int, count: int):
         self.name = name
         self.executionTime = executionTime
         self.count = count
-        self.msID = -1
 
-    def setMicroServiceID(self, msID):
-        self.msID = msID
+    def get_node_name(self) -> str:
+        return self.name
     
-    def getMicroServiceID(self):
-        return self.msID
-    
-    def __str__(self):
+    def __str__(self) -> str:
         return "Node: " + self.name + \
                 " executionTime: " + str(self.executionTime) + \
                 " count: " + str(self.count)
