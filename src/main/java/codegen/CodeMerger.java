@@ -61,6 +61,14 @@ public class CodeMerger {
             String returnType, List<String> paramNames) throws IOException {
         CompilationUnit cu = LexicalPreservingPrinter.setup(StaticJavaParser.parse(sourceFile));
 
+        // 新增包排除逻辑
+        String generatedPackage = "com.example.testProject.api";
+        Optional<String> packageOpt = cu.getPackageDeclaration().map(pd -> pd.getNameAsString());
+        if (packageOpt.isPresent() && packageOpt.get().equals(generatedPackage)) {
+            System.out.println("跳过生成包中的文件: " + sourceFile);
+            return;
+        }
+
         // 1. 添加必要的import
         addImportIfMissing(cu, "org.springframework.web.client.RestTemplate");
         addImportIfMissing(cu, "com.example.testProject.api.ApiResponse");
@@ -70,26 +78,36 @@ public class CodeMerger {
         cu.findAll(MethodCallExpr.class).stream()
                 .filter(mce -> mce.getNameAsString().equals(methodName))
                 .forEach(mce -> {
-                    // 构建类型转换表达式
-                    String castExpr = String.format("(%s)", returnType);
+                    // 提取实际参数表达式
+                    List<String> actualArgs = mce.getArguments().stream()
+                            .map(arg -> arg.toString())
+                            .collect(Collectors.toList());
 
-                    // 构建参数映射
-                    String params = paramNames.stream()
-                            .map(name -> "\"" + name + "\", " + name)
-                            .collect(Collectors.joining(", "));
+                    // 验证参数数量一致性
+                    if (actualArgs.size() != paramNames.size()) {
+                        throw new IllegalArgumentException(
+                                "方法参数数量不匹配: 预期 " + paramNames.size() + ", 实际 " + actualArgs.size());
+                    }
+
+                    // 构建参数映射（使用形参名称）
+                    List<String> params = new ArrayList<>();
+                    for (int i = 0; i < actualArgs.size(); i++) {
+                        String paramName = paramNames.get(i);
+                        params.add(String.format("\"%s\", %s", paramName, actualArgs.get(i)));
+                    }
 
                     // 构建新的调用表达式
                     String newCall = String.format(
-                            "%snew RestTemplate().postForObject(\"%s\", Map.of(%s), ApiResponse.class).getData()",
-                            castExpr,
+                            "(%s) new RestTemplate().postForObject(\"%s\", Map.of(%s), ApiResponse.class).getData()",
+                            returnType,
                             buildApiUrl(methodName),
-                            params);
+                            String.join(", ", params));
 
-                    // 替换并保留原始参数变量名
+                    // 替换原始调用
                     mce.replace(StaticJavaParser.parseExpression(newCall));
                 });
 
-        // 3. 保存修改
+        // 保存修改
         Files.write(sourceFile, cu.toString().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
     }
 

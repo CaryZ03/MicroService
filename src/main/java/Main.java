@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 public class Main {
     // 配置参数
     private static final String PROJECT_ROOT = "./testProject";
-    private static final String TARGET_METHOD = "public int add(int a, int b)";
+    private static final String TARGET_METHOD = "add";
+    private static final String TARGET_METHOD_SIGN = "public int add(int a, int b)";
     private static final String BACKUP_EXT = ".bak";
 
     public static void main(String[] args) {
@@ -34,7 +35,7 @@ public class Main {
             }
 
             // 1. 查找目标方法所在文件
-            Path targetFile = findTargetFile(PROJECT_ROOT, TARGET_METHOD);
+            Path targetFile = findTargetFile(PROJECT_ROOT, TARGET_METHOD_SIGN);
             System.out.println("找到目标方法位于: " + targetFile);
 
             // 2. 创建文件备份
@@ -45,7 +46,7 @@ public class Main {
             String originalCode = Files.readString(targetFile);
 
             // 4. 生成API代码
-            String generatedCode = DeepSeekApiClient.generateServiceCode(targetFile,originalCode);
+            String generatedCode = DeepSeekApiClient.generateServiceCode(TARGET_METHOD,targetFile, originalCode);
             System.out.println("API代码生成成功\n" + generatedCode);
 
             // 5. 合并代码
@@ -58,16 +59,17 @@ public class Main {
             System.out.println("API代码已生成到指定包路径");
 
             // // 8. 查找并替换所有方法调用
-            // MethodSignature signature = parseMethodSignature(TARGET_METHOD);
-            // List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, signature.methodName);
+            MethodSignature signature = parseMethodSignature(TARGET_METHOD_SIGN);
+            List<Path> targetFiles = findMethodCallFiles(PROJECT_ROOT, signature.methodName);
 
-            // for (Path file : targetFiles) {
-            //     CodeMerger.replaceMethodCalls(
-            //             file,
-            //             signature.methodName,
-            //             signature.returnType,
-            //             signature.paramNames);
-            // }
+            for (Path file : targetFiles) {
+                CodeMerger.replaceMethodCalls(
+                        file,
+                        signature.methodName,
+                        signature.returnType,
+                        signature.paramNames);
+            }
+
         } catch (MethodNotFoundException e) {
             System.err.println("错误: " + e.getMessage());
             restoreBackup(findLatestBackup());
@@ -82,7 +84,9 @@ public class Main {
      * 查找包含指定方法调用的文件
      * 
      * @param projectPath 项目路径
-     * @param methodName  方法名
+     * 
+     * @param methodName 方法名
+     * 
      * @return 符合条件的文件列表
      */
     private static List<Path> findMethodCallFiles(String projectPath, String methodName) throws IOException {
@@ -96,6 +100,7 @@ public class Main {
      * 解析方法签名
      * 
      * @param signature 方法签名
+     * 
      * @return 方法签名对象
      */
     private static MethodSignature parseMethodSignature(String signature) {
@@ -125,8 +130,10 @@ public class Main {
     /*
      * 检查文件是否包含指定方法调用
      * 
-     * @param filePath    文件路径
-     * @param methodName  方法名
+     * @param filePath 文件路径
+     * 
+     * @param methodName 方法名
+     * 
      * @return 是否包含
      */
     private static boolean containsMethodCall(Path filePath, String methodName) {

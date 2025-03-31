@@ -26,9 +26,9 @@ public class DeepSeekApiClient {
      * @param originalCode 原始函数代码
      * @return 生成的API服务端代码
      */
-    public static String generateServiceCode(Path targetFile, String originalCode) throws IOException {
+    public static String generateServiceCode(String name, Path targetFile, String originalCode) throws IOException {
         String template = """
-                        请将以下Java函数转换为Spring Boot REST API端点，严格遵循以下规范：
+                        请将以下名为%s的所有Java函数转换为Spring Boot REST API端点，严格遵循以下规范：
 
                         # 规范要求
                         1. 使用统一响应结构，这个结构已经存在于com.example.testProject/api/ApiResponse.java，你可以直接调用，不需要import：
@@ -74,7 +74,7 @@ public class DeepSeekApiClient {
                     }
                 }
                 """;
-        String prompt = String.format(template, PACKAGE_NAME, targetFile, originalCode);
+        String prompt = String.format(template, name, PACKAGE_NAME, targetFile, originalCode);
 
         ChatRequest request = new ChatRequest();
         request.model = "deepseek-chat";
