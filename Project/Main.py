@@ -22,10 +22,6 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# def printMicroService(microServices : Dict[int, MicroService]):
-#     for _, microService in microServices.items():
-#         microService.printNodes()
-
 # stage1: I didn't use the DQN model in this stage,
 # but Louvain algorithm to partition the graph into microservices.
 def stage1Main() -> None:
@@ -49,14 +45,14 @@ def stage1Main() -> None:
 
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservices)
 
-        gmh.visualizeGraph(microserviceGraph, "Microservice Graph")
-
         # graph save.
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
         gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")
 
+# stage2: use the DQN model.
 def stage2Main() -> None:
     gmh: GraphMLHelper = GraphMLHelper()
+    louvain: LouvainHelper = LouvainHelper()
 
     graphMLSourcePath: str = "./data/src"
     graphMLTargetPath: str = "./data/target"
@@ -92,8 +88,6 @@ def stage2Main() -> None:
                 reward: float = res[1]
                 done: bool = res[2]
 
-                # print("state shape: ", state.shape, "next state shape: ", next_state.shape)
-
                 agent.add_to_memory(state, action, reward, next_state, done)
 
                 total_reward += reward
@@ -111,12 +105,12 @@ def stage2Main() -> None:
                 print(f"Episode {episode}, Total Reward: {total_reward:.2f}")
 
         # ============================
-        # 输出最终的微服务划分结果
+        # print the partition of microservice.
         # ============================
         print("\n=== Final Microservice Partitioning Result ===")
         node_microservice: Dict[int, int] = env.get_best_partition()
 
-        microservice_to_nodes: Dict[int, List[int]] = {}
+        microservice_to_nodes: Dict[int, List[str]] = {}
         for node_id, ms_id in node_microservice.items():
             node_name = env.nodes[node_id].name
             microservice_to_nodes.setdefault(ms_id, []).append(node_name)
@@ -124,6 +118,10 @@ def stage2Main() -> None:
         for ms_id, node_list in microservice_to_nodes.items():
             print(f"Microservice {ms_id}: Nodes {node_list}")
 
+        microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservice_to_nodes)
+        graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
+        gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")
 
+        
 if __name__ == "__main__":
     stage2Main()

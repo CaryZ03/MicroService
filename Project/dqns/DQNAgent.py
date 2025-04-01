@@ -9,7 +9,7 @@ from typing import Tuple, Deque
 from dqns.DQNetwork import DQNetwork
 
 class DQNAgent:
-    def __init__(self, state_dim: int, action_dim: int, hidden_dim: int=256,
+    def __init__(self, state_dim: int, action_dim: int, hidden_dim: int=128,
                  learning_rate: float = 0.02, gamma: float = 0.99, 
                  epsilon: float = 5.0, epsilon_min : float= 1.0, 
                  epsilon_decay: float = 0.995):
