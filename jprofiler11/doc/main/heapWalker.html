@@ -1,0 +1,386 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>The heap walker</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.heapWalker';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>The Heap Walker</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/memory.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/threads.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <h3>Heap snapshots</h3>
+    <p>
+      Any heap analysis that involves references between objects requires a heap snapshot, because it is not possible
+      to ask the JVM what the incoming references to an object are - you have to iterate over the entire heap to answer
+      that question. From that heap snapshot, JProfiler creates an internal database that is optimized for producing the
+      data required for serving the views in the heap walker.
+    </p>
+    <p>
+      There are two sources of heap snapshots: JProfiler heap snapshots and HPROF/PHD heap snapshots. JProfiler heap
+      snapshots support all available features in the heap walker. The profiling agent uses the profiling interface
+      JVMTI to iterate over all references. If the profiled JVM is running on a different machine,
+      all information is transferred to the local machine and further calculations are performed there. HPROF/PHD snapshots
+      are created with a built-in mechanism in the JVM and are written to disk in a standard format that JProfiler
+      can read. HPROF snapshots are provided by HotSpot JVMs and PHD snapshots are produced by Eclipse OpenJ9 JVMs.
+    </p>
+    <p>
+      On the overview page of the heap walker, you can choose if a JProfiler heap snapshot or an HPROF/PHD heap snapshot
+      should be created. By default, the JProfiler heap snapshot is recommended. The HPROF/PHD heap snapshot is useful in
+      special situations that are discussed in <a href="../heapWalker/hprofSnapshots.html">another chapter</a>.
+    </p>
+    <p><img src="../images/ui/heap_walker_overview.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+
+    <h3>Selection steps</h3>
+    <p>
+      The heap walker consists of several views that show different aspects of a selected set of objects.
+      Right after you take the heap snapshot, you are looking at all objects on the heap. Each view has navigation
+      actions for turning some selected objects into the <b>current object set</b>. The header area of the heap
+      walker shows information on how many objects are contained in the current object set.
+    </p>
+    <p><img src="../images/ui/heap_walker_current_object_set.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      Initially, you are looking at the "Classes" view which is similar to the "All objects" view in the
+      <a href="../main/memory.html">live memory section</a>. By selecting a class and invoking
+      <i>Use-&gt;Selected Instances</i>, you create a new object set that only contains instances
+      of that class. In the heap walker, "using" always means creating a new object set.
+    </p>
+    <p>
+      For the new object set, showing the classes view of the heap walker would not be interesting, because it
+      would effectively just filter the table to the previously selected class. Instead, JProfiler suggests another
+      view with the "New object set" dialog. You can cancel this dialog to discard the new object set and return to
+      the previous view. The outgoing references view is suggested, but you could also choose another view. This is
+      just for the initially displayed view, you can switch views in the view selector of the heap walker afterwards.
+    </p>
+    <p><img src="../images/ui/heap_walker_view_change_dialog.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 486px"></p>
+    <p>
+      The header area now tells you that there are two selection steps and includes links
+      for calculating the retained and deep sizes or for using all objects that are retained by the current object set.
+      The latter would add another selection step and suggest the classes view because there would likely
+      be multiple classes in that object set.
+    </p>
+    <p><img src="../images/ui/heap_walker_selection_step_actions.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      In the lower part of the heap walker, the selection steps up to this point are listed. Clicking on the hyperlinks
+      will take you back to any selection step. The first data set can also be reached with the
+      <i>Go To Start</i> button in the tool bar. The back and forward buttons in the tool bar are useful
+      if you need to backtrack in your analysis.
+    </p>
+
+    <h3>Classes view</h3>
+    <p>
+      The view selector at the top of the heap walker contains five views that show different information for the
+      current object set. The first one of those is the "Classes" view.
+    </p>
+    <p>
+      The classes view is similar to the "All objects" view in the live memory section and has an aggregation level
+      chooser that can group classes into packages. In addition, it can show estimated retained sizes for classes.
+      This is the amount of memory that would be freed if all instances of a class were removed from the heap.
+      If you click on the <i>Calculate estimated retained sizes</i> hyperlink, a new <i>Retained Size</i> column is
+      added. The displayed retained sizes are estimated lower bounds, calculating the exact numbers would be too slow.
+      If you really need an exact number, select the class or package of interest and use the
+      <i>Calculate retained and deep sizes</i> hyperlink in the header of the new object set.
+    </p>
+    <p><img src="../images/ui/heap_walker_classes_retained_sizes.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      Based on your selection of one or more classes or packages, you can select the instances themselves, the
+      associated <code>java.lang.Class</code> objects, or all retained objects. Double-clicking is the
+      quickest selection mode and uses the selected instances. If multiple selection modes are available, as in
+      this case, a <i>Use</i> drop-down menu is shown above the view.
+    </p>
+    <p>
+      When solving class loader-related problems, you often have to group instances by their class loader.
+      The <i>Inspections</i> tab offers a "Group by class loaders" inspection that is made available on the
+      classes view, because it is especially important in that context. If you execute that analysis, a grouping table
+      at the top shows all class loaders. Selecting a class loader filters the data accordingly in the view below.
+      The grouping table remains in place when you switch to the other views of the heap walker until you perform
+      another selection step. Then, the class loader selection becomes part of that selection step.
+    </p>
+    <p><img src="../images/ui/heap_walker_class_loader_grouping.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+
+    <h3>Allocation recording views</h3>
+    <p>
+      The information where objects have been allocated can be important when narrowing down suspects for a memory leak
+      or when trying to reduce memory consumption. For JProfiler heap snapshots, the "Allocations" view shows the
+      allocation call tree and the allocation hot spots for those objects where allocations have been recorded.
+      Other objects are grouped in the "unrecorded objects" node in the allocation call tree. For HPROF/PHD snapshots,
+      this view is not available.
+    </p>
+    <p><img src="../images/ui/heap_walker_allocations_use_objects.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      Like in the classes view, you can select multiple nodes and use the <i>Use Selected</i> button at the top to
+      create a new selection step. In the "Allocation hot spots" view mode, you can also select nodes in the back
+      traces. This will only select objects in the associated top-level hot spot that have been allocated
+      on a call stack that ends with the selected back trace.
+    </p>
+    <p>
+      Another piece of information that JProfiler can save when recording allocations is the time when an object
+      was allocated. The "Time" view in the heap walker shows a histogram of the allocation times for all recorded
+      instances in the current object set. You can click and drag to select one or multiple intervals and then
+      create a new object set with the <i>Use Selected</i> button.
+    </p>
+    <p><img src="../images/ui/heap_walker_time_view.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      For a more precise selection of a time interval, you can specify a range of
+      <a href="../main/telemetries.html">bookmarks</a>. All objects between the first and last selected bookmark will
+      then be marked.
+    </p>
+    <p>
+      In addition to the time view, allocation times are displayed as a separate column in the reference views. However,
+      allocation time recording is not enabled by default. You can switch it on directly in the time view or edit the
+      setting in <i>Advanced Settings</i> -&gt; <i>Memory Profiling</i> in the session settings dialog.
+    </p>
+
+    <h3>Biggest objects view</h3>
+    <p>
+      The biggest objects view shows a list of the most important objects in in the current object set. "Biggest" in
+      this context means the objects that would free most memory if they were removed from the heap. That size is
+      called the <b>retained size</b>. In contrast, the <b>deep size</b> is the total size of all objects
+      that are reachable through strong references.
+    </p>
+    <p>
+      Each object can be expanded to show outgoing references to other objects that are retained by this object.
+      In this way, you can recursively expand the tree of retained objects that would be garbage collected if one
+      of the ancestors were to be removed. This kind of tree is called a "dominator tree". The information displayed for
+      each object in this tree is similar to the outgoing reference view except that only dominating references are
+      displayed.
+    </p>
+    <p><img src="../images/ui/heap_walker_biggest_objects_tree.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      Not all dominated objects are directly referenced by their dominators. For example, consider the references
+      in the following figure:
+    </p>
+    <p><div class="svgContainer" style="width: 100%; max-width: 300.67596px"><svg xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 300.67596 254.65614" onload="initSvg(this, 300.67596, 254.65614)" id="svg2" version="1.1"><defs xmlns="http://www.w3.org/2000/svg" id="defs4"><marker style="overflow:visible" id="marker3325" refX="0" refY="0" orient="auto"><path transform="scale(-0.6)" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" id="path3323"></path></marker><marker orient="auto" refY="0" refX="0" id="marker2573" style="overflow:visible"><path id="path2571" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="scale(-0.6)"></path></marker><marker style="overflow:visible" id="marker2555" refX="0" refY="0" orient="auto"><path transform="scale(-0.6)" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" id="path2553"></path></marker><marker orient="auto" refY="0" refX="0" id="marker2535" style="overflow:visible"><path id="path2533" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="scale(-0.6)"></path></marker><marker orient="auto" refY="0" refX="0" id="marker2531" style="overflow:visible"><path id="path2529" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="matrix(-1.1,0,0,-1.1,-1.1,0)"></path></marker><marker orient="auto" refY="0" refX="0" id="marker2469" style="overflow:visible"><path id="path2467" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="scale(-0.6)"></path></marker><marker orient="auto" refY="0" refX="0" id="marker2465" style="overflow:visible"><path id="path2220" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="scale(-0.6)"></path></marker><marker orient="auto" refY="0" refX="0" id="Arrow1Send" style="overflow:visible"><path id="path2208" d="M 0,0 5,-5 -12.5,0 5,5 Z" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1" transform="matrix(-0.2,0,0,-0.2,-1.2,0)"></path></marker><marker orient="auto" refY="0" refX="0" id="Arrow1Mend" style="overflow:visible"><path id="path2202" d="M 0,0 5,-5 -12.5,0 5,5 Z" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1" transform="matrix(-0.4,0,0,-0.4,-4,0)"></path></marker><marker orient="auto" refY="0" refX="0" id="Arrow2Lend" style="overflow:visible"><path id="path2214" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="matrix(-1.1,0,0,-1.1,-1.1,0)"></path></marker><marker orient="auto" refY="0" refX="0" id="Arrow2Mend" style="overflow:visible"><path id="path4351" style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="scale(-0.6)"></path></marker><linearGradient y2="-41.598" x2="-198.17" gradientTransform="matrix(0.72281,0,0,0.72281,160.45,136.56)" y1="-129.06" gradientUnits="userSpaceOnUse" x1="-59.032001" id="linearGradient3851"><stop offset="0" stop-color="#dbdbdb" id="stop3630-72"></stop><stop offset="1" stop-color="#757575" id="stop3632-7"></stop></linearGradient><marker style="overflow:visible" id="marker2555-8" refX="0" refY="0" orient="auto"><path transform="scale(-0.6)" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" id="path2553-0"></path></marker><marker style="overflow:visible" id="marker2555-4" refX="0" refY="0" orient="auto"><path transform="scale(-0.6)" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" id="path2553-8"></path></marker><marker style="overflow:visible" id="marker2555-8-9" refX="0" refY="0" orient="auto"><path transform="scale(-0.6)" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1" id="path2553-0-0"></path></marker></defs><g xmlns="http://www.w3.org/2000/svg" id="layer1" transform="translate(-129.2951,-43.206108)"><g id="g5054" transform="translate(0.11211416)"><rect ry="5" rx="5" y="63.706108" x="224.7951" height="23.656137" width="110.20489" id="rect2987" style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffaaaa;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"></rect><text id="text2157" y="80.034172" x="258.25009" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" xml:space="preserve"><tspan y="80.034172" x="258.25009" id="tspan2155">GC root</tspan></text></g><path style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-end:url(#marker2465);enable-background:accumulate" d="M 280.00005,87.362255 V 112.36226" id="path2189"></path><path style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3, 3;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-end:url(#marker2469);enable-background:accumulate" d="M 280.00005,137.36226 V 252.36225" id="path2191"></path><path id="path2511" d="m 280,137.36225 70,45" style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-end:url(#marker2555);enable-background:accumulate"></path><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" x="525.50507" y="236.45363" id="text2577"><tspan id="tspan2575" x="525.50507" y="247.08621"></tspan></text><path id="path2511-2" d="m 280,137.36225 -70,45" style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-end:url(#marker2555-8);enable-background:accumulate"></path><path id="path2511-3" d="m 209.00001,206.36225 61,45.99999" style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-end:url(#marker2555-4);enable-background:accumulate"></path><path id="path2511-2-5" d="m 353,206.36225 -63,45.99999" style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-end:url(#marker2555-8-9);enable-background:accumulate"></path><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" x="153.6555" y="162.71375" id="text5041"><tspan id="tspan5039" x="153.6555" y="162.71375" style="font-size:9.33333302px">dominates directly</tspan></text><text id="text5045" y="162.71375" x="327.52917" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" xml:space="preserve"><tspan style="font-size:9.33333302px" y="162.71375" x="327.52917" id="tspan5043">dominates directly</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" x="-240.01064" y="276.82944" id="text5049" transform="rotate(-90)"><tspan id="tspan5047" x="-240.01064" y="276.82944" style="font-size:9.33333302px">dominates indirectly</tspan></text><g id="g5059" transform="translate(0.11211416)"><rect style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffd34e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" id="rect2493" width="110.20489" height="23.656137" x="224.7951" y="113.70611" rx="5" ry="5"></rect><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" x="255.95322" y="130.03418" id="text2497"><tspan id="tspan2495" x="255.95322" y="130.03418">Object A</tspan></text></g><g id="g5080"><g id="g5074"><rect style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" id="rect2499" width="110.20489" height="23.656137" x="299.26617" y="182.70612" rx="5" ry="5"></rect><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" x="329.22214" y="199.03418" id="text2503"><tspan id="tspan2501" x="329.22214" y="199.03418">Object B2</tspan></text></g></g><g id="g5069"><rect style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" id="rect2159" width="110.20489" height="23.656137" x="149.7951" y="182.70612" rx="5" ry="5"></rect><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" x="178.76474" y="199.03418" id="text2163"><tspan id="tspan2161" x="178.76474" y="199.03418">Object B1</tspan></text></g><g id="g5064" transform="translate(-3.0927809)"><rect style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffd34e;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" id="rect2493-7" width="110.20489" height="23.656137" x="228" y="253.70612" rx="5" ry="5"></rect><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:125%;font-family:'Open Sans',sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" x="259.34854" y="270.03418" id="text2497-9"><tspan id="tspan2495-3" x="259.34854" y="270.03418">Object C</tspan></text></g></g></svg></div></p>
+    <p>
+      Object A dominates objects B1 and B2 and it does not have a direct reference to object C. Both B1 and B2
+      reference C. Neither B1 nor B2 dominates C, but A does. In this case, B1, B2 and C are listed as direct children
+      of A in the dominator tree, and C will not be listed a child of B1 and B2. For B1 and B2, the field names in A
+      by which they are held are displayed. For C, "[transitive reference]" is displayed on the reference
+      node.
+    </p>
+    <p>
+      At the left side of each reference node in the dominator tree, a size bar shows what percentage of the retained
+      size of the top-level object is still retained by the target object. The numbers will decrease as you drill
+      down further into the tree. In the view settings, you can change the percentage base to the total heap size.
+    </p>
+    <p>
+      The dominator tree has a built-in cutoff that eliminates all objects that have a retained size that
+      is lower than 0.5% of the retained size of the parent object. This is to avoid excessively long lists of small
+      dominated objects that distract from the important objects. If such a cutoff occurs, a
+      special "cutoff" child node will be shown that notifies you about the number of objects that are not shown
+      on this level, their total retained size and the maximum retained size of the single objects.
+    </p>
+    <p>
+      Instead of showing single objects, the dominator tree can also group biggest objects into classes. The grouping
+      drop-down at the top of the view contains a check box that activates this display mode. In addition, you can add
+      a class loader grouping at the top level. The class loader grouping is applied after the biggest objects are
+      calculated and shows who loaded the classes of the biggest objects. If you want to analyze the biggest objects
+      for one particular class loader instead, you can use the "Group by class loader" inspection first.
+    </p>
+    <p><img src="../images/ui/heap_walker_biggest_objects_grouping.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      The view mode selector above the biggest objects view allows you to switch to an alternate visualization:
+      A tree map that shows all dominated objects as a set of nested rectangles.
+    </p>
+    <p><img src="../images/ui/heap_walker_biggest_objects_tree_map.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      In the tree map, each rectangle represents a dominated object with an area proportional to its retained size.
+      In contrast to the tree, the tree map gives you a flattened perspective of all leafs in the dominator tree.
+      If you are mostly interested in big arrays, you can use the tree map in order to find them quickly without
+      having to dig into the branches of the tree. Also, the tree map gives you an overall impression of the relative
+      importance of dominated objects and the object size distribution on the heap.
+    </p>
+    <p>
+      At the bottom right of the tree map you can see the total percentage of the entire heap that is represented by
+      the tree map. If you have not zoomed in, the remaining part of the heap is dominated by objects that have not
+      made it into the list of biggest objects due to the internal threshold for retained sizes.
+    </p>
+
+    <h3>Reference views</h3>
+    <p>
+      Unlike the previous views, the reference views are only available if you have performed at least one selection
+      step. For the initial object set these views are not useful, because the incoming and outgoing reference views
+      show all individual objects and the merged reference views can only be interpreted for a focused set of objects.
+    </p>
+    <p>
+      The outgoing references view is similar to the view that a debugger would show in an IDE. When opening an object,
+      you can see the primitive data and references to other objects. Any reference type can be selected as a new
+      object set and you can select multiple objects at once. Like in the classes view, you can select retained objects
+      or associated <code>java.lang.Class</code> objects. If the selected object is a standard collection, you can
+      also select all contained elements with a single action. For class loader objects, there is an option to select
+      all loaded instances.
+    </p>
+    <p><img src="../images/ui/heap_walker_outgoing_references_tree.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      Fields with null references are not shown by default because that information may be distracting for a
+      memory analysis. If you want to see all fields for debugging purposes, you can change this behavior in the
+      view settings.
+    </p>
+    <p><img src="../images/ui/heap_walker_view_settings_null_outgoing_references.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 536px"></p>
+    <p>
+      Beside the simple selection of displayed instances, the outgoing references view has
+      <a href="../heapWalker/referenceFiltering.html">powerful filtering capabilities</a>.
+      For live sessions, both outgoing and incoming reference views have advanced manipulation and display
+      functionality that is discussed in the same chapter.
+    </p>
+    <p>
+      The incoming references view is the main tool for solving memory leaks. To find out why an object
+      is not garbage collected, the <i>Show Paths To GC Root</i> button will find reference chains to
+      garbage collector roots. The chapter on <a href="../heapWalker/memoryLeaks.html">memory leaks</a> has
+      detailed information on this important topic.
+    </p>
+    <p><img src="../images/ui/heap_walker_incoming_references_path_to_root.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+
+    <h3>Merged references</h3>
+    <p>
+      Checking references for a lot of different objects can be tedious, so JProfiler can show you the merged
+      outgoing and incoming references of all objects in the current object set. By default, the references are
+      aggregated by classes. If instances of a class are referenced by other instances of the same class, a
+      <img src="../images/class_recursive_reference_16.png" alt="" srcset="../images/class_recursive_reference_16.png 1x,../images/class_recursive_reference_16@2x.png 2x" style="vertical-align: middle">&nbsp;special node is inserted that shows
+      the original instances plus the instances from these class-recursive references. This mechanism automatically
+      collapses internal reference chains in common data structures, such as in a linked list.
+    </p>
+    <p>
+      You can also choose to show the merged references grouped by field. In that case, each node is a reference type,
+      such as a particular field of a class or the content of an array. For standard collections, internal reference
+      chains that would break cumulation are compacted, so you see reference types like "map value of java.lang.HashMap".
+      Unlike for class aggregation, this mechanism only works for explicitly supported collections from the standard
+      library of the JRE.
+    </p>
+    <p>
+      In the "Merged outgoing references" view, the instance counts refer to the referenced objects. In the
+      "Merged incoming references" view, you see two instance counts on each row. The first instance count shows
+      how many instances in the current object set are referenced along this path. The bar icon at the left side of the
+      node visualizes this fraction. The second instance count after the arrow icon refers to the objects that
+      hold the references to the parent node. When performing a selection step, you can choose whether you want to
+      select objects from the current object set that are referenced in the selected way or if you are interested
+      in the objects with the selected reference - the reference holders.
+    </p>
+    <p><img src="../images/ui/heap_walker_merged_incoming_tree.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      With the "Merged dominating references" view you can find out which references must be removed so that
+      some or all of the objects in the current object set can be garbage collected. The dominating
+      reference tree can be interpreted as the merged inverse of the dominator tree in the biggest objects view,
+      aggregated for classes. The reference arrows may not express a direct reference between the two classes, but
+      there may be other classes in between that hold non-dominating references. In the case of multiple garbage
+      collector roots, no dominating references may exist for some or all objects in the current object set.
+    </p>
+    <p><img src="../images/ui/heap_walker_merged_dominating_tree.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      By default, the "Merged dominating references" view shows incoming dominating references and by opening the
+      tree, you can reach the objects that are held by the GC roots. Sometimes, the reference tree may lead to
+      the same root objects along many different paths. By choosing the "GC roots to objects" view mode in the
+      drop down at the top of the view, you can see the reverse perspective where the roots are at the top level
+      and the objects in the current object set are in the leaf nodes. In that case, the references go from the top
+      level towards the leaf nodes. Which perspective is better depends on whether the references you want to eliminate
+      are close to the current object set or close to the GC roots.
+    </p>
+
+    <h3>Inspections</h3>
+    <p>
+      The "Inspections" view does not show data by itself. It presents a number of heap analyses that create new
+      object sets according to rules that are not available in the other views. For example, you may want to see
+      all objects that are retained by a thread local. This would be impossible to do in the reference views.
+      Inspections are grouped into several categories and explained in their descriptions.
+    </p>
+    <p><img src="../images/ui/heap_walker_inspections_overview.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      An inspection can partition the calculated object set into groups. Groups are shown in a table at the top of
+      the heap walker. For example, the "Duplicate strings" inspection shows the duplicate string values as groups.
+      If you are in the reference view, you can then see the <code>java.lang.String</code> instances with the
+      selected string value below. Initially, the first row in the group table is selected. By changing the selection,
+      you change the current object set. The <i>Instance Count</i> and <i>Size</i> columns of the group table tell
+      you how large the current object set will be when you select a row.
+    </p>
+    <p><img src="../images/ui/heap_walker_duplicate_strings_result.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      The group selection is not a separate selection step in the heap walker, but it becomes part of the selection
+      step made by the inspection. You can see the group selection in the selection step pane at the bottom.
+      When you change the group selection, the selection step pane is updated immediately.
+    </p>
+    <p>
+      Each inspection that creates groups decides which groups are most important in the context of the inspection.
+      Because this does not always correspond to the natural sort order of one of the other columns, the <i>Priority</i>
+      column in the group table contains a numeric value that enforces the sort order for the inspection.
+    </p>
+    <p>
+      Inspections can be expensive to calculate for large heaps, so the results are cached. In this way, you
+      can go back in the history and look at the results of previously calculated inspections without waiting.
+    </p>
+
+    <h3>Heap walker graph</h3>
+    <p>
+      The most realistic representation of instances together with their references is a graph. While the graph has
+      a low visual density and is impractical for some types of analyses, it still is the best way to visualize
+      relationships between objects. For example, circular references are difficult to interpret in a tree, but
+      immediately evident in a graph. Also, it may be beneficial to see incoming and outgoing references together,
+      which is impossible in a tree structure where you can see either one or the other.
+    </p>
+    <p>
+      The heap walker graph does not automatically show any objects from the current object set, nor is it cleared
+      when you change the current object set. You manually add selected objects to the graph from the
+      outgoing references view, the incoming references view or the biggest objects view by selecting one or more
+      instances and using the <i>Show In Graph</i> action.
+    </p>
+    <p><img src="../images/ui/heap_walker_incoming_references_show_graph.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      Package names in the graph are shortened by default. Like in the CPU call graph, you can enable the full
+      display in the view settings. References are painted as arrows. If you move the mouse over the reference,
+      a tooltip window will be displayed that shows details for the particular reference. Instances that were
+      manually added from the reference views have a blue background. The more recently an instance has been added,
+      the darker the background color. Garbage collector roots have a red background and classes have a yellow
+      background.
+    </p>
+    <p><img src="../images/ui/heap_walker_graph_example.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 807px"></p>
+    <p>
+      By default, the reference graph only shows the direct incoming and outgoing references
+      of the current instance. You can expand the graph by double clicking on any object.
+      This will expand either the direct incoming or the direct outgoing references for that object, depending
+      on the direction you're moving in. With the expansion controls on the left and right sides of an instance you
+      can selectively open incoming and outgoing references. If you need to backtrack, use the undo functionality
+      to restore previous states of the graph, so you don't get distracted by too many nodes. To trim
+      the graph, there are actions for removing all unconnected nodes or even for removing all objects.
+    </p>
+    <p>
+      Like in the incoming references view, the graph has a <i>Show Path To GC Root</i> button that will
+      expand one or more reference chains to a <a href="../heapWalker/memoryLeaks.html">garbage collector root</a>
+      if available. In addition, there is a <i>Find Path Between Two Selected Nodes</i> action that is active if two
+      instances are selected. It can search for directed and undirected paths and optionally also along weak references.
+      If a suitable path is found, it is shown in red.
+    </p>
+    <p><img src="../images/ui/heap_walker_graph_path_options.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 423px"></p>
+
+    <h3>Initial object set</h3>
+    <p>
+      When you take a heap snapshot, you can specify options that control the initial object set. If you have recorded
+      allocations, the <i>Select recorded objects</i> check box restricts the initially displayed objects to those
+      that have been recorded. The numbers will usually differ from those in the live memory views, because unreferenced
+      objects are removed by the heap walker. Unrecorded objects are still present in the heap snapshot, they are
+      just not displayed in the initial object set. With further selection steps you can reach unrecorded objects.
+    </p>
+    <p>
+      In addition, the heap walker performs a garbage collection and removes weakly referenced objects, except for
+      soft references. This is usually desirable because weakly referenced objects are distracting when looking for
+      memory leaks where only strongly referenced objects are relevant. However, in those cases where you are interested
+      in weakly referenced objects you can tell the heap walker to retain them. The four weak reference types in the JVM
+      are "soft", "weak", "phantom" and "finalizer" and you can chose which of them should be sufficient for retaining
+      an object in the heap snapshot.
+    </p>
+    <p><img src="../images/ui/heap_walker_options_dialog_reference_types.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 446px"></p>
+    <p>
+      If present, weakly referenced objects can be selected or removed from the current object set by using the
+      "Weak reference" inspections in the heap walker.
+    </p>
+
+    <h3>Marking the heap</h3>
+    <p>
+      Often you want to look at the objects that have been allocated for a particular use case. While you could do this
+      by starting and stopping allocation recording around that use case, there is a much better way that has a lot
+      less overhead and preserves the allocation recording feature for other purposes: The <i>Mark Heap</i> action
+      that is advertised on the heap walker overview and that is also available in the <i>Profiling</i>
+      menu or as a trigger action marks all objects on the heap as "old". When you take the next heap snapshot, it is
+      now clear what the "new" objects should be.
+    </p>
+    <p><img src="../images/ui/heap_walker_overview_mark.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      If there was a previous heap snapshot or a mark heap invocation, the title area of the heap walker shows the
+      new instance count and two links titled <i>Use new</i> and <i>Use old</i> that allow you to select either the
+      instances that have been allocated since that point in time, or the surviving instances that were allocated before.
+      This information is available for each object set, so you can drill down first and select new or old instances
+      later on.
+    </p>
+    <p><img src="../images/ui/heap_walker_new_objects.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/memory.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/threads.html" title="key: k"></a></div></div></div></body></html>

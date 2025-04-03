@@ -1,0 +1,11 @@
+# install4j response file for JProfiler 11.0.2
+addToDockAction$Boolean=false
+createDesktopLinkAction$Boolean=true
+createFileAssociation$Boolean=true
+createHprofFileAssociation$Boolean=true
+executeLauncherAction$Boolean=true
+installationType=customize
+licenseQuestion$Integer=0
+sys.adminRights$Boolean=true
+sys.installationDir=D\:\\Projects\\MicroService\\jprofiler11
+sys.languageId=en

@@ -1,0 +1,103 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Ant Tasks</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.commandLine.antTasks';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Ant Tasks</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/gradleTasks.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      The <a href="http://ant.apache.org" target="_blank">Ant</a> tasks provided by JProfiler are very
+      similar to the Gradle tasks. This chapter highlights the differences to the Gradle tasks and shows examples
+      for each Ant task.
+    </p>
+    <p>
+      All Ant tasks are contained in the archive <code>bin/ant.jar</code>.
+      In order to make a task available to Ant, you must first insert a <code>taskdef</code>
+      element that tells Ant where to find the task definition. All examples below include that taskdef. It must occur
+      only once per build file and can appear anywhere on the level below the
+      project element.
+    </p>
+    <p>
+      It is not possible to copy the <code>ant.jar</code> archive to the<code>lib</code> folder of your
+      Ant distribution, you have to reference a full installation of JProfiler in the task definition.
+    </p>
+    
+    <h3>Profiling from Ant</h3>
+    <p>
+      The <code>com.jprofiler.ant.ProfileTask</code> is derived from the built-in <code>Java</code> task and
+      supports all its attributes and nested elements. The additional attributes are the same as for the
+      <code>ProfileJava</code> <a href="../commandLine/gradleTasks.html">Gradle task</a>.
+      Ant attributes are case-insensitive and usually written in lower case.
+    </p>
+    <div class="pre-container"><pre>&lt;taskdef name="profile"
+         classname="com.jprofiler.ant.ProfileTask"
+         classpath="&lt;path to JProfiler installation&gt;/bin/ant.jar"/&gt;
+
+&lt;target name="profile"&gt;
+  &lt;profile classname="MyMainClass" offline="true" sessionid="80"&gt;
+    &lt;classpath&gt;
+      &lt;fileset dir="lib" includes="*.jar" /&gt;
+    &lt;/classpath&gt;
+  &lt;/profile&gt;
+&lt;/target&gt;</pre></div>
+    
+    <h3>Exporting data from snapshots</h3>
+    <p>
+      With the <code>com.jprofiler.ant.ExportTask</code> you can export view from snapshots, just like with the
+      <code>Export</code> <a href="../commandLine/gradleTasks.html">Gradle task</a>. Views are
+      specified differently than in the Gradle task: they are nested directly below the task element and options are
+      specified with nested <code>option</code> elements.
+    </p>
+    <div class="pre-container"><pre>&lt;taskdef name="export"
+         classname="com.jprofiler.ant.ExportTask"
+         classpath="&lt;path to JProfiler installation&gt;/bin/ant.jar"/&gt;
+
+&lt;target name="export"&gt;
+  &lt;export snapshotfile="snapshots/test.jps"&gt;
+    &lt;view name="CallTree" file="calltree.html"/&gt;
+    &lt;view name="HotSpots" file="hotspots.html"&gt;
+      &lt;option name="expandbacktraces" value="true"/&gt;
+      &lt;option name="aggregation" value="class"/&gt;
+    &lt;/view&gt;
+  &lt;/export&gt;
+&lt;/target&gt;</pre></div>
+    
+    <h3>Comparing snapshots</h3>
+    <p>
+      The <code>com.jprofiler.ant.CompareTask</code> corresponds to the <code>Compare</code> Gradle task
+      and performs comparisons between two ore more snapshots. Like for the <code>com.jprofiler.ant.ExportTask</code>,
+      comparisons are directly nested below the element and options are nested for each <code>comparison</code>
+      element. The snapshot files are specified with a nested file set.
+    </p>
+    <div class="pre-container"><pre>&lt;taskdef name="compare"
+         classname="com.jprofiler.ant.CompareTask"
+         classpath="&lt;path to JProfiler installation&gt;/bin/ant.jar"/&gt;
+
+&lt;target name="compare"&gt;
+  &lt;compare sortbytime="true"&gt;
+    &lt;fileset dir="snapshots"&gt;
+      &lt;include name="*.jps" /&gt;
+    &lt;/fileset&gt;
+    &lt;comparison name="TelemetryHeap" file="heap.html"/&gt;
+    &lt;comparison name="TelemetryThreads" file="threads.html"&gt;
+      &lt;option name="measurements" value="inactive,active"/&gt;
+      &lt;option name="valuetype" value="bookmark"/&gt;
+      &lt;option name="bookmarkname" value="test"/&gt;
+    &lt;/comparison&gt;
+  &lt;/compare&gt;
+&lt;/target&gt;</pre></div>
+
+    <h3>Analyzing heap snapshots</h3>
+    <p>
+      Like the <code>Analyze</code> Gradle task, the equivalent <code>com.jprofiler.ant.AnalyzeTask</code> for Ant
+      prepares the heap snapshot analysis in snapshots that have been saved with offline profiling for faster access
+      in the GUI. The snapshots that should be processed are specified with a nested file set.
+    </p>
+    <div class="pre-container"><pre>&lt;taskdef name="analyze"
+         classname="com.jprofiler.ant.AnalyzeTask"
+         classpath="&lt;path to JProfiler installation&gt;/bin/ant.jar"/&gt;
+
+&lt;target name="analyze"&gt;
+  &lt;analyze&gt;
+    &lt;fileset dir="snapshots" includes="*.jps" /&gt;
+  &lt;/analyze&gt;
+&lt;/target&gt;</pre></div>
+    
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/gradleTasks.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"></div></div></div></body></html>

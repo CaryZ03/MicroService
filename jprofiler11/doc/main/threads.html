@@ -1,0 +1,147 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Thread profiling</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.threads';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Thread Profiling</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/heapWalker.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/probes.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Using threads incorrectly can create many different kinds of problems. Too many active threads can result in
+      thread starvation, threads can block each other and impact the liveness of your application or acquiring locks in
+      the wrong order can lead to deadlocks. In addition, information about threads is important for debugging
+      purposes.
+    </p>
+    <p>
+      In JProfiler, thread profiling is split into two view sections, the "Threads" section deals with the life-cycle
+      of threads and with capturing thread dumps. The "Monitors &amp; locks" section offers functionality for analyzing
+      the interaction of multiple threads.
+    </p>
+    <p><img src="../images/ui/thread_and_monitor_sections.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 190px"></p>
+
+    <h3>Inspecting threads</h3>
+    <p>
+      The thread history view shows each thread as a colored row in a time-line where the color indicates the
+      recorded thread status. Threads are sorted by their creation time and can be filtered by name. When monitor events
+      have been recorded, you can hover over parts of a thread where it was in the "Waiting" or "Blocked" state and
+      see the associated stack trace with a link into the monitor history view.
+    </p>
+    <p><img src="../images/ui/thread_history_view.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      A tabular view of all threads is available in the thread monitor view. If CPU recording is active while a thread
+      is being created, JProfiler saves the name of the creating thread and displays it in the table. At the bottom,
+      the stack trace of the creating thread is shown. For performance reasons, no actual stack trace is requested
+      from the JVM, but the current information from CPU recording is used.  This means that the stack traces will
+      only show those classes that satisfy the filter settings for call tree collection.
+    </p>
+    <p><img src="../images/ui/thread_monitor_view.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      If you enable the recording of estimated CPU times in the profiling settings, a <i>CPU Time</i> column is added to
+      the table. CPU time is only measured when you record CPU data.
+    </p>
+    <p><img src="../images/ui/thread_estimated_cpu_time_setting.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      Like most debuggers, JProfiler can also take thread dumps. The stack traces of thread dumps are the full stack
+      traces provided by the JVM and do not depend on CPU recording.  Different thread dumps can be compared in a
+      diff viewer when you select two thread dumps and click the <i>Show Difference</i> button.
+      It is also possible to compare two threads from a single thread dump by selecting them and choosing
+      <i>Show Difference</i> from the context menu.
+    </p>
+    <p><img src="../images/ui/thread_dumps_view.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      Thread dumps can also be taken with the "Trigger thread dump" trigger action or via the
+      <a href="../../api/javadoc/com/jprofiler/api/agent/Controller.html" target="_blank">API</a>.
+    </p>
+
+    <h3>Analyzing locking situations</h3>
+    <p>
+      Every Java object has an associated monitor that can by used for two synchronization operations: A thread
+      can wait on a monitor until another thread issues a notification on it, or it can acquire a lock on a monitor,
+      possibly blocking until another thread has given up the ownership of the lock. In addition, Java offers classes in
+      the <code>java.util.concurrent.locks</code> package for implementing more advanced locking strategies. Locks
+      in that package do not use monitors of objects but a different native implementation.
+    </p>
+    <p>
+      JProfiler can record locking situations for both of the above mechanisms. In a locking situation, there are one
+      or multiple threads, a monitor or an instance of <code>java.util.concurrent.locks.Lock</code> as well as a
+      waiting or blocking operation that takes a certain amount of time. These locking situations are presented in
+      a tabular fashion in the monitor history view, and visually in the locking history graph.
+    </p>
+    <p><img src="../images/ui/monitors_locking_history_graph.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      The locking history graph focuses on the entire set of relationships of all involved monitors and threads rather
+      than the duration of isolated monitor events. Threads and monitors participating in a locking situation are
+      painted as blue and gray rectangles, if they are part of a deadlock, they are painted in red. Black arrows
+      indicate ownership of a monitor, yellow arrows extend from waiting threads to the associated monitors, while a
+      dashed red arrow indicates that a thread wants to acquire a monitor and is currently blocking. Stack traces
+      are available when hovering over blocking or waiting arrows if CPU data has been recorded. Those tool tips
+      contain hyperlinks that take you to the corresponding row in the monitor history view.
+    </p>
+    <p>
+      The tabular monitor history view shows monitor events. They have a duration that is displayed as a column so
+      you can find the most important events by sorting the table. For any selected row in the tabular view, you
+      can jump to the graph with the <i>Show in Graph</i> action.
+    </p>
+    <p><img src="../images/ui/monitors_history_show_in_graph_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 788px"></p>
+    <p>
+      Each monitor event has an associated monitor. The <i>Monitor Class</i> column shows the class name of the
+      instance whose monitor is used, or "[raw monitor]" if no Java object is associated with the monitor. In any case,
+      monitors have a unique ID that is displayed in a separate column, so you can correlate the usage of the same
+      monitor over multiple events. Each monitor event has a waiting thread that is performing the operation and
+      optionally an owning thread that is blocking the operation. If available, their stack traces are shown in the
+      lower part of the view.
+    </p>
+    <p>
+      If you have further questions about a monitor instance, the <i>Show in Heap Walker</i> action in both monitor
+      history view and locking history graph provides a link into the heap walker and selects the monitor instance as
+      a new object set.
+    </p>
+    <p><img src="../images/ui/monitors_history_show_in_heapwalker_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 788px"></p>
+
+    <h3>Limiting the events of interest</h3>
+    <p>
+      One fundamental problem with analyzing monitor events is that applications may generate monitor events at an
+      extraordinary rate. That is why JProfiler has default thresholds for waiting and blocking events below which
+      events are immediately discarded. These thresholds are defined in the view settings and can be increased in
+      order to focus on longer events.
+    </p>
+    <p><img src="../images/ui/monitors_recording_threshold.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      To the recorded events, you can further apply filters. The monitor history view offers a threshold, an event type
+      and a text filter at the top of the view. The locking history graph allows you to select a thread or a monitor
+      of interest and only show locking situations that involve the marked entities. Events of interest are shown with
+      a different color in the time line and there is a secondary navigation bar to step through those events.
+      If the current event is not an event of interest, you can see how many events are between the current event
+      and the next event of interest in either direction.
+    </p>
+    <p>
+      In addition to locking situations where the selected thread or monitor are present, the locking situations where
+      it is removed from the graph are shown as well. This is because each monitor event is defined by two such
+      locking situations, one where an operation is started and one where it has ended. This also means that a
+      completely empty graph is a valid locking situation that indicates that there are no more locks in the JVM.
+    </p>
+    <p><img src="../images/ui/monitors_mark_nodes_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      Another strategy to reduce the number of events that need your attention is to cumulate locking situations.
+      In the locking history graph, there is a time line at the bottom that shows all recorded events. Clicking and
+      dragging in it selects a time range and data from all contained events is shown in the locking graph above.
+      In a cumulated graph, each arrow can contain multiple events of the same type. In that case, the tool tip window
+      shows the number of events as well as the total time of all contained events. A drop-down list in the tool tip
+      window shows the time stamps and lets you switch between the different events.
+    </p>
+
+    <h3>Deadlock detection</h3>
+    <p>
+      Data in the current locking graph and current monitors views is always shown, regardless of whether
+      monitor events are recorded. These views show the current locking situations and the monitor events that are
+      in progress. Blocking operations are usually short-lived, but in the event of a deadlock, both views will
+      display a permanent view of the issue. In addition, the current locking graph shows the threads and monitors
+      that produce a deadlock in red, so you can spot such a problem immediately.
+    </p>
+    <p><img src="../images/ui/monitors_deadlock_graph.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+
+    <h3>Monitor usage statistics</h3>
+    <p>
+      To investigate blocking and waiting operations from a more elevated perspective, the monitor statistics view
+      calculates reports from the monitor recording data. You can group monitor events by monitors, thread names,
+      or classes of monitors and analyze cumulated counts and durations for each row.
+    </p>
+    <p><img src="../images/ui/monitors_usage_statistics.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/heapWalker.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/probes.html" title="key: k"></a></div></div></div></body></html>

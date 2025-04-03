@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Filters And Live Interactions</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.heapWalker.referenceFiltering';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Filters And Live Interactions</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../heapWalker/overhead.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../heapWalker/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/memoryLeaks.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      When looking for objects of interest in the heap walker, you often arrive at an object set that has too many
+      instances of the same class in it. To further trim the object set according to your particular focus,
+      the selection criteria could then involve their properties or references. For example, you may be interested
+      in HTTP session objects that contain a particular attribute. In the merged outgoing reference view of the
+      heap walker you can perform selection steps that involve chains of references for the entire object set.
+    </p>
+    <p>
+      However, the outgoing references view where you see individual objects offers much more powerful functionality
+      to make selection steps that constrain references and primitive fields.
+    </p>
+    <p><img src="../images/ui/heap_walker_apply_filter_menu.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      When you select a top-level object, a primitive value or a reference in the outgoing references view, the
+      <i>Apply Filter-&gt;By Restricting The Selected Value</i> action becomes enabled.
+      Depending on the selection, the filter value dialog offers different options. Whatever options you configure,
+      you always implicitly add the constraint that objects in the new object set must have outgoing reference chains
+      like the selected one. Filters always work on the top-level objects by restricting the current set of objects
+      into a possibly smaller set.
+    </p>
+    <p><img src="../images/ui/heap_walker_filter_dialog_primitive.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      Constraining primitive values works in both HPROF and JProfiler heap snapshots. For reference types,
+      you can ask JProfiler to filter non-null values, null values, and values of a selected class. Filtering
+      by the result of the <code>toString()</code> method is only available in live sessions, except for
+      <code>java.lang.String</code> and <code>java.lang.Class</code> objects where JProfiler can figure this
+      out by itself.
+    </p>
+    <p><img src="../images/ui/heap_walker_filter_dialog_reference.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      The most powerful filter type is the code filter snippet. In the script editor, you have access to the
+      object or reference and can write an expression or script whose boolean return value decides whether an
+      instance should be retained in the current object set or not.
+    </p>
+    <p><img src="../images/ui/heap_walker_filter_dialog_script.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      Of course this feature can only work for live sessions, because JProfiler needs access to the live objects.
+      Another consideration is that an object may have been garbage collected since the heap snapshot was taken.
+      In that case, such an object would not be included in the new object set when a code snippet filter is
+      executed.
+    </p>
+    <p>
+      Apart from filters, there are two other features in the outgoing references view for interacting
+      with individual objects: The <i>Show toString() Values</i> action invokes the <code>toString()</code> method
+      on all objects that are currently visible in the view and shows them directly in the reference nodes.
+      The nodes can become very long and the text may be cut off. Using the <i>Show Node Details</i> action from the
+      context menu helps you to see the entire text.
+    </p>
+    <p><img src="../images/ui/heap_walker_to_string_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      A more general method of obtaining information from an object than calling the <code>toString()</code>
+      method is to run an arbitrary script that returns a string. The <i>Run Script</i> action next to the
+      <i>Show toString() Values</i> action allows you to do that when a top-level object or a reference is selected.
+      The result of the script execution is displayed in a separate dialog.
+    </p>
+    <p><img src="../images/ui/heap_walker_run_script.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../heapWalker/overhead.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../heapWalker/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/memoryLeaks.html" title="key: k"></a></div></div></div></body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>MBean browser</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.mbean';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>MBean Browser</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/probes.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/offline.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Many application servers and frameworks such as
+      <a href="https://camel.apache.org/camel-jmx.html" target="_blank">Apache Camel</a> use JMX to expose
+      a number of MBeans for configuration and monitoring purposes. The JVM itself also publishes a number of
+      <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/management/mxbeans.html" target="_blank">platform MXBeans</a>
+      that present interesting information around the low-level operations in the JVM.
+    </p>
+    <p>
+      JProfiler includes an MBean browser that shows all registered MBeans in the profiled VM. The remote management
+      level of JMX for accessing MBean servers is not required, because the JProfiler agent is already running
+      in-process and has access to all registered MBean servers.
+    </p>
+    <p>
+      JProfiler supports the type system of <b>Open MBeans</b>. Besides defining a number of simple types,
+      Open MBeans can define complex data types that do not involve custom classes. Also, arrays and tables
+      are available as data structures. With <b>MXBeans</b>, JMX offers an easy way to create Open MBeans
+      automatically from Java classes. For example, the MBeans provided by the JVM are MXBeans.
+    </p>
+    <p>
+      While MBeans have no hierarchy, JProfiler organizes them into a tree by taking the object domain name up to the
+      first colon as the first tree level and using all properties as recursively nested levels. The property value
+      is shown first with the property key in brackets at the end. The <code>type</code> property is prioritized
+      to appear right below the top-level node.
+    </p>
+
+    <h3>Attributes</h3>
+    <p>
+      At the top level of the tree table showing the MBean content, you see the MBean attributes.
+    </p>
+    <p><img src="../images/ui/mbean_browser.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      The following data structures are shown as nested rows:
+    </p>
+    <ul><li><p><span class="sectionTitle">Arrays</span></p>
+        Elements of primitive arrays and object arrays are shown in nested rows with the index as the key name.
+      </li><li><p><span class="sectionTitle">Composite data</span></p>
+        All items in a composite data type are shown as nested rows. Each item can be an arbitrary type, so nesting
+        can continue to an arbitrary depth.
+      </li><li><p><span class="sectionTitle">Tabular data</span></p>
+        Most frequently you will encounter tabular data in MXBeans where instances of <code>java.util.Map</code> are
+        mapped to a tabular data type with one key column and one value column. If the type of the key is a simple type,
+        the map is shown "inline", and each key-value pair is shown as a nested row. If the key has a complex type,
+        a level of "map entry" elements with nested key and value entries is inserted. This is also the case for the
+        general tabular type with composite keys and multiple values.
+      </li></ul>
+    <p>
+      Optionally, MBean attributes can be editable in which case an
+      <img src="../images/mbean_edit_16.png" alt="" srcset="../images/mbean_edit_16.png 1x,../images/mbean_edit_16@2x.png 2x" style="vertical-align: middle">&nbsp;edit icon will be displayed next to their value and
+      the <i>Edit Value</i> action becomes active. Composite and tabular types cannot be edited in the MBean browser,
+      but arrays or simple types are editable.
+    </p>
+    <p>
+      If a value is nullable, such as an array, the editor has a check box to choose the null state.
+    </p>
+    <p><img src="../images/ui/mbean_edit_attribute.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 473px"></p>
+    <p>
+      Array elements are separated by semicolons. One trailing semicolon can be ignored, so
+      <code>1</code> and <code>1;</code> are equivalent. A missing value before a semicolon will be treated as a null
+      value for object arrays. For string arrays, you can create empty elements with double quotes ("") and elements
+      that contain semicolons by quoting the entire element. Double quotes in string elements must be doubled.
+      For example, entering a string array value of
+    </p>
+    <div class="pre-container"><pre>"Test";"";;"embedded "" quote";"A;B";;</pre></div>
+    <p>
+      creates the string array
+    </p>
+    <div class="pre-container"><pre>new String[] {"Test", "", null, "embedded \" quote", "A;B", null}</pre></div>
+    <p>
+      JProfiler can create custom telemetries from numeric MBean attribute values. When you
+      <a href="../main/telemetries.html">define an MBean telemetry line</a> for a custom telemetry, an MBean attribute
+      browser will be shown that lets you choose an attribute that provides the telemetry data. When you are
+      already working in the MBean Browser, the <i>Add Telemetry For Value</i> action
+      in the context menu provides a convenient way to create a new custom telemetry.
+    </p>
+    <p><img src="../images/ui/mbean_telemetry_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      A telemetry can also track nested values in composite data or tabular data with simple keys and single values.
+      When you chose the nested row, a value path is built where path components are separated by forward slashes.
+    </p>
+
+    <h3>Operations</h3>
+    <p>
+      In addition to inspecting and modifying MBean attributes, you can invoke MBean operations and check their
+      return values. MBean operations are methods on the MBean interface that are not setters or getters.
+    </p>
+    <p><img src="../images/ui/mbean_operations.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 793px"></p>
+    <p>
+      The return value of an operation may have a composite, tabular or array type, so a new window with a content
+      similar to the MBean attribute tree table is shown. For a simple return type, there is only one row named
+      "Return value". For other types, the "Return value" is the root element into which the result is added.
+    </p>
+     <p><img src="../images/ui/mbean_operation_return.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <p>
+      MBean operations can have one or more arguments. When you enter them, the same rules and restrictions apply
+      as when editing an MBean attribute.
+    </p>
+    <p><img src="../images/ui/mbean_operation_arguments.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 461px"></p>
+
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/probes.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/offline.html" title="key: k"></a></div></div></div></body></html>

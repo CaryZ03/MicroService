@@ -1,0 +1,92 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>JavaScript XHR Origin Tracking</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.advancedCpu.javaScriptXhr';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>JavaScript XHR Origin Tracking</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedCpu/callTracer.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedCpu/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/$folder$.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      With JavaScript XHR origin tracking, you can split servlet invocations for different stack traces in the
+      browser during <a href="https://xhr.spec.whatwg.org/" target="_blank">XMLHttpRequest</a> or
+      <a href="https://fetch.spec.whatwg.org/" target="_blank">Fetch</a> requests,
+      so you can better correlate the activity in the profiled JVM with actions in the browser.
+      in the following, "XHR" designates both the XMLHttpRequest and the Fetch mechanisms.
+    </p>
+
+    <h3>Browser plugin</h3>
+    <p>
+      To use this feature, you have to use <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>
+      as the browser and install the
+      <a href="https://chrome.google.com/webstore/detail/jprofiler-origin-tracker/mnicmpklpjkhohdbcdkflhochdfnmmbm" target="_blank">JProfiler origin tracker extension</a>.
+    </p>
+    <p><img src="../images/chrome_extension.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 720px"></p>
+    <p>
+      The Chrome extension adds a button with a <img src="../images/jprofiler_16.png" alt="" srcset="../images/jprofiler_16.png 1x,../images/jprofiler_16@2x.png 2x" style="vertical-align: middle">&nbsp;JProfiler
+      icon to the tool bar that starts tracking. When you start tracking, the extension will intercept all XHR calls
+      and report them to a locally running JProfiler instance. As long as tracking has not been started, JProfiler
+      will show an information page that tells you how to set up JavaScript XHR origin tracking.
+    </p>
+    <p><img src="../images/ui/xhr_info.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      When tracking is activated, the JProfiler extension will ask you to reload the page. This is necessary for
+      adding instrumentation. If you choose to not reload the page, event detection may not work.
+    </p>
+    <p>
+      The tracking status is persistent on a per-domain basis. If you restart the browser while tracking is active
+      and visit the same URL, tracking will automatically be enabled, without the need to reload the page.
+    </p>
+
+    <h3>JavaScript XHR tree</h3>
+    <p>
+      If the XHR calls are handled by a JVM that is profiled by an active profiling session in JProfiler, the
+      JavaScript XHR view will show a cumulated call tree of these calls. If the view remains empty, you can switch
+      the "Scope" at the top of the view to "All XHR calls" to check if any XHR calls have been made.
+    </p>
+    <p><img src="../images/ui/xhr_view.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      Javascript <img src="../images/javascript_16.png" alt="" srcset="../images/javascript_16.png 1x,../images/javascript_16@2x.png 2x" style="vertical-align: middle">&nbsp;call stack nodes include information
+      on the source file and the line number. The function where the XHR call is made has a
+      <img src="../images/call_annotation_class_16.png" alt="" srcset="../images/call_annotation_class_16.png 1x,../images/call_annotation_class_16@2x.png 2x" style="vertical-align: middle">&nbsp;special icon and and adjacent
+      hyperlink in case the XHR call was handled by the profiled JVM. The hyperlink will take you to the
+      Javascript splitting node in the <a href="../main/cpu.html">call tree view</a> where you can
+      see the server side call tree that was responsible for handling requests of this type.
+    </p>
+    <p>
+      At the top of the tree you find <img src="../images/javascript_event_16.png" alt="" srcset="../images/javascript_event_16.png 1x,../images/javascript_event_16@2x.png 2x" style="vertical-align: middle">&nbsp;browser event
+      nodes that show event name and element name together with important attributes that help you pin down the source
+      of the event. Not all requests have an associated event.
+    </p>
+    <p>
+      The extension is aware of several popular JavaScript frameworks and walks the ancestor hierarchy between the
+      target node of an event up to the node where the event listener is located, looking for attributes that are
+      suitable for display and splitting the call tree. Failing to find framework-specific attributes, it stops at
+      an <code>id</code> attribute. In the absence of an ID, it searches for "control elements" like <code>a</code>,
+      <code>button</code> or <code>input</code>. All failing, the element where the event listener is registered
+      will be shown.
+    </p>
+    <p>
+      In some cases, the automatic detection of interesting attributes may not be suitable and you may prefer a
+      different call tree splitting. For example, some frameworks assign automatic IDs, but it would be more readable
+      to group all elements together with a semantic description of the action. To achieve a different call tree
+      splitting, add the HTML attribute
+    </p>
+    <div class="pre-container"><pre>data-jprofiler="..."</pre></div>
+    <p>
+      to the target element or an element between the target and the location of the event listener. The text in that
+      attribute will be used for splitting and other attributes will be ignored.
+    </p>
+
+    <h3>Call tree splitting</h3>
+    <p>
+      In the call tree view, XHR calls will split the call tree for each separate combination of browser event
+      and call stack. The <img src="../images/javascript_16.png" alt="" srcset="../images/javascript_16.png 1x,../images/javascript_16@2x.png 2x" style="vertical-align: middle">&nbsp;splitting nodes
+      show information about the browser event. If no event is in progress, like in a call to <code>setTimeout()</code>,
+      the last few stack frames are displayed inline.
+    </p>
+    <p><img src="../images/ui/xhr_call_tree.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      The "show more" hyperlink on these nodes opens the same detail dialog that is opened by the
+      <i>View-&gt;Show Node Details</i> action. For JavaScript splitting nodes, the detail dialog
+      does not show the text of the node, but the entire browser call stack. To inspect the call stack of other
+      JavaScript splitting nodes, leave the non-modal detail dialog open and click on those nodes, the detail dialog
+      will update its contents automatically.
+    </p>
+    <p><img src="../images/ui/xhr_call_tree_detail.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedCpu/callTracer.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedCpu/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../heapWalker/$folder$.html" title="key: k"></a></div></div></div></body></html>

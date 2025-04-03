@@ -1,0 +1,5 @@
+2025-03-20 05:21:53.968  WARN 34516 --- [traveldog housekeeper] com.zaxxer.hikari.pool.HikariPool        : traveldog - Thread starvation or clock leap detected (housekeeper delta=6h28m13s789ms367µs400ns).
+2025-03-20 07:14:32.049  WARN 34516 --- [traveldog housekeeper] com.zaxxer.hikari.pool.HikariPool        : traveldog - Thread starvation or clock leap detected (housekeeper delta=1h51m3s605ms147µs100ns).
+2025-03-20 10:00:45.889  WARN 34516 --- [traveldog housekeeper] com.zaxxer.hikari.pool.HikariPool        : traveldog - Thread starvation or clock leap detected (housekeeper delta=2h45m43s814ms120µs500ns).
+2025-03-20 11:51:12.252  WARN 34516 --- [traveldog housekeeper] com.zaxxer.hikari.pool.HikariPool        : traveldog - Thread starvation or clock leap detected (housekeeper delta=1h49m56s362ms210µs900ns).
+2025-03-20 12:13:25.826  WARN 34516 --- [traveldog housekeeper] com.zaxxer.hikari.pool.HikariPool        : traveldog - Thread starvation or clock leap detected (housekeeper delta=22m17s966ms852µs600ns).

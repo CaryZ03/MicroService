@@ -1,0 +1,119 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Scripts in JProfiler</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.advancedConfig.scripts';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Scripts In JProfiler</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedConfig/troubleShooting.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedConfig/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/$folder$.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      JProfiler's built-in script editor allows you to enter custom logic in various places in the JProfiler GUI,
+      including custom probe configuration, split methods, heap walker filters and many more.
+    </p>
+    <p><img src="../images/ui/scripts_dialog.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <p>
+      The box above the edit area shows the available parameters of the script as well
+      as its return type. By invoking <i>Help-&gt;Show Javadoc Overview</i> from the menu you can
+      get more information on classes from the <code>com.jprofiler.api.*</code> packages.
+    </p>
+    <p>
+      A number of packages can be used without using fully-qualified class names. Those packages are:
+    </p>
+    <ul><li>java.util.*</li><li>java.io.*</li></ul>
+    <p>
+      You can put a number of import statements as the first lines in the text area in order to avoid using fully
+      qualified class names.
+    </p>
+    <p>
+      All scripts are passed an instance of <code>com.jprofiler.api.agent.ScriptContext</code> that allows you to save
+      state between successive invocations of the script.
+    </p>
+    <p>
+      To get the maximum editor functionality, it is recommended to configure a JDK in the general settings. By
+      default, the JRE that JProfiler runs with is used. In that case, code completion does not offer parameter names
+      and Javadoc for classes in the JRE.
+    </p>
+    <p><img src="../images/ui/scripts_jdk.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 616px"></p>
+
+    <h3>Script types</h3>
+    <p>
+      Scripts can be expressions. An expression doesn't have a trailing semicolon and evaluates to the required return
+      type. For example,
+    </p>
+    <div class="pre-container"><pre>object.toString().contains("test")</pre></div>
+    <p>
+      would work as a filter script in the outgoing reference view of the heap walker.
+    </p>
+    <p>
+      Alternatively, a script consists of a series of Java statements with a return statement of the required return
+      type as the last statement:
+    </p>
+    <div class="pre-container"><pre>import java.lang.management.ManagementFactory;
+return ManagementFactory.getRuntimeMXBean().getUptime();</pre></div>
+    <p>
+      The above example would work for a script telemetry. JProfiler automatically detects whether you have entered
+      an expression or a script.
+    </p>
+    <p>
+      If you want to reuse a script that you have entered previously, you can select it from the script history.
+      If you click on the <img src="../images/java_code_16.png" alt="" srcset="../images/java_code_16.png 1x,../images/java_code_16@2x.png 2x" style="vertical-align: middle">&nbsp;<i>Show History</i>
+      tool bar button, all previously used scripts are shown. Scripts are organized by script signature and
+      the current script signature is selected by default.
+    </p>
+
+    <h3>Code completion</h3>
+    <p>
+      Pressing <code>CTRL-Space</code> brings up a popup with code completion proposals. Also, typing
+      a dot (".") shows this popup after a delay if no other character is typed. The delay is configurable
+      in the editor settings. While the popup is being displayed, you can continue to type or delete characters with
+      <code>Backspace</code> and the popup will be updated accordingly. "Camel-hump" completion is supported. For example,
+      typing <code>NPE</code> and hitting <code>CTRL-Space</code> will propose <code>java.lang.NullPointerException</code>
+      among other classes. If you accept a class that is not automatically imported, the fully qualified name will
+      be inserted.
+    </p>
+    <p><img src="../images/ui/scripts_code_completion.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 720px"></p>
+    <p>
+      The completion popup can suggest:
+    </p>
+    <ul><li><img src="../images/completion_variable_16.png" alt="" srcset="../images/completion_variable_16.png 1x,../images/completion_variable_16@2x.png 2x" style="vertical-align: middle"> variables and script parameters.
+        Script parameters are displayed in bold font.</li><li><img src="../images/completion_package_16.png" alt="" srcset="../images/completion_package_16.png 1x,../images/completion_package_16@2x.png 2x" style="vertical-align: middle"> packages, when typing an import statement</li><li><img src="../images/completion_class_16.png" alt="" srcset="../images/completion_class_16.png 1x,../images/completion_class_16@2x.png 2x" style="vertical-align: middle"> classes</li><li><img src="../images/completion_field_16.png" alt="" srcset="../images/completion_field_16.png 1x,../images/completion_field_16@2x.png 2x" style="vertical-align: middle"> fields, when the context is a class</li><li><img src="../images/completion_method_16.png" alt="" srcset="../images/completion_method_16.png 1x,../images/completion_method_16@2x.png 2x" style="vertical-align: middle"> methods, when the context is a class or
+        the parameter list of a method</li></ul>
+    <p>
+      Parameters with classes that are neither contained in the configured session class path nor in the configured JDK
+      are marked as <code>[unresolved]</code> and are changed to the generic <code>java.lang.Object</code> type.
+      To be able to call methods on such parameters and get code completion for them, add the missing JAR files
+      to the class path in the application settings.
+    </p>
+
+    <h3>Problem analysis</h3>
+    <p>
+      The code that you enter is analyzed on the fly and checked for errors and warning conditions. Errors are
+      shown as red underlines in the editor and red stripes in the right gutter. Warnings such as an unused variable
+      declaration are shown as a yellow backgrounds in the editor and yellow stripes in the gutter. Hovering
+      the mouse over an error or warning in the editor as well as hovering the mouse over a stripe in the gutter
+      area displays the error or warning message.
+    </p>
+    <p>
+      The status indicator at the top of the right gutter is green if there are no warnings or errors in the code,
+      yellow if there are warnings and red if errors have been found. You can configure the threshold for problem
+      analysis in the editor settings.
+    </p>
+    <p><img src="../images/ui/scripts_editor_setting.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <p>
+      If the gutter icon in the top right corner of the dialog is green, your script is going to compile unless you
+      have disabled error analysis in the editor settings. In some situations, you might want to try the actual
+      compilation. Choosing <i>Code-&gt;Test Compile</i> from the menu will compile the
+      script and display any errors in a separate dialog. Saving your script with the <i>OK</i>
+      button will not test the syntactic correctness of the script unless the script is used right away.
+    </p>
+
+    <h3>Key bindings</h3>
+    <p>
+      Pressing <code>SHIFT-F1</code> opens the browser at the Javadoc page that describes the element at the cursor
+      position. Javadoc for the Java runtime library can only be displayed if a JDK with a valid Javadoc location is
+      configured for the code editor in the general settings.
+    </p>
+    <p>
+      All key bindings in the Java code editor are configurable. Choose <i>Settings-&gt;Key Map</i>
+      from the window menu to display the key map editor. Key bindings are saved in the file
+      <code>$HOME/.jprofiler11/editor_keymap.xml</code>. This file only exists if the default key map has been copied.
+      When migrating a JProfiler installation to a different computer, you can copy this file to preserve your
+      key bindings.
+    </p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../advancedConfig/troubleShooting.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../advancedConfig/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/$folder$.html" title="key: k"></a></div></div></div></body></html>

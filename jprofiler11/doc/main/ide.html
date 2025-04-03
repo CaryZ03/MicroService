@@ -1,0 +1,199 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>IDE integrations</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.ide';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>IDE Integrations</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/compare.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../customProbes/$folder$.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      When you profile your application, the methods and classes that come up in JProfiler's views often lead to
+      questions that can only be answered by looking their source code. While JProfiler provides a built-in source code
+      viewer for that purpose, it has limited functionality. Also, when a problem is found, the next move is usually to
+      edit the offending code. Ideally, there should be a direct path from the profiling views in JProfiler to the IDE,
+      so you can inspect and improve code without any manual lookups.
+    </p>
+
+    <h3>Installing IDE integrations</h3>
+    <p>
+      JProfiler offers IDE integrations for IntelliJ IDEA, eclipse and NetBeans. To install an IDE plugin, invoke
+      <i>Session-&gt;IDE Integrations</i> from the main menu.
+      The installer also offers this action to make it easy to update the IDE plugin along with the JProfiler
+      installation. JProfiler writes a property file into the plugin directory that connects the plugin with
+      the current installation directory of JProfiler. In the IDE plugin settings, you can change the used version of
+      JProfiler at any time. The protocol between the plugin and the JProfiler GUI is backwards compatible and can work
+      with older versions of JProfiler as well.
+    </p>
+    <p><img src="../images/ui/ide_integrations.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 616px"></p>
+    <p>
+      The IntelliJ IDEA integration can also be installed from the plugin manager. In that case, the plugin will ask you
+      for the location of the JProfiler executable when you profile for the first time.
+    </p>
+    <p>
+      On different platforms, the JProfiler executable is located in different directories. On Windows, it's
+      <code class="executable">bin\jprofiler.exe</code>, on Linux or Unix <code class="executable">bin/jprofiler</code> and
+      on macOS there is a special helper shell script <code class="executable">Contents/Resources/app/bin/macos/jprofiler.sh</code>
+      in the JProfiler application bundle for the IDE integrations.
+    </p>
+
+    <h3>Source code navigation</h3>
+    <p>
+      Everywhere a class name or a method name is shown in JProfiler, the context menu contains a <i>Show Source</i>
+      action.
+    </p>
+    <p><img src="../images/ui/ide_show_source_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      If the session was not started from the IDE, the built-in source code viewer is shown that
+      utilizes line number tables in the compiled class files to find methods. A source file can only be found
+      if its root directory or a containing ZIP file is configured in the application settings
+    </p>
+    <p><img src="../images/ui/ide_source_path.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      Together with the source code display, a bytecode viewer based on the
+      <a href="https://github.com/ingokegel/jclasslib" target="_blank">jclasslib bytecode viewer</a>
+      shows the structure of the compiled class file.
+    </p>
+    <p><img src="../images/ui/ide_bytecode_viewer.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      If the session is launched from the IDE, the integrated source code viewer is not used and the
+      <i>Show Source</i> action defers to the IDE plugin. The IDE integrations support launched profiling sessions,
+      opening saved snapshots as well as attaching to running JVMs.
+    </p>
+    <p>
+      For live profiling sessions, you start the profiled application for the IDE similarly to running or debugging it.
+      The JProfiler plugin will then insert the VM parameter for profiling and connect a JProfiler window to it.
+      JProfiler is running as a separate process and is started by the plugin if required. Source code navigation
+      requests from JProfiler are sent to the associated project in the IDE. JProfiler and the IDE plugin cooperate
+      to make window switching seamless without blinking task bar entries, just as if you were dealing with a single
+      process.
+    </p>
+    <p>
+      When starting the session, the "Session startup" dialog lets you configure all profiling settings.
+      The configured profiling settings that are used for a launched session are remembered by JProfiler on a
+      per-project or on a per-run-configuration basis, depending on the IDE integrations. When a session is profiled
+      for the first time, the IDE plugin automatically determines a list of profiled packages
+      based on the topmost classes in the package hierarchy of your source files. At any later point, you can go to the
+      filter settings step in the session settings dialog and use the reset button to perform this calculation again.
+    </p>
+    <p>
+      For snapshots, the IDE integration is set up by opening a snapshot file from within the IDE with the
+      <i>File-&gt;Open</i> action or by double-clicking on it in the project window. Source code
+      navigation from JProfiler will then be directed into the current project. Finally, the IDE plugin adds an
+      <i>Attach to JVM</i> action to the IDE that lets you select a running JVM and get source code navigation into the
+      IDE, similar to the mechanism for snapshots.
+    </p>
+    <p>
+      Sometimes you may want to switch to the IDE without a particular class or method in mind. For that purpose,
+      the tool bar in the JProfiler window has an <i>Activate IDE</i> button that is shown for profiling sessions
+      that are opened by an IDE integration. The action is bound to the <code>F11</code> key, just like the JProfiler
+      activation action in the IDE, so you can switch back and forth between the IDE and JProfiler with the same key
+      binding.
+    </p>
+    <p><img src="../images/ui/ide_activate_ide_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+
+    <h3>IntelliJ IDEA integration</h3>
+    <p>
+      To profile your application from IntelliJ IDEA, choose one of the profiling commands in the
+      <i>Run</i> menu, the context menu in the editor, or click on the corresponding
+      toolbar button.
+    </p>
+    <p><img src="../images/ide_idea_toolbar.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 426px"></p>
+    <p><img src="../images/ide_idea_menu.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 347px"></p>
+    <p><img src="../images/ide_idea_context.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 284px"></p>
+    <p>
+      JProfiler can profile most run configuration types from IDEA, including applications servers. To
+      configure further settings, edit the run configuration, choose the <i>Startup/Connection</i> tab,
+      and select the <i>JProfiler</i> entry. The screen shot below shows the startup settings for a
+      local server configuration. Depending on the run configuration type, you can adjust JVM options
+      or retrieve profiling parameters for remote profiling.
+    </p>
+    <p><img src="../images/ide_idea_server.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 650px"></p>
+    <p>
+      The profiled application is then started just as with the usual "Run" commands. Precise source code navigation
+      is implemented for Java and Kotlin.
+    </p>
+    <p>
+      On the <i>JProfiler</i> tab of the IDE settings, you can adjust the used JProfiler executable and whether you
+      always want to open a new window in JProfiler for new profiling sessions.
+    </p>
+    <p><img src="../images/ide_idea_settings.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 690px"></p>
+    <p>
+      The JProfiler tool window in IDEA is shown when you profile a run configuration from IDEA, when you open a
+      JProfiler snapshot or when you attach to a running JVM.
+    </p>
+    <p><img src="../images/ide_idea_tool_window.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 561px"></p>
+    <p>
+      The action in the tool bar with the JProfiler icon activates the JProfiler window. On the right side of the tool bar,
+      several toggle buttons give access to important recording actions in JProfiler. If a recording is active, the
+      corresponding toggle button is selected.
+    </p>
+    <p>
+      Of particular relevance is the <i>CPU recording</i> action, because CPU graph data can be shown directly in the
+      IDE. The only parameter for graph calculation that is offered in the IDE is the thread status. To configure
+      advanced parameters like thread selection or to use the call tree root, call tree removal and call tree view
+      filter settings from the call tree view, you can generate the graph in the JProfiler window, it will then be
+      shown in the IDE as well.
+    </p>
+    <p>
+      When you calculate a graph, the list of hot spots will be populated and the source code will be annotated with
+      gutter icons for incoming and outgoing calls. The popup on the gutter icons shows an inline graph, clicking
+      on a method will navigate to it. The list of hot spots shows you interesting entry points for analyzing the graph.
+      When double-clicking on a table row, the source code is shown.
+    </p>
+    <p><img src="../images/ide_idea_graph_popup.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 666px"></p>
+    <p>
+      The <i>Show in JProfiler</i> button contains actions that activate the JProfiler window, either the
+      selected node in the method graph or the corresponding call tree analysis in the method graph.
+      For outgoing calls, the "Cumulated outgoing calls" analysis is offered, for the incoming calls, the
+      "Backtraces" analysis is shown. All these actions are also available in the context menu of the hot spot list
+      or as keyboard actions.
+    </p>
+    <p><img src="../images/ide_idea_keyboard.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 681px"></p>
+
+    <h3>eclipse integration</h3>
+    <p>
+      The eclipse plugin can profile most common launch configuration types including test run configurations
+      and WTP run configurations. The eclipse plugin only works with the full eclipse SDKs and not with partial
+      installations of the eclipse framework.
+    </p>
+    <p>
+      To profile your application from eclipse, choose one of the profiling commands in the
+      <i>Run</i> menu or click on the corresponding toolbar button. The profile
+      commands are equivalent to the debug and run commands in eclipse and are part of eclipse's
+      infrastructure, except for the <i>Run-&gt;Attach JProfiler to JVM</i> menu item
+      which is added by the JProfiler plugin.
+    </p>
+    <p><img src="../images/ide_eclipse3_toolbar.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 720px"></p>
+    <p><img src="../images/ide_eclipse3_menu.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 409px"></p>
+    <p>
+      If the menu item <i>Run-&gt;Profile ...</i> does not exist in the Java perspective,
+      enable the "Profile" actions for this perspective under
+      <i>Window-&gt;Perspective-&gt;Customize Perspective</i>
+      by bringing the <i>Action Set Availability</i> tab to front and selecting the <i>Profile</i> checkbox.
+    </p>
+    <p>
+      Several JProfiler-related settings including the location of the JProfiler executable can be adjusted in
+      eclipse under <i>Window-&gt;Preferences-&gt;JProfiler</i>.
+    </p>
+
+    <h3>NetBeans integration</h3>
+    <p>
+      In NetBeans, you can profile standard, free form and maven projects. For free form projects,
+      you have to debug your application once before trying to profile it, because the required file
+      <code>nbproject/ide-targets.xml</code> is set up by the debug action. JProfiler will add a
+      target named "profile-jprofiler" to it with the same contents as the debug target and will try to modify
+      the VM parameters as needed. If you have problems profiling a free form project, check the
+      implementation of this target.
+    </p>
+    <p>
+      You can profile web applications with the integrated Tomcat or with any other
+      Tomcat server configured in NetBeans. When your main project is a web project, selecting
+      <i>Profile main project with JProfiler</i> starts the Tomcat server with profiling enabled.
+    </p>
+    <p>
+      If you use NetBeans with the bundled GlassFish Server and your main project is set up to use a GlassFish Server,
+      selecting <i>Profile main project with JProfiler</i> starts the application server with profiling enabled.
+    </p>
+    <p>
+      To profile your application from NetBeans, choose one of the profiling commands in the
+      <i>Run</i> menu or click on the corresponding toolbar button.
+    </p>
+    <p><img src="../images/ide_netbeans_toolbar.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 635px"></p>
+    <p><img src="../images/ide_netbeans_menu.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 511px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/compare.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../customProbes/$folder$.html" title="key: k"></a></div></div></div></body></html>

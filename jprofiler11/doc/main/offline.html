@@ -1,0 +1,175 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Offline profiling</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.offline';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Offline Profiling</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/mbean.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/compare.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      There are two fundamentally different ways to profile an application with JProfiler: By default, you profile with
+      the JProfiler GUI attached. The JProfiler GUI provides you with buttons to start and stop recording and shows you
+      all recorded profiling data.
+    </p>
+    <p>
+      There are situations where you would like to profile without the JProfiler GUI and analyze the results later on.
+      For this scenario, JProfiler offers offline profiling. Offline profiling allows you to start the profiled
+      application with the profiling agent but without the need to connect with a JProfiler GUI.
+    </p>
+    <p>
+      However, offline profiling still requires some actions to be performed. At least one snapshot has to be saved,
+      otherwise no profiling data will be available for analysis later on. Also, to see CPU or allocation data,
+      you have to start recording at some point. Similarly, if you wish to be able to use the heap walker in the saved
+      snapshot, you have to trigger a heap dump.
+    </p>
+    <h3>Profiling API</h3>
+    <p>
+      The first solution to this problem is the controller API. With the API, you can programmatically invoke
+      all profiling actions in your code. In the <code>api/samples/offline</code> directory, there is a runnable example
+      that shows you how to use the controller API in practice.  Execute <code>../gradlew</code> in that directory
+      to compile and run it and study the Gradle build file <code>build.gradle</code> to understand how
+      the test program is invoked.
+    </p>
+    <p>
+      The <a href="../../api/javadoc/com/jprofiler/api/agent/Controller.html" target="_blank">Controller API</a> is the main
+      interface for managing profiling actions at run time. It is contained in <code>bin/agent.jar</code> in your
+      JProfiler installation or as a Maven dependency with the coordinates
+    </p>
+    <div class="pre-container"><pre>group: com.jprofiler
+artifact: jprofiler-probe-injected
+version: &lt;JProfiler version&gt;</pre></div>
+    <p>
+      and the repository
+    </p>
+    <div class="pre-container"><pre>https://maven.ej-technologies.com/repository</pre></div>
+    <p>
+      If the profiling API is used during a normal execution of your application, the API calls will just quietly do
+      nothing.
+    </p>
+    <p>
+      The drawback of this approach is that you have to add the JProfiler agent library to the class path of your
+      application during development, add profiling instructions to your source code and recompile your code each time
+      you make a change to the programmatic profiling actions.
+    </p>
+
+    <h3>Triggers</h3>
+    <p>
+      With <a href="../main/recording.html">triggers</a>, you can specify all profiling actions
+      in the JProfiler GUI without modifying your source code. Triggers are saved in the JProfiler config file.
+      The config file and the session ID are passed to the profiling agent
+      on the command line when you start with offline profiling enabled, so the profiling agent can read those trigger
+      definitions.
+    </p>
+    <p><img src="../images/ui/offline_triggers.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      In contrast to the profiling API, where you add API calls to your source code, triggers are activated
+      when a certain event occurs in the JVM. For example, instead of adding an API call for a certain profiling
+      action at the beginning or at the end of a method, you can use a method invocation trigger. As another use case,
+      instead of creating your own timer thread to periodically save a snapshot, you can use a timer trigger.
+    </p>
+    <p>
+      Each trigger has a list of actions that are performed when the associated event occurs. Some of these actions
+      correspond to profiling actions in the controller API. In addition, there are other actions that go beyond the
+      controller functionality such as the action to print method calls with parameters and return values or the action
+      to invoke interceptor scripts for a method.
+    </p>
+    <p><img src="../images/ui/offline_trigger_actions.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+
+    <h3>Configuring offline profiling</h3>
+    <p>
+      If you have configured a launched session in JProfiler, you can convert it to an offline session by invoking
+      <i>Session-&gt;Conversion Wizards-&gt;Convert Application Session To Offline</i> from the
+      main menu. This will create a start script with the appropriate VM parameters and take the profiling settings
+      from the same session that you use in the JProfiler UI. If you want to move the invocation to another computer,
+      you have to use <i>Session-&gt;Export Session Settings</i> to export the session to a
+      config file and make sure that the VM parameter in the start script references that file.
+    </p>
+    <p><img src="../images/ui/offline_conversion_wizard.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      When profiling an application server with the integration wizards, there is always a start script or config file
+      that is being modified so that the VM parameters for profiling are inserted into the Java invocation. All
+      integration wizards have a "Profile offline" option on the "Startup" step in order to configure the application
+      server for offline profiling instead of interactive profiling.
+    </p>
+    <p><img src="../images/ui/offline_integration_wizards_startup_mode.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      You may want to pass the VM parameter yourself to a Java call, for example if you have a start script
+      that is not handled by the integration wizards. That VM parameter has the format
+    </p>
+    <div class="pre-container"><pre>-agentpath:&lt;path to jprofilerti library&gt;=offline,id=&lt;ID&gt;[,config=&lt;path&gt;]</pre></div>
+    <p>
+      and is available from the <code>[Generic application]</code> wizard.
+    </p>
+    <p>
+      Passing <code>offline</code> as a library parameter enables offline profiling. In this case, a connection
+      with the JProfiler GUI is not possible. The <code>session</code> parameter determines which session from the
+      config file should be used for the profiling settings. The ID of a session can be seen in the top right corner of
+      the <i>Application settings</i> tab in the session settings dialog. The optional <code>config</code>
+      parameter points to the config file. This is a file that you can export by invoking
+      <i>Session-&gt;Export Session Settings</i>. If you omit the parameter, the standard config
+      file will be used. That file is located in the <code>.jprofiler11</code> directory in your user home directory.
+    </p>
+
+    <h3>Offline profiling with Gradle and Ant</h3>
+    <p>
+      When you start offline profiling from Gradle or Ant, you can use the corresponding JProfiler plugins to make
+      your work easier. A typical usage of the Gradle task for profiling tests is shown below:
+    </p>
+    <div class="pre-container"><pre>plugins {
+    id 'com.jprofiler' version 'X.Y.Z'
+    id 'java'
+}
+
+jprofiler {
+    installDir = file('/opt/jprofiler')
+}
+
+task run(type: com.jprofiler.gradle.TestProfile) {
+    offline = true
+    configFile = file("path/to/jprofiler_config.xml")
+    sessionId = 1234
+}</pre></div>
+    <p>
+      The <code>com.jprofiler.gradle.JavaProfile</code> task profiles any Java class in the same way that you
+      execute it with the standard <code>JavaExec</code> task. If you use some other method of launching your
+      JVM that is not directly supported by JProfiler, the <code>com.jprofiler.gradle.SetAgentPathProperty</code>
+      task can write the required VM parameter to a property. It is added by default when applying the JProfiler
+      plugin, so you can simply write:
+    </p>
+    <div class="pre-container"><pre>setAgentPathProperty {
+    propertyName = 'agentPathProperty'
+    offline = true
+    configFile = file("path/to/jprofiler_config.xml")
+    sessionId = 1234
+}</pre></div>
+    <p>
+      and then use <code>agentPathProperty</code> as a project property reference elsewhere after the task has been
+      executed. The features of all Gradle tasks and the corresponding Ant tasks are documented in detail in
+      <a href="../commandLine/$folder$.html">separate chapters</a>.
+    </p>
+
+    <h3>Enabling offline profiling for running JVMs</h3>
+    <p>
+      With the command line utility <code class="executable">bin/jpenable</code>, you can start offline profiling in any
+      running JVM with a version of 1.6 or higher. Just like for the VM parameter, you have to specify an
+      <code>offline</code> switch, a session ID and an optional config file:
+    </p>
+    <div class="pre-container"><pre>jpenable --offline --id=12344 --config=/path/to/jprofiler_config.xml</pre></div>
+    <p>
+      With an invocation like this, you have to select a process from a list of running JVMs.
+      With the additional arguments <code>--pid=&lt;PID&gt; --noinput</code> other you can automate the process
+      so that it requires no user input at all.
+    </p>
+    <p>
+      On the other hand, when enabling offline profiling on the fly, it may be necessary to manually start some
+      recordings or to save a snapshot. This is possible with the <code class="executable">bin/jpcontroller</code> command
+      line tool.
+    </p>
+    <p>
+      If the profiling agent is only loaded, but no profiling settings have been applied, no recording actions can be
+      switched on and so <code class="executable">jpcontroller</code> will not be able to connect. This includes the
+      case where you enable profiling with <code class="executable">jpenable</code>, but without the <code>offline</code>
+      parameter. If you enable offline mode, the profiling settings are specified and
+      <code class="executable">jpcontroller</code> can be used.
+    </p>
+    <p>
+      More information on the <code class="executable">jpenable</code> and <code class="executable">jpcontroller</code> executables
+      is available in the <a href="../commandLine/profilingExecutables.html">command line reference</a>.
+    </p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/mbean.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/compare.html" title="key: k"></a></div></div></div></body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Installing JProfiler</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.installing';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Installing JProfiler</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/architecture.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/profiling.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Executable installers are provided for Windows and Linux/Unix that lead you step-by step through the installation.
+      If a previous installation is detected, the installation is streamlined.
+    </p>
+    <p><img src="../images/installer_welcome.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 552px"></p>
+    <p>
+      On macOS, JProfiler uses the standard installation
+      procedure for UI applications: a DMG archive is provided that you can mount in the Finder by double-clicking on it,
+      then you can drag the JProfiler application bundle to the <code>/Applications</code> folder. That folder
+      is visible as a symbolic link in the DMG itself.
+    </p>
+    <p><img src="../images/dmg_mounted.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 659px"></p>
+    <p>
+      On Linux/Unix, installers are not executable after download, so you have to prepend <code>sh</code> when
+      executing them. The installer performs a command line installation if you pass the parameter <code>-c</code>.
+      Completely unattended installations for Windows and Linux/Unix are performed with the parameter <code>-q</code>.
+      In that case, you can pass the additional argument <code>-dir &lt;directory&gt;</code> in order
+      to choose the installation directory.
+    </p>
+    <p><img src="../images/installer_console.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 732px"></p>
+    <p>
+      After you run an installer, it will save a file <code>.install4j/response.varfile</code> that contains all
+      user input. You can take that file and use it to automate unattended installations by passing the argument
+      <code>-varfile &lt;path to response.varfile&gt;</code> on the command line.
+    </p>
+    <p>To set licensing information for unattended installations, pass
+      <code>-Vjprofiler.licenseKey=&lt;license key&gt; -Vjprofiler.licenseName=&lt;user name&gt;</code> and optionally
+      <code>-Vjprofiler.licenseCompany=&lt;company name&gt;</code> as command line arguments.
+      If you have a floating license, use <code>FLOAT:&lt;server name or IP address&gt;</code> instead of the
+      license key.
+    </p>
+    <p>
+      Archives are also provided as ZIP files for Windows and as .tar.gz files for Linux. The command
+    </p>
+<div class="pre-container"><pre>tar xzvf filename.tar.gz</pre></div>
+    <p>
+      will extract a .tar.gz archive into a separate top-level directory.
+      To start JProfiler, execute <code>bin/jprofiler</code> in the extracted directory. On Linux/Unix, the file
+      <code>jprofiler.desktop</code> can be used to integrate the JProfiler executable into your window manager.
+      For example, on Ubuntu you can drag the desktop file into the launcher side bar in order to create a permanent
+      launcher item.
+    </p>
+
+    <h3>Distributing the profiling agent to remote machines</h3>
+    <p>
+      JProfiler has two parts: The desktop UI together with the command line utilities that operate on snapshots on the
+      one hand, and the profiling agent together with the command line utilities that control the profiled JVM on
+      the other hand. The installers and archives that you download from the web site contain both parts.
+    </p>
+    <p>
+      For remote profiling, however, you only need the profiling agent to be installed on the remote side.
+      While you can simply extract an archive with the JProfiler distribution on the remote machine, you may want
+      to limit the amount of required files, especially when automating a deployment. Also, the profiling agent is
+      freely redistributable, so you can ship it with your application or install it on customer machines for
+      trouble-shooting.
+    </p>
+    <p>
+      To get a minimal package with the profiling agent, the remote integration wizards offer the option
+      to create such an archive for any of the supported platforms. In the JProfiler GUI, invoke
+      <i>Session-&gt;Integration Wizards-&gt;New Server/Remote Integration</i>,
+      select the "Remote" option and then the <i>Create archive with profiling agent</i> check box on the
+      <i>Remote installation directory</i> step.
+    </p>
+    <p><img src="../images/ui/create_archive_remote_profiling.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      If necessary, JProfiler will download the required native agent libraries together with the
+      <code class="executable">jpenable</code>, <code class="executable">jpdump</code> and<code class="executable">jpcontroller</code>
+      executables and create a .tar.gz or .zip archive depending on the target platform.
+      All the above executables in the archive only require Java 6 as a minimum version, while the profiling agent
+      works with Java 5 or higher.
+    </p>
+    <p>
+      The sub-directories that you see after extracting the archive on the remote machine are described below. They are
+      a subset of a full JProfiler installation on the respective target platform.
+    </p>
+    <p><div class="svgContainer" style="width: 100%; max-width: 487.66522px"><svg xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 487.66522 191.2153" onload="initSvg(this, 487.66522, 191.2153)" id="svg2" version="1.1"><defs xmlns="http://www.w3.org/2000/svg" id="defs4"><marker orient="auto" refY="0" refX="0" id="Arrow2Mend" style="overflow:visible"><path id="path4351" style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round" d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z" transform="scale(-0.6)"></path></marker><linearGradient y2="-41.598" x2="-198.17" gradientTransform="matrix(0.72281,0,0,0.72281,160.45,136.56)" y1="-129.06" gradientUnits="userSpaceOnUse" x1="-59.032001" id="linearGradient3851"><stop offset="0" stop-color="#dbdbdb" id="stop3630-72"></stop><stop offset="1" stop-color="#757575" id="stop3632-7"></stop></linearGradient></defs><g xmlns="http://www.w3.org/2000/svg" id="layer1" transform="translate(-128.48477,-129.0297)"><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none" x="215" y="182.36218" id="text3492"><tspan id="tspan3494" x="215" y="182.36218" style="font-size:12px;line-height:1.25">top-level directory after extraction</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#002b22;fill-opacity:1;stroke:none" x="215" y="217.36218" id="text3498"><tspan id="tspan3500" x="215" y="217.36218" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:'Open Sans',sans-serif;fill:#002b22">.install4j</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#002b22;fill-opacity:1;stroke:none" x="215" y="237.36218" id="text3502"><tspan id="tspan3504" x="215" y="237.36218" style="font-size:12px;line-height:1.25;fill:#002b22;fill-opacity:1">bin</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#002b22;fill-opacity:1;stroke:none" x="243.78963" y="257.36218" id="text3506"><tspan id="tspan3508" x="243.78963" y="257.36218" style="font-size:12px;line-height:1.25;fill:#002b22">&lt;platform-64&gt;</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#002b22;fill-opacity:1;stroke:none" x="243.78963" y="277.36218" id="text3510"><tspan id="tspan3512" x="243.78963" y="277.36218" style="font-size:12px;line-height:1.25;fill:#002b22">&lt;platform-32&gt;</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#002b22;fill-opacity:1;stroke:none" x="215" y="297.36218" id="text3514"><tspan x="215" y="297.36218" id="tspan3518" style="font-size:12px;line-height:1.25;fill:#002b22">lib</tspan></text><path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m 180,197.36218 v 95.00004 h 30" id="path4952"></path><path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m 180,212.36218 h 30" id="path4954"></path><path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m 180,232.36218 h 30" id="path4956"></path><path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m 223.78956,252.36222 15,-4e-5" id="path4958"></path><path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="m 223.78956,272.36222 15,-4e-5" id="path4960"></path><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none" x="372.99179" y="237.36218" id="text5412"><tspan id="tspan5414" x="372.99179" y="237.36218" style="font-size:12px;line-height:1.25">agent JAR file and helper executables</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none" x="372.34238" y="257.36218" id="text5416"><tspan id="tspan5418" x="372.34238" y="257.36218" style="font-size:12px;line-height:1.25">native libraries for 64-bit JVMs</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none" x="373.7164" y="277.36218" id="text5420"><tspan id="tspan5422" x="373.7164" y="277.36218" style="font-size:12px;line-height:1.25">native libraries for 32-bit JVMs</tspan></text><text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none" x="373.7164" y="297.36218" id="text5424"><tspan id="tspan5426" x="373.7164" y="297.36218" style="font-size:12px;line-height:1.25">support libraries for attach functionality</tspan></text><path style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.00000003, 2.00000003;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)" d="m 240.00001,232.36218 h 125" id="path5436"></path><path style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.99999996, 1.99999996;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)" d="m 329.99999,252.36218 h 35" id="path5626"></path><path style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.99999998, 1.99999998;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)" d="m 329.99999,272.36218 h 35" id="path5628"></path><path style="fill:none;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.00000002, 2.00000002;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)" d="M 235,292.36218 H 365" id="path5630"></path><text id="text5218" y="217.36223" x="373.07431" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Open Sans',sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan style="font-size:12px;line-height:1.25" y="217.36223" x="373.07431" id="tspan5216">runtime for launchers</tspan></text><path id="path5220" d="M 270.00004,212.36222 H 365" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.00000002, 2.00000002;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend)"></path><path style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" d="m 223.78956,241.36224 v 30.99998 h 15 v 0" id="path5241"></path><g id="g4568" transform="matrix(0.09135322,0,0,0.09135322,156.51933,154.28408)" style="stroke-width:10.94652271"><path id="path4562" d="m 186.35,77.8 14.05,20.4 c 6.15,8.9 15.45,13.8 26.3,13.8 H 488 c 4.4,0 8,3.6 8,8 v 352 c 0,4.4 -3.6,8 -8,8 H 24 c -4.4,0 -8,-3.6 -8,-8 V 72 c 0,-4.4 3.6,-8 8,-8 h 136 c 10.85,0 20.2,4.9 26.35,13.8 z" style="fill:#ffb100;stroke-width:10.94652271"></path><path id="path4564" d="M 165.55,176 H 24 c -4.4,0 -8,3.6 -8,8 v 288 c 0,4.4 3.6,8 8,8 h 464 c 4.4,0 8,-3.6 8,-8 V 152 c 0,-4.4 -3.6,-8 -8,-8 H 222.95 c -9.35,0 -17.4,3.55 -23.7,10.5 l -10,11.05 c -6.3,6.9 -14.35,10.45 -23.7,10.45 z" style="fill:#ffd34e;stroke-width:10.94652271"></path><path id="path4566" d="m 18.7,478 c 1.4,1.25 3.25,2 5.3,2 h 464 c 4.4,0 8,-3.6 8,-8 V 152 c 0,-2.35 -1.05,-4.5 -2.7,-6 z" style="fill:#ffc928;stroke-width:10.94652271"></path></g></g></svg></div></p>
+
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/architecture.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/profiling.html" title="key: k"></a></div></div></div></body></html>

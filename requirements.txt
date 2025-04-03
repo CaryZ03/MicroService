@@ -1,0 +1,4 @@
+sqlglot
+requests
+networkx
+matplotlib

@@ -1,0 +1,107 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Viewing Parts Of The Call Tree</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.callTree.rootsAndRemovals';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Viewing Parts Of The Call Tree</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../callTree/requestTracking.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../callTree/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/splitting.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Call trees often contain too much information. When you want to reduce the displayed detail, there are
+      several possibilities: you can restrict the displayed data to one particular sub-tree, remove all
+      unwanted data, or use a more coarse-grained filter for displaying method calls. All of these strategies
+      are supported by JProfiler.
+    </p>
+
+    <h3>Setting call tree roots</h3>
+    <p>
+      If you profile a use case that consists of multiple tasks that run sequentially, each sub-tree can be analyzed
+      separately. Once you have found the entry point to such a sub-task, the surrounding call tree is only a
+      distraction and the timing percentages in the sub-tree inconveniently refer to the root of the entire call tree.
+    </p>
+    <p>
+      To focus on a particular sub-tree, JProfiler offers the <i>Set As Root</i> context action in the
+      call tree and the
+      allocation call tree views.
+    </p>
+    <p><img src="../images/ui/roots_set_as_root_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      After setting a call tree root, information about the selected root is shown at the top of the view.
+      A single scrollable label shows the last few stack elements leading up to the root and a detail dialog
+      with the entire stack of the call tree root can be displayed by clicking on the <i>Show More</i> button.
+    </p>
+    <p><img src="../images/ui/roots_set_as_root_header.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      When you use the set root action recursively, the call stack prefixes will simply be concatenated.
+      To go back to the previous call tree, you can either use the <i>Back</i> button of the call tree
+      history to undo one root change at a time, or the <i>Reset Root And Show All</i> action in
+      the context menu to go back to the original tree in a single step.
+    </p>
+    <p><img src="../images/ui/roots_backward_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 984px"></p>
+    <p>
+      What is most important about changing the call tree root, is that the hot spots view will show data
+      that is calculated for the selected root only, and not for the entire tree. At the top of the hot spots view,
+      you will see the current call tree root just like in the call tree view to remind of you the context of the
+      displayed data.
+    </p>
+    <p><img src="../images/ui/roots_set_as_root_hot_spots.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+
+    <h3>Removing parts of the call tree</h3>
+    <p>
+      Sometimes it's helpful to see how the call tree would look like if a certain method was not present.
+      For example, this can be the case when you have to fix several performance problems in one go, because
+      you are working with a snapshot from a production system that cannot be iterated quickly like in your development
+      environment. After solving the main performance problem, you then want to analyze the second one, but that can
+      only be seen clearly if the first one is eliminated from the tree.
+    </p>
+    <p>
+      Nodes in the call tree can be removed together with their sub-trees by selecting them and hitting the
+      <code>Delete</code> key or by choosing <i>Remove Selected Sub-Tree</i> from the context menu. Times in
+      ancestor nodes will be corrected accordingly as if the hidden nodes did not exist.
+    </p>
+    <p><img src="../images/ui/roots_remove_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      There are two removal modes. With the <i>All invocations</i> mode, JProfiler searches for all invocations of the
+      selected method in the entire call tree and removes them together with their entire sub-trees. The
+      <i>Sub-tree only</i> option only removes the selected sub-tree.
+    </p>
+    <p><img src="../images/ui/roots_removal_mode.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 386px"></p>
+    <p>
+      Just like for the <i>Set As Root</i> action, removed nodes influence the hot spots view. In this way, you can
+      check what the hot spots would look like if those methods were optimized to the point of not being important
+      contributions.
+    </p>
+    <p>
+      When you remove a node, the header area of both the call tree and the hot spots views will show a line with
+      the count of the removed nodes and a <i>Restore Remove Sub-Trees</i> button. Clicking on that
+      button will bring up a dialog where you can select removed elements that should be be shown again.
+    </p>
+    <p><img src="../images/ui/roots_remove_header.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+
+    <h3>Call tree view filters</h3>
+    <p>
+      The third feature in the call that has an influence on the displayed data in the hot spots view is the
+      view filter. When you change your call tree filters, it has a large effect on the
+      <a href="../main/cpu.html">calculated hot spots</a>. To emphasize this interdependence with the call tree view,
+      the hot spots view shows the call tree view filter in a line above the view together with a button to remove the
+      additional filters.
+    </p>
+    <p><img src="../images/ui/roots_view_filters.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      Setting a call tree root, removing parts of the call tree and view filters can be used together, with the
+      limitation that view filters have to be set last. As soon as view filters are configured in the call tree,
+      the <i>Set As Root</i> and <i>&gt;Remove Selected Sub-Tree</i> actions do not work anymore.
+    </p>
+
+    <h3>Interaction with the call graph</h3>
+    <p>
+      Invoking the <i>Show Graph</i> action in either the call tree or the hot spots view will show a graph that is
+      limited to the same call tree root, does not include the removed methods and uses the configured call tree view
+      filters. At the top of the graph, the information about these changes is displayed in a similar form as in the
+      call tree.
+    </p>
+    <p><img src="../images/ui/roots_graph_wizard_options.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      When creating a new graph in the graph view itself, check boxes in the wizard let you choose which of these
+      call tree adjustment features should be taken into account for the calculation of the call graph. Each check box
+      is only visible if the corresponding feature is currently used in the call tree view.
+    </p>
+    <p><img src="../images/ui/roots_graph_header.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../callTree/requestTracking.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../callTree/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/splitting.html" title="key: k"></a></div></div></div></body></html>

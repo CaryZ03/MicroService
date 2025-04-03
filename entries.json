@@ -1,0 +1,42 @@
+[
+    {
+        "name": "POST:/login",
+        "weight": 1
+    },
+    {
+        "name": "POST:/logout",
+        "weight": 1
+    },
+    {
+        "name": "POST:/user/getUserOrder/{int}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/customer/getByUid/{int}",
+        "weight": 1
+    },
+    {
+        "name": "POST:/user/addCustomer",
+        "weight": 1
+    },
+    {
+        "name": "GET:/user/getByUid/{int}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/train/getTidByUid/{int}",
+        "weight": 1
+    },
+    {
+        "name": "POST:/register",
+        "weight": 1
+    },
+    {
+        "name": "GET:/user/getNoticeByUid/{int}",
+        "weight": 1
+    },
+    {
+        "name": "POST:/hotel/getByLocation",
+        "weight": 1
+    }
+]

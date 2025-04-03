@@ -1,5 +1,6 @@
 import requests
 import json
+import re
 
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -70,7 +71,7 @@ def queryTraces(serviceId):
     }
     """
     
-    time_gap = timedelta(minutes=30)
+    time_gap = timedelta(hours=72)
     current_time = datetime.now()
     former_time = current_time - time_gap
     
@@ -85,7 +86,7 @@ def queryTraces(serviceId):
             "queryOrder": "BY_START_TIME",
             "paging": {
             "pageNum": 1,
-            "pageSize": 50
+            "pageSize": 100
             },
             "minTraceDuration": None,
             "maxTraceDuration": None,
@@ -187,7 +188,11 @@ def getAttributes(span):
             return None
         # print(json.dumps(span, indent=1))
         tables = []
-        parsed_sqls = parse(sql)
+        try:
+            parsed_sqls = parse(sql)
+        except Exception as e:
+            print(e)
+            return None
         for parsed_sql in parsed_sqls:
             # print(parsed_sql.sql(pretty=True))
             tables += [table.this.sql() for table in parsed_sql.find_all(exp.Table)]
@@ -210,32 +215,92 @@ def getAttributes(span):
     return nodes
 
 
-def addToGraph(G, spans):
+def toRegex(name):
+    # print("name:", name)
+    patterns = [
+        {
+            "var": r"{int}",
+            "regex": r"\\d+"
+        },
+        {
+            "var": r"{str}",
+            "regex": r"[a-zA-Z0-9]+"
+        },
+    ]
+    
+    for pattern in patterns:
+        name = re.sub(pattern["var"], pattern["regex"], name)
+    # print(name)
+    return name
+    
+    
+def matchEntry(name, entries):
+    tmp_entry = {}
+    for entry in entries:
+        if entry["name"] == name:
+            return entry
+        elif re.fullmatch(toRegex(entry["name"]), name):
+            # print("hihi!")
+            tmp_entry = entry
+    return tmp_entry
+
+
+def getNodeId(node):
+    node_id = node["endpointName"]
+    if node["spanId"] == 0:
+        entry = matchEntry(node_id, entries)
+        node_id = entry["name"] if entry else node_id
+    return node_id
+
+
+def addToGraph(G, spans, entries, toJson=False):
+    weight = 1
     for span in spans:
         nodes = getAttributes(span)
         if not nodes:
             continue
         
         for node in nodes:
-            node_id = node["endpointName"]
+            node_id = getNodeId(node)
             execution_time = node["endTime"] - node["startTime"]
-            count= 1
             
-            if node_id in G:
-                execution_time += G.nodes[node_id]["execution_time"]
-                count += G.nodes[node_id]["count"]
-            G.add_node(node_id, execution_time=execution_time, count=1)
+            if G.has_node(node_id):
+                G.nodes[node_id]["execution_time"] += execution_time
+                G.nodes[node_id]["count"] += 1
+            else:
+                G.add_node(node_id, execution_time=execution_time, count=1)
 
             # 如果 parentSpanId 不是 -1，则添加边
             if node["parentSpanId"] != -1:
                 parent_node = next((n for n in spans if n["spanId"] == node["parentSpanId"]), None)
                 if parent_node:
-                    parent_node_id = parent_node["endpointName"]
-                    G.add_edge(node_id, parent_node_id)  # 子节点指向父节点
+                    parent_node_id = getNodeId(parent_node)
+                    if G.has_edge(node_id, parent_node_id):
+                        G[node_id][parent_node_id]["weight"] += weight
+                    else:
+                        G.add_edge(node_id, parent_node_id, weight=weight)
+            else:
+                if toJson:
+                    entries += [node]
+                else:
+                    name = node["endpointName"]
+                    entry = matchEntry(name, entries)
+                    weight = entry["weight"] if entry else 1
+                
     
     
-# # 创建有向图
-# G = nx.DiGraph()
+# 创建有向图
+G = nx.DiGraph()
+
+# entries = []
+
+# 读取 JSON 文件
+with open("entries_demo.json", "r") as json_file:
+    entries = json.load(json_file)
+    
+print("Entries:", entries)
+
+spanss = []
 
 # services = queryServices()
 # # print(json.dumps(services, indent=1))
@@ -244,15 +309,27 @@ def addToGraph(G, spans):
 #     # print(json.dumps(traces, indent=1))
 #     for trace in traces:
 #         spans = queryTrace(trace["traceIds"][0])
-#         addToGraph(G, spans)
+#         spanss.append(spans)
+#         addToGraph(G, spans, entries)
 #     break
 
-# # print(json.dumps(nodes, indent=1))
+# with open("spans.json", "w") as outfile:
+#     json.dump(spanss, outfile, indent=4)
 
-# nx.write_graphml(G, "graph-without-hikari.graphml")
+
+with open("spans.json", "r") as infile:
+    spanss = json.load(infile)
+
+# 打印读取的数据
+print(spanss)
+
+for spans in spanss:
+    addToGraph(G, spans, entries)
+
+nx.write_graphml(G, "demo-with-weight.graphml")
 
 # import networkx as nx
-G = nx.read_graphml("microservice_graph-without-hikari.graphml")
+# G = nx.read_graphml("microservice_graph-without-hikari.graphml")
 
 # microservice_
 # 绘制图
@@ -260,13 +337,27 @@ pos = nx.spring_layout(G)
 # , k=0.15, iterations=20
 nx.draw(G, pos, with_labels=True, node_size=300, node_color="skyblue", font_size=5, font_weight="bold", arrows=True)
 
-# 添加节点标签
-labels = nx.get_node_attributes(G, 'execution_time')
-nx.draw_networkx_labels(G, pos, labels=labels, font_size=5)
+# # 添加节点标签
+# labels = nx.get_node_attributes(G, 'execution_time')
+# nx.draw_networkx_labels(G, pos, labels=labels, font_size=5)
+
+# 添加边权重标签
+edge_labels = nx.get_edge_attributes(G, 'weight')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=5)
 
 # 显示图
 plt.title("Trace Dependency Graph")
 plt.show()
+
+
+# entry_names = list(set([entry["endpointName"] for entry in entries]))
+# print("Entries:", entry_names)
+
+# entries = [{"name": entry_name, "weight": 1} for entry_name in entry_names]
+
+# # 写入 JSON 文件
+# with open("entries_demo.json", "w") as json_file:
+#     json.dump(entries, json_file, indent=4)  # 使用 indent 参数美化输出
         
         
 

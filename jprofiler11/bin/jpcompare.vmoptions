@@ -1,0 +1,5 @@
+# For 32-bit JVMs, raise the -Xmx value carefully because otherwise snapshot
+# files cannot be memory mapped anymore and all operations slow down.
+-Xmx1536m
+-Xss2m
+-include-options ${USERPROFILE}\.jprofiler11\jprofiler.vmoptions

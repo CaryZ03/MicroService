@@ -1,0 +1,221 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Embedded Probes</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.customProbes.embeddedProbes';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Embedded Probes</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../customProbes/injectedProbes.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../customProbes/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/$folder$.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      If you control the source code of the software component that is the target of your probe, you should
+      write an embedded probe instead of an injected probe.
+    </p>
+    <p>
+      Most of the initial effort when writing an injected probe goes into specifying the intercepted methods
+      and selecting the injected objects as method parameters for the handler method. With embedded probes,
+      this is not necessary, because you can call the embedded probe API directly from the monitored methods.
+      Another advantage of embedded probes is that deployment is automatic. Probes ship together with your software
+      and appear in the JProfiler UI when the application is profiled. The only dependency you have to ship is
+      a small JAR file licensed under the Apache 2.0 License that mainly consists of empty method bodies serving as
+      hooks for the profiling agent.
+    </p>
+
+    <h3>Development environment</h3>
+    <p>
+      The development environment is the same as for injected probes, with the difference that the artifact name
+      is <code>jprofiler-probe-embedded</code> instead of <code>jprofiler-probe-injected</code> and
+      that you ship the JAR file with your application instead of developing the probe in a separate project.
+      The probe API that you need for adding an embedded probe to your software component is contained in the single
+      JAR artifact. In the javadoc, start with the package overview for
+      <code>com.jprofiler.api.probe.embedded</code> when you explore the API.
+    </p>
+    <p>
+      Just like for injected probes, there are two examples for embedded probes as well. In
+      <code>api/samples/simple-embedded-probe</code>, there is an example that gets you started with writing an embedded
+      probe. Execute <code>../gradlew</code> in that directory to compile and run it and study the gradle
+      build file <code>build.gradle</code> to understand the execution environment. For more features, including
+      control objects, go to the example in <code>api/samples/advanced-embedded-probe</code>.
+    </p>
+
+    <h3>Payload probes</h3>
+    <p>
+      Similar to injected probes, you still need a probe class for configuration purposes. The probe class must
+      extend <code>com.jprofiler.api.probe.embedded.PayloadProbe</code> or
+      <code>com.jprofiler.api.probe.embedded.SplitProbe</code>, depending on whether your probe collects
+      payloads or splits the call tree. With the injected probe API, you use different annotations on the handler
+      methods for payload collection and splitting. The embedded probe API, on the other hand, has no handler
+      methods and needs to shift this configuration to the probe class itself.
+    </p>
+    <div class="pre-container"><pre>public class FooPayloadProbe extends PayloadProbe {
+    @Override
+    public String getName() {
+        return "Foo queries";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Records foo queries";
+    }
+}</pre></div>
+    <p>
+      Whereas injected probes use annotations for configuration, you configure embedded probes by overriding
+      methods from the base class of the probe. For a payload probe, the only abstract method is <code>getName()</code>,
+      all other methods have a default implementation that you can override if required. For example, if you want to
+      disable the events view to reduce overhead, you can override <code>isEvents()</code> to return <code>false</code>.
+    </p>
+    <p>
+      For collecting payloads and measuring their associated timing you use a pair of <code>Payload.enter()</code>
+      and <code>Payload.exit()</code> calls
+    </p>
+    <div class="pre-container"><pre>public void measuredCall(String query) {
+    Payload.enter(FooPayloadProbe.class);
+    try {
+        performWork();
+    } finally {
+        Payload.exit(query);
+    }
+}</pre></div>
+    <p>
+      The <code>Payload.enter()</code> call receives the probe class as an argument, so the profiling agent knows
+      which probe is the target of the call, the <code>Payload.exit()</code> call is automatically associated with the
+      same probe and receives the payload string as an argument. If you miss an exit call, the call tree would be broken,
+      so this should always be done in a finally clause of a try block.
+    </p>
+    <p>
+      If the measured code block does not produce any value, you can call the <code>Payload.execute</code> method instead
+      which takes the payload string and a <code>Runnable</code>. With Java 8+, lambdas or method references make this
+      method invocation very concise.
+    </p>
+    <div class="pre-container"><pre>public void measuredCall(String query) {
+  Payload.execute(FooPayloadProbe.class, query, this::performWork);
+}</pre></div>
+    <p>
+      The payload string must be known in advance in that case. There is also a version of <code>execute</code> that
+      takes a <code>Callable</code>.
+    </p>
+    <div class="pre-container"><pre>public QueryResult measuredCall(String query) throws Exception {
+    return Payload.execute(PayloadProbe.class, query, () -&gt; query.execute());
+}</pre></div>
+    <p>
+      The problem with the signatures that take a <code>Callable</code> is that <code>Callable.call()</code> throws
+      a checked <code>Exception</code> and so you have to either catch it or declare it on the containing method.
+    </p>
+
+    <h3>Control objects</h3>
+    <p>
+      Payload probes can open and close control objects by calling the appropriate methods in the
+      <code>Payload</code> class. They are associated with probe events by passing them to a version of the
+      <code>Payload.enter()</code> or <code>Payload.execute()</code> methods that take a control object and a
+      custom event type.
+    </p>
+    <div class="pre-container"><pre>public void measuredCall(String query, Connection connection) {
+    Payload.enter(FooPayloadProbe.class, connection, MyEventTypes.QUERY);
+    try {
+        performWork();
+    } finally {
+        Payload.exit(query);
+    }
+}</pre></div>
+    <p>
+      The control object view must be explicitly enabled in the probe configuration and custom event types must be
+      registered in the probe class as well.
+    </p>
+    <div class="pre-container"><pre>public class FooPayloadProbe extends PayloadProbe {
+    @Override
+    public String getName() {
+        return "Foo queries";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Records foo queries";
+    }
+
+    @Override
+    public boolean isControlObjects() {
+        return true;
+    }
+
+    @Override
+    public Class&lt;? extends Enum&gt; getCustomTypes() {
+        return Connection.class;
+    }
+}</pre></div>
+    <p>
+      If you do not explicitly open and close your control objects, the probe class must override
+      <code>getControlObjectName</code> in order to resolve display names for all control objects.
+    </p>
+
+    <h3>Split probes</h3>
+    <p>
+      The split probe base class has no abstract methods, because it can be used to just split the call tree without
+      adding a probe view. In that case, the minimal probe definition is just
+    </p>
+    <div class="pre-container"><pre>public class FooSplitProbe extends SplitProbe {}</pre></div>
+    <p>
+      One important configuration for split probes is whether they should be reentrant. By default, only the top-level
+      call is split. If you would like to split recursive calls as well, override <code>isReentrant()</code> to
+      return <code>true</code>. Split probes can also create a probe view and publish the split strings as payloads
+      if you override <code>isPayloads()</code> to return <code>true</code> in the probe class.
+    </p>
+    <p>
+      To perform a split, make a pair of calls to <code>Split.enter()</code> and <code>Split.exit()</code>.
+    </p>
+    <div class="pre-container"><pre>public void splitMethod(String parameter) {
+    Split.enter(FooSplitProbe.class, parameter);
+    try {
+        performWork(parameter);
+    } finally {
+        Split.exit();
+    }
+}</pre></div>
+    <p>
+      Contrary to to payload collection, the split string has to be passed to the <code>Split.enter()</code> method
+      together with the probe class. Again, it is important that <code>Split.exit()</code> is called reliably, so it
+      should be in a finally clause of a try block. <code>Split</code> also offers <code>execute()</code> methods
+      with <code>Runnable</code> and <code>Callable</code> arguments that perform the split with a single call.
+    </p>
+
+    <h3>Telemetries</h3>
+    <p>
+      It is particularly convenient to publish telemetries for embedded probes, because being in the same classpath
+      you can directly access all static methods in your application. Just like for injected probes, annotate static
+      public methods in your probe configuration class with <code>@Telemetry</code> and return a numeric value.
+      See the chapter on <a href="../customProbes/concepts.html">probe concepts</a> for more information. The
+      <code>@Telemetry</code> annotations of the embedded and the injected probe APIs are equivalent, they are
+      just in different packages.
+    </p>
+    <p>
+      Another parallel functionality between embedded and injected probe API is the ability to modify the thread state
+      with the <code>ThreadState</code> class. Again, the class is present in both APIs with different packages.
+    </p>
+
+    <h3>Deployment</h3>
+    <p>
+      There are no special steps necessary to enable embedded probes when profiling with the JProfiler UI.
+      However, the probe will only be registered when the first call into <code>Payload</code> or
+      <code>Split</code> is made. Only at that point will the associated probe view be created in JProfiler.
+      If you prefer the probe view to be visible from the beginning, as is the case for built-in and injected probes,
+      you can call
+    </p>
+    <div class="pre-container"><pre>PayloadProbe.register(FooPayloadProbe.class);</pre></div>
+    <p>
+      for payload probes and
+    </p>
+    <div class="pre-container"><pre>SplitProbe.register(FooSplitProbe.class);</pre></div>
+    <p>
+      for split probes.
+    </p>
+    <p>
+      You may be considering whether to call the methods of <code>Payload</code> and <code>Split</code>
+      conditionally, maybe controlled by a command line switch in order to minimize overhead.
+      However, this is generally not necessary, because the method bodies are empty. Without the profiling agent
+      attached, no overhead is incurred apart from the construction of the payload string. Considering that probe events
+      should not be generated on a microscopic scale, they will be created relatively rarely, so that building the
+      payload string should be a comparatively insignificant effort.
+    </p>
+    <p>
+      Another concern for containers may be that you do not want to expose external dependencies on the class path.
+      A user of your container could also use the embedded probe API which would lead to a conflict.
+      In that case you can shade the embedded probe API into your own package. JProfiler will still recognize the
+      shaded package and instrument the API classes correctly. If build-time shading is not practical, you can extract the
+      source archive and make the classes part of your project.
+    </p>
+
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../customProbes/injectedProbes.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../customProbes/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/$folder$.html" title="key: k"></a></div></div></div></body></html>

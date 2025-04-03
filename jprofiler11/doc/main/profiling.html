@@ -1,0 +1,297 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Profiling a JVM</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.profiling';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Profiling A JVM</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/installing.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/recording.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      To profile a JVM, JProfiler's profiling agent has to be loaded into the JVM. This can happen in two different ways:
+      By specifying an <code>-agentpath</code> VM parameter in the start script or by using the attach API
+      to load the agent into an already running JVM.
+    </p>
+    <p>
+      JProfiler supports both modes. Adding the VM parameter is the preferred way to profile and is used by the
+      integration wizards, the IDE plugins and session configurations that launch a JVM from within JProfiler.
+      Attaching works both locally as well as remotely over SSH.
+    </p>
+
+    <h3>-agentpath VM parameter</h3>
+    <p>
+      It is useful to understand how the VM parameter that loads the profiling agent is composed. <code>-agentpath</code>
+      is a generic VM parameter provided by the JVM for loading any kind of native library that uses the JVMTI interface.
+      Because the profiling interface JVMTI is a native interface, the profiling agent must be a native library. This means
+      that you can only profile on the
+      <a href="https://www.ej-technologies.com/products/jprofiler/featuresPlatforms.html" target="_blank">explicitly supported platforms</a>.
+      32-bit and 64-bit JVMs also need different native libraries.
+      Java agents, on the other hand, are loaded with the <code>-javaagent</code> VM parameter and only have
+      access to a limited set of capabilities.
+    </p>
+    <p>
+      After <code>-agentpath:</code>, the full path name to the native library is appended. There is an equivalent
+      parameter <code>-agentlib:</code> where you only specify the platform-specific library name, but then you
+      have to make sure that the library is contained in the library path. After the path to the library, you can add an
+      equals sign and pass options to the agent, separated by commas. For example, on Linux, the whole parameter could
+      look like this:
+    </p>
+<div class="pre-container"><pre>-agentpath:/opt/jprofiler10/bin/linux-x64/libjprofilerti.so=port=8849,nowait</pre></div>
+    <p>
+      The first equals sign separates the path name from the parameters, the second equals sign is part of the parameter
+      <code>port=8849</code>. This common parameter defines the port on which the profiling agent is listening
+      to connections from the JProfiler GUI. 8849 is actually the default port, so you can also omit that parameter.
+      If you want to profile multiple JVMs on the same machine, you have to assign different ports, though.
+      The IDE plugins and the locally launched sessions assign this port automatically, for integration wizards
+      you have to choose the port explicitly.
+    </p>
+    <p>
+      The second parameter <code>nowait</code> tells the profiling agent not to block the JVM at startup and
+      wait for a JProfiler GUI to connect. Blocking at startup is the default, because the profiling agent does not
+      receive its profiling settings as command line parameters but from the JProfiler GUI or alternatively from a config
+      file. The command line parameters are only for bootstrapping the profiling agent, telling it how to get started
+      and for passing debug flags.
+    </p>
+    <p>
+      By default, the JProfiler agent binds the communication socket to all available network interfaces. If this is not
+      desirable for security reasons, you can add the option <code>address=[IP address]</code> in order to select
+      a specific interface.
+    </p>
+
+    <h3>Locally launched sessions</h3>
+    <p>
+      Like "Run configurations" in an IDE, you can configure locally launched sessions directly in JProfiler. You specify
+      the class path, the main class, working directory, VM parameters and arguments and JProfiler launches the session
+      for you. All the demo sessions that ship with JProfiler are locally launched sessions.
+    </p>
+    <p><img src="../images/ui/launched_application_session.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      A special launch mode is "Web Start" where you select the URL of the JNLP file and JProfiler will launch
+      a JVM to profile it.
+    </p>
+    <p><img src="../images/ui/launched_web_start_session.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      Locally launched sessions can be converted to standalone sessions with the conversion wizards by invoking
+      <i>Session-&gt;Conversion Wizards</i> from the main menu. <i>Convert Application Session to Remote</i>
+      simply creates a start script and inserts the <code>-agentpath</code> VM parameter into the Java call.
+      <i>Convert Application Session to Offline</i> creates a start script for <a href="../main/offline.html">offline profiling</a>
+      which means that the config is loaded on startup and the JProfiler GUI is not required.
+      <i>Convert Application Session to Redistributed Session</i> does the same thing, but creates a directory
+      <code>jprofiler_redist</code> next to it that contains the profiling agent as well as the config file so you can
+      ship it to a different machine where JProfiler is not installed.
+    </p>
+    <p><img src="../images/ui/conversion_wizards_menu.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      If you develop the profiled application yourself, consider using an <a href="../main/ide.html">IDE integration</a>
+      instead of a launched session. It will be more convenient and give you better source code navigation. If you do
+      not develop the application yourself, but already have a start script, consider using the remote integration
+      wizard. It will tell you the exact VM parameter that you have to add to the Java invocation.
+    </p>
+
+    <h3>Integration wizards</h3>
+    <p>
+      JProfiler's integration wizards handle many well-known third party containers with start scripts or config files
+      that can be modified programatically to include additional VM parameters.
+      For some products, start scripts can be generated where VM parameters are passed as arguments or via environment variables.
+    </p>
+    <p><img src="../images/ui/integration_wizards_selection.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      In all cases, you have to locate some specific file from the third-party product, so JProfiler has the necessary
+      context to perform its modifications. Some generic wizards only give you instructions on what you have to do in
+      order to enable profiling.
+    </p>
+    <p><img src="../images/ui/integration_wizards_locate_script.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      The first step in each integration wizard is the choice whether to profile on the local machine or on a remote
+      machine. In the case of the local machine you have to provide less information, because JProfiler already knows
+      the platform, where JProfiler is installed and where its config file is located.
+    </p>
+    <p><img src="../images/ui/integration_wizards_local_remote.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      An important decision is the "startup mode" that was discussed above. By default, the profiling settings are
+      transmitted from the JProfiler UI at startup, but you can also tell the profiling agent to let the JVM start
+      immediately. In the latter case, the profiling settings can be applied once the JProfiler GUI connects.
+    </p>
+    <p><img src="../images/ui/integration_wizards_startup_mode.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 636px"></p>
+    <p>
+      However, you can also specify a config file with the profiling settings which is much more efficient.
+      This is done on the <i>Config synchronization</i> step. The main problem in this case is that you have to synchronize
+      the config file with the remote side each time you edit the profiling settings locally. The most elegant way
+      is to connect to the remote machine via SSH on the <i>Remote address</i> step, then the config file can
+      be transferred automatically via SSH.
+    </p>
+    <p><img src="../images/ui/integration_wizards_config_sync.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      At the end of the integration wizard, a session will be created that starts profiling and - in the non-generic cases -
+      also starts the third party product, such as an application server.
+    </p>
+    <p><img src="../images/ui/integration_wizards_finish.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      External start scripts are handled by the <i>Execute start script</i> and <i>Execute stop script</i>
+      options on the <i>Application settings</i> tab of the session configuration dialog and URLs can be shown by selecting
+      the <i>Open browser with URL</i> check box. This is also the place where you can change the address of the remote
+      machine and the config synchronization options.
+    </p>
+    <p><img src="../images/ui/remote_session_settings.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+    <p>
+      The integration wizards all handle cases where the profiled JVM is running on a remote machine. However,
+      when a config file or start script has to be modified, you have to copy it to your local machine and
+      transfer modified versions back to the remote machine. It may be more convenient to directly run the command line
+      tool <code class="executable">jpintegrate</code> on the remote machine and let it perform its modifications in place.
+      <code class="executable">jpintegrate</code> requires a full installation of JProfiler and has the same JRE requirements
+      as the JProfiler GUI.
+    </p>
+    <p><img src="../images/jpintegrate.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 732px"></p>
+    <p>
+      When an error occurs while starting a remote profiling session, see the
+      <a href="../advancedConfig/troubleShooting.html">trouble-shooting guide</a> for a check list of steps
+      that you can take to fix the problem.
+    </p>
+
+    <h3>IDE integrations</h3>
+    <p>
+      The most convenient way to profile an application is through an IDE integration. If you usually start your application
+      from your IDE during development, the IDE already has all the required information and the JProfiler plugin can
+      simply add the VM parameter for profiling, start JProfiler if necessary and connect the profiled JVM to a
+      JProfiler main window.
+    </p>
+    <p>
+      All IDE integrations are contained in the <code>integrations</code> directory in the JProfiler installation.
+      In principle, the archives in that directory can be installed manually with the plugin installation mechanisms
+      in the respective IDEs. However, the preferred way to install IDE integrations is to invoke
+      <i>Session-&gt;IDE integrations</i> from the main menu.
+    </p>
+    <p><img src="../images/ui/ide_integrations.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 616px"></p>
+    <p>
+      Profiling sessions from the IDE do not get their own session entry in JProfiler, because such a session could not be
+      started from the JProfiler GUI. Profiling settings are persisted on a per-project or a
+      per-run-configuration basis, depending on the settings in the IDE.
+    </p>
+    <p>
+      When connected to an IDE, JProfiler shows a window switcher in the tool bar that makes it easy to jump back
+      to the associated window in the IDE. All the <i>Show Source</i> actions now show the source directly in the IDE
+      instead of the built-in source viewer in JProfiler.
+    </p>
+    <p>
+      IDE integrations are discussed in detail in a <a href="../main/ide.html">later chapter</a>.
+    </p>
+
+    <h3>Attach mode</h3>
+    <p>
+      You do not necessarily have to decide beforehand that you intend to profile a JVM. With the attach functionality
+      in JProfiler, you can select a running JVM and load the profiling agent on the fly.
+      While attach mode it convenient, it has a couple of drawbacks that you should be aware of:
+    </p>
+    <ul><li>
+        You have to identify the JVM that you want to profile from a list of running JVMs. This can sometimes be tricky if a lot
+        of JVMs are running on the same machine.
+      </li><li>
+        There is additional overhead because potentially many classes have to be redefined to add instrumentation.
+      </li><li>
+        Some features in JProfiler are not available in attach mode. This is mostly because some capabilities of the JVMTI
+        can only be switched on when the JVM is being initialized and are not available in later phases of the JVM's lifecycle.
+      </li><li>
+        Some features require instrumentation in a large fraction of all classes. Instrumenting while a class is being
+        loaded is cheap, adding instrumentation later on when the class has already been loaded is not. Such features are
+        disabled by default when you use attach mode.
+      </li><li>
+        Attach functionality is only supported for Oracle JVMs with version 6 or higher.
+      </li></ul>
+    <p>
+      The <i>Quick Attach</i> tab in JProfiler's start center lists all JVMs that can be profiled. The background color
+      of the list entries indicates whether a profiling agent has already been loaded, whether a JProfiler GUI
+      is currently connected or if offline profiling has been configured.
+    </p>
+    <p>
+      When you start a profiling session, you can configure profiling settings in the session settings dialog.
+      When you repeatedly profile the same process, you do not want to re-enter the same configuration again and again,
+      so a persistent session can be saved when you close a session that has been created with the quick attach feature.
+      The next time you want to profile this process, start the saved session from the <i>Open Session</i> tab instead
+      of the <i>Quick Attach</i> tab. You will still have to select a running JVM, but the profiling settings are the same
+      ones that you have already configured before.
+    </p>
+    <p><img src="../images/ui/local_attach_session.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 786px"></p>
+
+    <h3>Attaching to local services</h3>
+    <p>
+      The attach API in the JVM requires that the invoking process runs as the same user as the process that you want to
+      attach to, so the list of JVMs that are displayed by JProfiler is limited to the current user. Processes launched
+      by different users are mostly services. The way to attach to services differs for Windows and Unix-based platforms.
+    </p>
+    <p>
+      On Windows, the attach dialog has a <i>Show Services</i> button
+      that lists all locally running services. JProfiler launches bridge executables to be able to attach to those
+      processes no matter what user they are running with.
+    </p>
+    <p><img src="../images/ui/local_attach_show_services.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 656px"></p>
+    <p>
+      On Unix-based platforms including macOS, you can execute the command line tool
+      <code class="executable">jpenable</code> as a different user with <code class="executable">su</code> or <code class="executable">sudo</code>,
+      depending on your Unix variant or Linux distribution. On macOS and Debian-based Linux distributions like Ubuntu,
+      <code class="executable">sudo</code> is used.
+    </p>
+    <p>
+      With sudo, call
+    </p>
+<div class="pre-container"><pre>sudo -u userName jpenable</pre></div>
+      with su, the required command line is
+<div class="pre-container"><pre>su userName -c jpenable</pre></div>
+    <p>
+      <code class="executable">jpenable</code> will let you select JVMs and tell you the port on which the profiling agent
+      is listening. On the <i>Quick Attach</i> tab of the start center, you can then select the <i>On another computer</i>
+      option and configure a direct connection to localhost and the given profiling port.
+    </p>
+    <p><img src="../images/ui/remote_attach_direct_connection.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 656px"></p>
+
+    <h3>Attaching to JVMs on remote machines</h3>
+    <p>
+      The most demanding setup for profiling is remote profiling - the JProfiler GUI runs on your local machine
+      and the profiled JVM on another machine. For a setup where you pass the -agentpath VM parameter to the
+      profiled JVM, you have to install JProfiler on the remote machine and set up a remote session on your local
+      machine. With the remote attach functionality in JProfiler, no such modifications are
+      required, you just need SSH credentials to log into the remote machine.
+    </p>
+    <p>
+      The SSH connection enables JProfiler to upload the agent package that was discussed in the
+      <a href="../main/installing.html">"Installing JProfiler"</a> help topic and execute the contained command line
+      tools on the remote machine. You don't need SSH to be set up on your local machine, JProfiler ships with
+      its own implementation. In the most straightforward setup you just define host, user name and authentication.
+    </p>
+    <p>
+      With an SSH connection, JProfiler can perform an automatic discovery of running JVMs or connect to a specific port
+      where a profiling agent is already listening. For the latter case, you can use <code class="executable">jpenable</code> or
+      <code class="executable">jpintegrate</code> on the remote machine as described above and prepare a special JVM for
+      profiling. Then, the SSH remote attach can be configured to directly connect to the configured profiling port.
+    </p>
+    <p><img src="../images/ui/ssh_direct_manual_port.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      Automatic discovery will list all JVMs on the remote machine that have been started as the SSH login user. In most cases
+      this will not be the user that has started the service that you would like to profile. Because users that
+      start services usually are not allowed for SSH connections, JProfiler adds a <i>Switch User</i> button that
+      lets you use <code class="executable">sudo</code> or <code class="executable">su</code> to switch to that user.
+    </p>
+    <p><img src="../images/ui/remote_attach_switch_user.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 586px"></p>
+    <p>
+      In complex network topologies, you sometimes cannot connect directly to the remote machine. In that case,
+      you can tell JProfiler to connect with a multi-hop SSH tunnel in the GUI. At the end of the SSH tunnel you can make
+      one direct network connection, usually to "127.0.0.1".
+    </p>
+    <p><img src="../images/ui/ssh_multi_hop.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      HPROF snapshots can only be taken for JVMs that were started with the SSH login user. This is because HPROF
+      snapshots require an intermediate file that is written with the access rights of the user that has started the
+      JVM. For security reasons, it is not possible to transfer file rights to the SSH login user for download.
+      No such restriction exists for full profiling sessions.
+    </p>
+
+    <h3>Setting the display name of running JVMs</h3>
+    <p>
+      In the JVM selection table, the displayed process name is the main class of the profiled JVM together with its
+      arguments. For launchers generated by exe4j or install4j, the executable name is displayed.
+    </p>
+    <p>
+      If you wish to set the displayed name yourself, for example because you have several processes with the same
+      main class that would otherwise be undistinguishable, you can set the VM parameter
+      <code>-Djprofiler.displayName=[name]</code>. If the name contains spaces, use single quotes:
+      <code>-Djprofiler.displayName='My name with spaces'</code> and quote the entire VM parameter with double
+      quotes if necessary. In addition to <code>-Djprofiler.displayName</code> JProfiler also recognizes
+      <code>-Dvisualvm.display.name</code>.
+    </p>
+
+
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../main/installing.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-right" href="../main/recording.html" title="key: k"></a></div></div></div></body></html>

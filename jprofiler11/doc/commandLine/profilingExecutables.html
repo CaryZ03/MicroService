@@ -1,0 +1,161 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Command Line Executables For Profiling</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.commandLine.profilingExecutables';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Command Line Executables For Profiling</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/snapshotExecutables.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      JProfiler includes a number of command line tools for setting up the profiling agent and controlling profiling
+      actions from the command line.
+    </p>
+
+    <h3>Loading the profiling agent into a running JVM</h3>
+    <p>
+      With the command line utility <code class="executable">bin/jpenable</code>, you can load the profiling agent into any
+      running JVM with a version of 6 or higher. With command line arguments you can automate the process so that it
+      requires no user input. The supported arguments are:
+    </p>
+    <div class="pre-container"><pre>Usage: jpenable [options]
+
+jpenable starts the profiling agent in a selected local JVM, so you can connect
+to it from a different computer. If the JProfiler GUI is running locally, you
+can attach directly from the JProfiler GUI instead of running this executable.
+
+* if no argument is given, jpenable attempts to discover local JVMs that
+  are not being profiled yet and asks for all required input on the command
+  line.
+* with the following arguments you can partially or completely supply all
+  user input on the command line:
+
+  -d  --pid=&lt;PID&gt;     The PID of the JVM that should be profiled
+  -n  --noinput       Do not ask for user input under any circumstances
+  -h  --help          Show this help
+      --options=&lt;OPT&gt; Debugging options passed to the agent
+
+  GUI mode: (default)
+  -g  --gui           The JProfiler GUI will be used to attach to the JVM
+  -p  --port=&lt;nnnnn&gt;  The port on which the profiling agent should listen for
+                      a connection from the JProfiler GUI
+
+  Offline mode:
+  -o  --offline       The JVM will be profiled in offline mode
+  -c  --config=&lt;PATH&gt; Path to the config file with the profiling settings
+  -i  --id=&lt;ID&gt;       ID of the session in the config file. Not required, if
+                      the config file holds only a single session.
+
+Note that the JVM has to be running as the same user as jpenable, otherwise
+JProfiler cannot connect to it.
+An exception are Windows services running under the local system account if you
+list them interactively with jpenable.</pre></div>
+
+    <h3>Saving HPROF snapshots</h3>
+    <p>
+      If you just need a heap snapshot, consider using the <code class="executable">bin/jpdump</code>
+      command line tool that saves an <a href="../heapWalker/hprofSnapshots.html">HPROF snapshot</a> without loading
+      the profiling agent into the VM:
+    </p>
+    <div class="pre-container"><pre>Usage: jpdump [options]
+
+jpdump saves an HPROF heap dump from a locally running JVM to a file.
+The HPROF file can then be opened in the JProfiler GUI.
+
+* if no argument is given, jpdump lists all locally running JVMs.
+* with the following arguments you can partially or completely supply all
+  user input on the command line:
+
+  -p  --pid=&lt;PID&gt;    The PID of the JVM whose heap should be dumped
+                     With a specified PID, no further questions will by asked.
+  -a  --all          Save all objects. If not specified, only live objects are
+                     dumped
+  -f  --file=&lt;PATH&gt;  Path to the dump file. If not specified, the dump file
+                     &lt;VM name&gt;.hprof is written in the current directory.
+                     If the file already exists, a number is appended.
+  -h  --help         Show this help
+
+Note that the JVM has to be running as the same user as jpdump, otherwise
+JProfiler cannot connect to it.
+An exception are Windows services running under the local system account if you
+list them interactively with jpdump.</pre></div>
+    <p>
+      This has a lower overhead than loading the profiling agent and saving a JProfiler heap snapshot. Also,
+      because the profiling agent can never be unloaded, this method is suitable for JVMs running in production.
+    </p>
+
+    <h3>Controlling the profiling agent</h3>
+    <p>
+      When you start the <code class="executable">bin/jpcontroller</code> executable without arguments, it attempts to connect
+      to a profiled JVM on the local machine. If multiple profiled JVMs were discovered, you can select one from a list.
+      Because the discovery mechanism uses the attach API of the Oracle JVM, this only works for Oracle JVMs starting
+      with Java 6.
+    </p>
+    <p>
+      <code class="executable">jpcontroller</code> can only connect to JVMs where the profiling settings have been set, so it
+      does not work if the JVM was started with the "nowait" option for the <code>-agentpath</code> VM parameter.
+      That option is set when choosing the <i>Startup immediately, connect later with the JProfiler GUI</i> radio
+      button on the "Startup mode" screen of an integration wizard and no JProfiler GUI has yet connected to the agent.
+      Using <code class="executable">jpenable</code> without the <code>--offline</code> argument also requires a
+      connection from the JProfiler GUI before <code class="executable">jpcontroller</code> can connect to the profiled
+      process.
+    </p>
+    <p>
+      If you want to connect to a process on a remote computer, or if the JVM is not a HotSpot JVM with a version of 6
+      or higher, you have to pass the VM parameter <code>-Djprofiler.jmxServerPort=[port]</code> to the profiled
+      JVM. An MBean server will be published on that port and you can specify the chosen port as an argument to
+      <code class="executable">jpcontroller</code>. With the additional VM parameter
+      <code>-Djprofiler.jmxPasswordFile=[file]</code> you can specify a properties file with key-value pairs
+      of the form <code>user=password</code> to set up authentication. Note that these VM parameters are overridden
+      by the <code>com.sun.management.jmxremote.port</code> VM parameter.
+    </p>
+    <p>
+      With the explicit setup of the JMX server, you can use the command line controller to connect to a
+      remote server by invoking <code class="executable">jpcontroller host:port</code>. If the remote computer is only
+      reachable via an IP address, you have to add <code>-Djava.rmi.server.hostname=[IP address]</code> as a
+      VM parameter to the remote VM.
+    </p>
+    <p>
+      By default, <code class="executable">jpcontroller</code> is an interactive command line utility, but you can also
+      automate profiling sessions with it without the need for manual input. An automated invocation would pass
+      <code>[pid | host:port]</code> to select a profiled JVM as well as the <code>--non-interactive</code>
+      argument. In addition, a list of commands is read, either from stdin, or from a command file that is
+      specified with the <code>--command-file</code> argument. Each command starts on a new line, lines that
+      are blank or start with a "#" comment character are ignored.
+    </p>
+    <p>
+      Commands for this non-interactive mode are the same as the method names in the
+      <a href="https://www.ej-technologies.com/resources/jprofiler/help/api/javadoc/com/jprofiler/api/agent/mbean/RemoteControllerMBean.html" target="_blank">JProfiler MBean</a>.
+      They require the same number of parameters, separated by spaces. String must be surrounded by double quotes if they
+      contain spaces. In addition, a <code>sleep &lt;seconds&gt;</code> command is provided that pauses
+      for a number of seconds. This allows you to start recording, wait for some time and then save a snapshot to disk.
+    </p>
+    <p>
+      The supported arguments of jpcontroller are shown below:
+    </p>
+    <div class="pre-container"><pre>Usage: jpcontroller [options] [host:port | pid]
+
+* if no argument is given, jpcontroller attempts to discover local JVMs that
+   are being profiled
+* if a single number is specified, jpcontroller attempts to connect to the JVM
+   with process ID [pid]. If that JVM is not profiled, jpcontroller cannot
+   connect. In that case, use the jpenable utility first.
+* otherwise, jpcontroller connects to "host:port", where port is the value
+   that has been specified in the VM parameter -Djprofiler.jmxServerPort=[port]
+   for the profiled JVM.
+
+The following options are available:
+  -n --non-interactive      Run an automated session where a list of commands
+                            is read from stdin.
+  -f --command-file=&lt;PATH&gt;  Read commands from a file instead of stdin. Only
+                            applicable together with --non-interactive.
+
+Syntax for non-interactive commands:
+  See the javadoc for RemoteControllerMBean (https://bit.ly/2DimDN5) for a
+  list of operations. Parameters are separated by spaces and must be quoted if
+  they contain spaces. For example:
+
+    addBookmark "Hello world"
+    startCPURecording true
+    sleep 10
+    stopCPURecording
+    saveSnapshot /path/to/snapshot.jps
+
+  The sleep &lt;seconds&gt; command pauses for the specified number of seconds.
+  Empty lines and lines starting with # are ignored.</pre></div>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../commandLine/$folder$.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../commandLine/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../commandLine/snapshotExecutables.html" title="key: k"></a></div></div></div></body></html>

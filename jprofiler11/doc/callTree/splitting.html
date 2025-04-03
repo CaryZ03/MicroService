@@ -1,0 +1,89 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Splitting The Call Tree</title><link rel="stylesheet" type="text/css" href="../standalone/help_common.css"><link rel="stylesheet" type="text/css" href="../standalone/help.css"><script type="text/javascript">
+helpId = 'jprofiler.callTree.splitting';
+indexUrl= '../index.html';
+</script><meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" src="../standalone/jquery.min.js"></script><script type="text/javascript" src="../standalone/content.js"></script></head><body><div class="header-container"><div class="header-title"><h2>Splitting The Call Tree</h2></div><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../callTree/rootsAndRemovals.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../callTree/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/analyses.html" title="key: k"></a></div></div></div><hr><div class="spacer"></div><div>
+    <p>
+      Call trees are cumulated for repeated invocations of the same call stacks. This is necessary because of memory
+      overhead and the need for consolidating data in order to make it understandable. However, sometimes you want to
+      break the cumulation at selected points so you can view parts of the call tree separately.
+    </p>
+    <p>
+      JProfiler has a concept of splitting the call tree with special nodes that are inserted into the call stack
+      and show semantic information that has been extracted from the method invocation above the inserted node.
+      These splitting nodes allow you to see additional payload information directly inside the call tree and to
+      analyze their contained sub-trees separately. Each splitting type can be merged and unmerged on the fly
+      with the actions in the context menu and has a cap on the total number of splitting nodes so that the memory
+      overhead is bounded.
+    </p>
+
+    <h3>Call tree splitting and probes</h3>
+    <p>
+      <a href="../main/probes.html">Probes</a> can split the call tree according to the
+      information that they collect at selected methods of interest. For example, the servlet probe splits the call tree
+      for each different URL. The splitting in this case is highly configurable, so you can include only the desired parts
+      of the URL, some other information from the servlet context or even produce multiple splitting levels.
+    </p>
+    <p><img src="../images/ui/splitting_servlet.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 784px"></p>
+    <p>
+      If you write your own probe, you can split the call tree in the same way, with both the
+      <a href="../customProbes/embeddedProbes.html">embedded</a> and the
+      <a href="../customProbes/injectedProbes.html">injected</a> custom probe systems.
+    </p>
+
+    <h3>Splitting methods with scripts</h3>
+    <p>
+      The same splitting functionality that is available to probes can be used directly in the call tree, with
+      the <i>Split Method With a Script</i> action. In the screen shot below, we want to split the call tree for a
+      JMS message handler to see the handling of different types of messages separately.
+    </p>
+    <p><img src="../images/ui/splitting_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      Instead of writing a probe, you just enter a script that returns a string. The string is used for grouping
+      the call tree at the selected method and is displayed in the splitting node. If you return <code>null</code>,
+      the current method invocation is not split and added to the call tree as usual.
+    </p>
+    <p><img src="../images/ui/splitting_script_dialog.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+    <p>
+      The script has access to a number of parameters. It is passed the class of the selected method, the instance for
+      non-static methods, as well as all method parameters. In addition, you get a <code>ScriptContext</code> object
+      that can be used to store data. If you need to recall some values from previous invocations of the same script,
+      you can invoke the <code>getObject/putObject</code> and <code>getLong/putLong</code> methods in the context.
+      For example, you may want to split only the first time a particular value for method parameter is seen. You
+      could then use
+    </p>
+    <div class="pre-container"><pre>if (scriptContext.getObject(text) != null) {
+    scriptContext.putObject(text);
+    return text;
+} else {
+    return null;
+}</pre></div>
+    <p>
+      as part of your splitting script.
+    </p>
+    <p>
+      Splitting nodes are inserted below the selected method. For the example in the above screen shot, we now see
+      the handling code for each JMS message destination separately.
+    </p>
+    <p><img src="../images/ui/splitting_call_tree.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 781px"></p>
+    <p>
+      The splitting location is bound to a method, not to the selected call stack. If the same method is present
+      somewhere else in the call tree, it will be split as well. If you use the <i>Merge splitting level</i> action,
+      all splits will be merged into a single node. That node gives you a chance to unmerge the split again.
+    </p>
+    <p><img src="../images/ui/splitting_unmerge_action.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      If you produce too many splits, a node labeled <i>capped method splits</i> will contain all further
+      split invocations, cumulated into a single tree. With the hyperlink in the node, you can reset the cap
+      counter and record some more splitting nodes. For a permanent increase in the maximum number of splits, you can
+      increase the cap in the profiling
+      settings.
+    </p>
+    <p><img src="../images/ui/splitting_capped_node.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 783px"></p>
+    <p>
+      To edit split methods after you have created them, go to the session settings dialog. If you don't need a
+      particular split method anymore, but want to keep it for future use, you can disable it with the check box in
+      front of the script configuration. This is better than just merging it in the call tree, because the recording
+      overhead may be significant.
+    </p>
+    <p><img src="../images/ui/splitting_config.png" alt="" onclick="showEnlarged(this)" class="scaledImg" style="vertical-align: middle; width: 100%; max-width: 686px"></p>
+  </div><br><hr><div class="header-container"><div class="header-nav"><div class="nav-wrapper"><a class="nav-left" href="../callTree/rootsAndRemovals.html" title="key: j"></a></div><div class="nav-wrapper"><a class="nav-up" href="../callTree/$folder$.html" title="key: u"></a></div><div class="nav-wrapper"><a class="nav-right" href="../callTree/analyses.html" title="key: k"></a></div></div></div></body></html>
