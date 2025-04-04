@@ -1,5 +1,6 @@
 from mapper import buildGraph, showGraph
 import networkx as nx
+import time
 
 import os
 import sys
@@ -23,7 +24,7 @@ os.chdir("Partition")
 
 from Partition.Main import *
 
-stage1Main()
+stage2Main()
 
 os.chdir("..")
 

@@ -29,8 +29,8 @@ class DQNAgent:
         self.epsilon_decay: float = epsilon_decay
 
         # the main and target DQNetwork.
-        self.main_network: DQNetwork = DQNetwork(state_dim, action_dim)
-        self.target_network: DQNetwork = DQNetwork(state_dim, action_dim)
+        self.main_network: DQNetwork = DQNetwork(state_dim, action_dim).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        self.target_network: DQNetwork = DQNetwork(state_dim, action_dim).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
         self.target_network.load_state_dict(self.main_network.state_dict())
         self.optimizer: optim.Adam = optim.Adam(self.main_network.parameters(), lr=learning_rate)
 
@@ -43,7 +43,7 @@ class DQNAgent:
 
     def act(self, state: np.ndarray) -> int:
         # print(state)
-        state_tensor: torch.tensor = torch.tensor(state, dtype=torch.float32)
+        state_tensor: torch.tensor = torch.tensor(state, dtype=torch.float32).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
         if state_tensor.ndim == 1:
             state_tensor = state_tensor.unsqueeze(0)
@@ -61,11 +61,11 @@ class DQNAgent:
 
         minibatch = random.sample(self.memory, batch_size)
 
-        states = torch.tensor(np.array([i[0] for i in minibatch]), dtype=torch.float32)
-        actions = torch.tensor(np.array([i[1] for i in minibatch]), dtype=torch.long)
-        rewards = torch.tensor(np.array([i[2] for i in minibatch]), dtype=torch.float32)
-        next_states = torch.tensor(np.array([i[3] for i in minibatch]), dtype=torch.float32)
-        dones = torch.tensor(np.array([i[4] for i in minibatch]), dtype=torch.bool)
+        states = torch.tensor(np.array([i[0] for i in minibatch]), dtype=torch.float32).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        actions = torch.tensor(np.array([i[1] for i in minibatch]), dtype=torch.long).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        rewards = torch.tensor(np.array([i[2] for i in minibatch]), dtype=torch.float32).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        next_states = torch.tensor(np.array([i[3] for i in minibatch]), dtype=torch.float32).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        dones = torch.tensor(np.array([i[4] for i in minibatch]), dtype=torch.bool).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
         # 计算当前 Q 值
         current_q = self.main_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)

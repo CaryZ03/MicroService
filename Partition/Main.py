@@ -21,6 +21,7 @@ import os
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+import json
 
 # stage1: I didn't use the DQN model in this stage,
 # but Louvain algorithm to partition the graph into microservices.
@@ -42,6 +43,9 @@ def stage1Main() -> None:
 
         for serviceID, functions in microservices.items():
             print(f"microserive {serviceID}: {functions}")
+            
+        with open("microservices.json", "w") as f:
+            json.dump(microservices, f, indent=4)
 
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservices)
 
@@ -120,6 +124,9 @@ def stage2Main() -> None:
 
         for ms_id, node_list in microservice_to_nodes.items():
             print(f"Microservice {ms_id}: Nodes {node_list}")
+            
+        with open("microservices1.json", "w") as f:
+            json.dump(microservice_to_nodes, f, indent=4)
 
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservice_to_nodes)
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
