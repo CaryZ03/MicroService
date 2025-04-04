@@ -340,11 +340,6 @@ def buildGraph(source='json', saveSpans=False, saveEntries=False):
     for spans in spanss:
         addToGraph(G, spans, entries, saveEntries)
 
-    # nx.write_graphml(G, "demo-with-weight.graphml")
-
-    # import networkx as nx
-    # G = nx.read_graphml("microservice_graph-without-hikari.graphml")
-
     if saveEntries:
         entry_names = list(set([entry["endpointName"] for entry in entries]))
         print("Entries:", entry_names)
