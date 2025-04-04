@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from collections import deque
 from typing import Tuple, Deque 
 
-from dqns.DQNetwork import DQNetwork
+from .DQNetwork import DQNetwork
 
 class DQNAgent:
     def __init__(self, state_dim: int, action_dim: int, hidden_dim: int=128,

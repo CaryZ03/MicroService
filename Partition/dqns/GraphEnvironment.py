@@ -4,8 +4,8 @@ import math
 
 from typing import List, Dict, Tuple
 
-from entities.Node import Node
-from entities.MicroService import MicroService
+from ..entities.Node import Node
+from ..entities.MicroService import MicroService
 
 class GraphEnvironment:
     def __init__(self, graph: nx.Graph):

@@ -237,6 +237,7 @@ def toRegex(name):
 def matchEntry(name, entries):
     tmp_entry = {}
     for entry in entries:
+        print("entry:", entry)
         if entry["name"] == name:
             return entry
         elif re.fullmatch(toRegex(entry["name"]), name):
@@ -245,7 +246,7 @@ def matchEntry(name, entries):
     return tmp_entry
 
 
-def getNodeId(node):
+def getNodeId(node, entries):
     node_id = node["endpointName"]
     if node["spanId"] == 0:
         entry = matchEntry(node_id, entries)
@@ -253,7 +254,7 @@ def getNodeId(node):
     return node_id
 
 
-def addToGraph(G, spans, entries, toJson=False):
+def addToGraph(G, spans, entries, saveEntries=False):
     weight = 1
     for span in spans:
         nodes = getAttributes(span)
@@ -261,7 +262,7 @@ def addToGraph(G, spans, entries, toJson=False):
             continue
         
         for node in nodes:
-            node_id = getNodeId(node)
+            node_id = getNodeId(node, entries) if not saveEntries else node["endpointName"]
             execution_time = node["endTime"] - node["startTime"]
             
             if G.has_node(node_id):
@@ -274,13 +275,13 @@ def addToGraph(G, spans, entries, toJson=False):
             if node["parentSpanId"] != -1:
                 parent_node = next((n for n in spans if n["spanId"] == node["parentSpanId"]), None)
                 if parent_node:
-                    parent_node_id = getNodeId(parent_node)
+                    parent_node_id = getNodeId(parent_node, entries) if not saveEntries else parent_node["endpointName"]
                     if G.has_edge(node_id, parent_node_id):
                         G[node_id][parent_node_id]["weight"] += weight
                     else:
                         G.add_edge(node_id, parent_node_id, weight=weight)
             else:
-                if toJson:
+                if saveEntries:
                     entries += [node]
                 else:
                     name = node["endpointName"]
@@ -288,60 +289,9 @@ def addToGraph(G, spans, entries, toJson=False):
                     weight = entry["weight"] if entry else 1
                 
 
-
-
-def buildGraph(source='json'):
-    # 创建有向图
-    G = nx.DiGraph()
-
-    # entries = []
-
-    # 读取 JSON 文件
-    with open("entries_demo.json", "r") as json_file:
-        entries = json.load(json_file)
-        
-    print("Entries:", entries)
-
-    spanss = []
-
-    if source == 'json':
-        with open("spans.json", "r") as infile:
-            spanss = json.load(infile)
-    else:
-        
-        
-        services = queryServices()
-        # print(json.dumps(services, indent=1))
-        for service in services:
-            traces = queryTraces(service["id"])
-            # print(json.dumps(traces, indent=1))
-            for trace in traces:
-                spans = queryTrace(trace["traceIds"][0])
-                spanss.append(spans)
-                addToGraph(G, spans, entries)
-            break
-
-    # with open("spans.json", "w") as outfile:
-    #     json.dump(spanss, outfile, indent=4)
-
-
-    
-
-    # 打印读取的数据
-    print(spanss)
-
-    for spans in spanss:
-        addToGraph(G, spans, entries)
-
-    nx.write_graphml(G, "demo-with-weight.graphml")
-
-    # import networkx as nx
-    # G = nx.read_graphml("microservice_graph-without-hikari.graphml")
-
-    # microservice_
+def showGraph(G):
     # 绘制图
     pos = nx.spring_layout(G)
-    # , k=0.15, iterations=20
     nx.draw(G, pos, with_labels=True, node_size=300, node_color="skyblue", font_size=5, font_weight="bold", arrows=True)
 
     # # 添加节点标签
@@ -357,14 +307,53 @@ def buildGraph(source='json'):
     plt.show()
 
 
-    # entry_names = list(set([entry["endpointName"] for entry in entries]))
-    # print("Entries:", entry_names)
+def buildGraph(source='json', saveSpans=False, saveEntries=False):
+    # 创建有向图
+    G = nx.DiGraph()
 
-    # entries = [{"name": entry_name, "weight": 1} for entry_name in entry_names]
+    if source == 'json':
+        with open("spans.json", "r") as infile:
+            spanss = json.load(infile)
+    else:
+        spanss = []
+        services = queryServices()
+        # print(json.dumps(services, indent=1))
+        for service in services:
+            traces = queryTraces(service["id"])
+            # print(json.dumps(traces, indent=1))
+            for trace in traces:
+                spans = queryTrace(trace["traceIds"][0])
+                spanss.append(spans)
+            break
+        if saveSpans:
+            with open("spans.json", "w") as outfile:
+                json.dump(spanss, outfile, indent=4)
+        
+    if saveEntries:
+        entries = []
+    else:
+        with open("entries_demo1.json", "r") as json_file:
+            entries = json.load(json_file)
+    
+    print("Entries:", entries)
 
-    # # 写入 JSON 文件
-    # with open("entries_demo.json", "w") as json_file:
-    #     json.dump(entries, json_file, indent=4)  # 使用 indent 参数美化输出
-            
-            
+    for spans in spanss:
+        addToGraph(G, spans, entries, saveEntries)
+
+    # nx.write_graphml(G, "demo-with-weight.graphml")
+
+    # import networkx as nx
+    # G = nx.read_graphml("microservice_graph-without-hikari.graphml")
+
+    if saveEntries:
+        entry_names = list(set([entry["endpointName"] for entry in entries]))
+        print("Entries:", entry_names)
+
+        entries = [{"name": entry_name, "weight": 1} for entry_name in entry_names]
+
+        # 写入 JSON 文件
+        with open("entries_demo.json", "w") as json_file:
+            json.dump(entries, json_file, indent=4)  # 使用 indent 参数美化输出
+    
+    return G
 
