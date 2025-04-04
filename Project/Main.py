@@ -63,43 +63,46 @@ def stage2Main() -> None:
         graph : nx.DiGraph = gmh.getGraphFromGraphML(graphMLPath)
         env: GraphEnvironment = GraphEnvironment(graph)
 
-        # KEY: the number of microservice and node are equal at the beginning.
-        # The state would record the category of each node,
-        # the action represents move a mode from current microservice to another.
-        state_dim: int = env.get_node_cnt()
-        action_dim: int = pow(env.get_node_cnt(), 2)
-        agent: DQNAgent = DQNAgent(state_dim = state_dim, action_dim = action_dim)
+        state_dim: int = env.getNodeCnt()
+        microservice_count: int = int(math.sqrt(env.getNodeCnt()))
+        action_dim: int = env.getNodeCnt() * microservice_count
+        agent: DQNAgent = DQNAgent(state_dim, action_dim)
 
-        episodes = 1000
+        episodes = 5000
+        max_steps = 100
+        batch_size = 32
+
         for episode in range(episodes):
             env.reset()
             # the state from env is DICT!!!
-            ori_state: Dict[int, int] = env.get_state()
-            state: np.ndarray = np.array(list(ori_state))
+            ori_state: Dict[int, int] = env.getState()
+            state: np.ndarray = np.array(list(ori_state.values()))
+
             total_reward: float = 0.0
             done: bool = False
+            step_count = 0
             
-            while not done:
+            while not done and step_count < max_steps:
                 action: int = agent.act(state)
-                res: Tuple[Dict[int, int], float, bool, str] = env.step(action)
+                # print("action: ", action)
+                res: Tuple[Dict[int, int], float, bool] = env.step(action)
                 # the state from env is DICT!!!
                 ori_next_state: Dict[int, int] = res[0]
-                next_state: np.ndarray = np.array(list(ori_next_state))
+                next_state: np.ndarray = np.array(list(ori_next_state.values()))
                 reward: float = res[1]
                 done: bool = res[2]
 
                 agent.add_to_memory(state, action, reward, next_state, done)
 
-                total_reward += reward
-                env.update_best_partition(total_reward, ori_next_state)
+                if len(agent.memory) >= batch_size:
+                    agent.train(batch_size)
 
+                total_reward += reward
                 state = next_state
-                
-                if episode % 10 == 0:
-                    agent.update_target_network()
-            
-            if len(agent.memory) >= 32:
-                agent.train(batch_size=32)
+                step_count += 1
+
+            if episode % 10 == 0:
+                    agent.softUpdateTargetNetwork()
             
             if episode % 100 == 0:
                 print(f"Episode {episode}, Total Reward: {total_reward:.2f}")
@@ -108,7 +111,7 @@ def stage2Main() -> None:
         # print the partition of microservice.
         # ============================
         print("\n=== Final Microservice Partitioning Result ===")
-        node_microservice: Dict[int, int] = env.get_best_partition()
+        node_microservice: Dict[int, int] = env.getState()
 
         microservice_to_nodes: Dict[int, List[str]] = {}
         for node_id, ms_id in node_microservice.items():
@@ -124,4 +127,5 @@ def stage2Main() -> None:
 
         
 if __name__ == "__main__":
+    # stage1Main()
     stage2Main()

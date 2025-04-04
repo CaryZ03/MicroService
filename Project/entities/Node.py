@@ -7,6 +7,9 @@ class Node:
     def get_node_name(self) -> str:
         return self.name
     
+    def getNodeCount(self) -> int:
+        return self.count
+    
     def __str__(self) -> str:
         return "Node: " + self.name + \
                 " executionTime: " + str(self.executionTime) + \
