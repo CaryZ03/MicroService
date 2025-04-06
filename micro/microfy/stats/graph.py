@@ -488,5 +488,5 @@ def generate_echarts_html(graph: nx.DiGraph, output_file: str = "dag.html"):
     </html>
     """
 
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding="utf-8") as f:
         f.write(template)

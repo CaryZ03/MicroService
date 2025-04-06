@@ -120,7 +120,10 @@ class JavaClassCollector(JavaParserVisitor):
         return ''.join(parts)
 
     def visitPackageDeclaration(self, ctx: JavaParser.PackageDeclarationContext):
+        # 获取包名
         self.package_name = ctx.qualifiedName().getText()
+        self.short2full.update(java_lang)
+        # 更新 short2full 映射表，添加 java.lang 包
         self.short2full.update(java_lang)
 
     def visitImportDeclaration(self, ctx: JavaParser.ImportDeclarationContext):
