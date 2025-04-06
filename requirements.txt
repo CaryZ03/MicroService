@@ -2,3 +2,6 @@ sqlglot
 requests
 networkx
 matplotlib
+numpy
+scikit-learn
+nltk
