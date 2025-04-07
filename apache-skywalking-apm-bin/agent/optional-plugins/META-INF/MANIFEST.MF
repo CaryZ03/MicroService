@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven 3.6.1
+Built-By: wusheng
+Build-Jdk: 17.0.7
+Specification-Title: customize-enhance-plugin
+Specification-Version: 9.4
+Specification-Vendor: The Apache Software Foundation
+Implementation-Title: customize-enhance-plugin
+Implementation-Version: 9.4.0
+Implementation-Vendor-Id: org.apache.skywalking
+Implementation-Vendor: The Apache Software Foundation
+Implementation-URL: https://github.com/apache/skywalking-java/java-agent
+ -sniffer/optional-plugins/apm-customize-enhance-plugin
+

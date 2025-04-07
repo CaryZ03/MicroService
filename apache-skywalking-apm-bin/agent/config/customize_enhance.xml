@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enhanced>
+    <class class_name="com.example.demo.service.OrderService">
+        <method method="createOrder(com.example.demo.model.Order)" static="false"/>
+    </class>
+</enhanced>
