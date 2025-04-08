@@ -5,7 +5,7 @@ import time
 import os
 import sys
 
-G = buildGraph(source='json', saveSpans=False, saveEntries=False)
+G = buildGraph(source='j', saveSpans=True, saveEntries=False)
 showGraph(G)
 
 nx.write_graphml(G, "Partition/data/src/graph.graphml")
@@ -24,7 +24,7 @@ os.chdir("Partition")
 
 from Partition.Main import *
 
-stage2Main()
+stage1Main()
 
 os.chdir("..")
 
