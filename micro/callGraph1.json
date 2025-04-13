@@ -1,0 +1,148 @@
+{
+  "com.example.demo.controller.UserController.getUserById": [
+    "com.example.demo.service.UserService.getUserById"
+  ],
+  "com.example.demo.model.OrderDetail.setId": [],
+  "com.example.demo.service.ProductService.getProductByName": [
+    "com.example.demo.repository.ProductRepository.findByName"
+  ],
+  "com.example.demo.model.Product.getId": [],
+  "com.example.demo.controller.OrderDetailController.addOrderDetail": [
+    "com.example.demo.service.OrderDetailService.addOrderDetail"
+  ],
+  "com.example.demo.controller.OrderController.getOrderById": [
+    "com.example.demo.service.OrderService.getOrderById"
+  ],
+  "com.example.demo.model.Order.setStatus": [],
+  "com.example.demo.repository.UserRepository.findByUsername": [],
+  "com.example.demo.model.PaymentRecord.setStatus": [],
+  "com.example.demo.model.Order.getId": [],
+  "com.example.demo.model.User.setId": [],
+  "com.example.demo.service.ProductService.addProduct": [],
+  "com.example.demo.model.User.setPassword": [],
+  "com.example.demo.model.OrderDetail.setQuantity": [],
+  "com.example.demo.model.Order.getUser": [],
+  "com.example.demo.model.OrderDetail.setTotalPrice": [],
+  "com.example.demo.service.UserService.getUserById": [],
+  "com.example.demo.model.OrderDetail.setOrder": [],
+  "com.example.demo.model.Category.setName": [],
+  "com.example.demo.controller.CategoryController.getCategoryByName": [
+    "com.example.demo.service.CategoryService.getCategoryByName"
+  ],
+  "com.example.demo.model.Category.getProducts": [],
+  "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId": [
+    "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId"
+  ],
+  "com.example.demo.model.User.getEmail": [],
+  "com.example.demo.service.CategoryService.getCategoryByName": [
+    "com.example.demo.repository.CategoryRepository.findByName"
+  ],
+  "com.example.demo.model.Category.getName": [],
+  "com.example.demo.model.Product.getName": [],
+  "com.example.demo.model.Product.getCategory": [],
+  "com.example.demo.model.User.getId": [],
+  "com.example.demo.model.Order.getStatus": [],
+  "com.example.demo.model.Order.setId": [],
+  "com.example.demo.controller.CategoryController.addCategory": [
+    "com.example.demo.service.CategoryService.addCategory"
+  ],
+  "com.example.demo.model.Order.setPaymentRecord": [],
+  "com.example.demo.model.Order.setOrderDetail": [],
+  "com.example.demo.model.User.setUsername": [],
+  "com.example.demo.controller.ProductController.getProductByName": [
+    "com.example.demo.service.ProductService.getProductByName"
+  ],
+  "com.example.demo.model.OrderDetail.getQuantity": [],
+  "com.example.demo.model.PaymentRecord.setId": [],
+  "com.example.demo.service.OrderDetailService.addOrderDetail": [],
+  "com.example.demo.model.User.setEmail": [],
+  "com.example.demo.Demo1ApplicationTests.contextLoads": [],
+  "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId": [
+    "com.example.demo.repository.PaymentRecordRepository.findByOrderId"
+  ],
+  "com.example.demo.controller.ProductController.addProduct": [
+    "com.example.demo.service.ProductService.addProduct"
+  ],
+  "com.example.demo.controller.OrderController.createOrder": [
+    "com.example.demo.service.OrderService.createOrder"
+  ],
+  "com.example.demo.model.PaymentRecord.getStatus": [],
+  "com.example.demo.repository.CategoryRepository.findByName": [],
+  "com.example.demo.service.OrderService.getPaymentRecordByOrderId": [
+    "com.example.demo.repository.PaymentRecordRepository.findByOrderId"
+  ],
+  "com.example.demo.repository.PaymentRecordRepository.findByOrderId": [],
+  "com.example.demo.model.OrderDetail.getTotalPrice": [],
+  "com.example.demo.model.Product.getPrice": [],
+  "com.example.demo.model.Category.setId": [],
+  "com.example.demo.model.Product.setPrice": [],
+  "com.example.demo.model.Order.setProduct": [],
+  "com.example.demo.service.CategoryService.addCategory": [],
+  "com.example.demo.model.Product.setCategory": [],
+  "com.example.demo.service.OrderService.createOrder": [
+    "com.example.demo.service.UserService.getUserById",
+    "com.example.demo.model.User.getId",
+    "com.example.demo.model.Order.getUser",
+    "com.example.demo.model.Order.setUser",
+    "com.example.demo.service.ProductService.getProductById",
+    "com.example.demo.model.Product.getId",
+    "com.example.demo.model.Order.getProduct",
+    "com.example.demo.model.Order.setProduct",
+    "com.example.demo.model.PaymentRecord.setOrder",
+    "com.example.demo.model.PaymentRecord.setPrice",
+    "com.example.demo.model.Product.getPrice",
+    "com.example.demo.model.Order.getProduct",
+    "com.example.demo.model.PaymentRecord.setStatus"
+  ],
+  "com.example.demo.repository.OrderDetailRepository.findByOrderId": [],
+  "com.example.demo.model.User.getPassword": [],
+  "com.example.demo.model.Category.setProducts": [],
+  "com.example.demo.service.ProductService.getProductById": [],
+  "com.example.demo.model.OrderDetail.getOrder": [],
+  "com.example.demo.repository.OrderRepository.findByUserId": [],
+  "com.example.demo.model.PaymentRecord.getId": [],
+  "com.example.demo.model.OrderDetail.getId": [],
+  "com.example.demo.model.Product.setId": [],
+  "com.example.demo.repository.ProductRepository.findByName": [],
+  "com.example.demo.controller.UserController.registerUser": [
+    "com.example.demo.service.UserService.registerUser"
+  ],
+  "com.example.demo.controller.ProductController.getProductById": [
+    "com.example.demo.service.ProductService.getProductById"
+  ],
+  "com.example.demo.model.PaymentRecord.getOrder": [],
+  "com.example.demo.model.Product.setStock": [],
+  "com.example.demo.model.Order.getPaymentRecord": [],
+  "com.example.demo.model.Order.getOrderDetail": [],
+  "com.example.demo.model.Order.setUser": [],
+  "com.example.demo.model.Order.getProduct": [],
+  "com.example.demo.controller.PaymentRecordController.addPaymentRecord": [
+    "com.example.demo.service.PaymentRecordService.addPaymentRecord"
+  ],
+  "com.example.demo.service.OrderService.getOrderById": [
+    "com.example.demo.service.OrderService.getOrderDetailsByOrderId",
+    "com.example.demo.service.OrderService.getPaymentRecordByOrderId",
+    "com.example.demo.model.Order.setOrderDetail",
+    "com.example.demo.model.Order.setPaymentRecord"
+  ],
+  "com.example.demo.model.Product.getStock": [],
+  "com.example.demo.model.PaymentRecord.setOrder": [],
+  "com.example.demo.model.Category.getId": [],
+  "com.example.demo.controller.StartController.startSpringBoot": [],
+  "com.example.demo.service.PaymentRecordService.addPaymentRecord": [],
+  "com.example.demo.model.PaymentRecord.setPrice": [],
+  "com.example.demo.service.OrderService.getOrderDetailsByOrderId": [
+    "com.example.demo.repository.OrderDetailRepository.findByOrderId"
+  ],
+  "com.example.demo.service.UserService.registerUser": [],
+  "com.example.demo.model.Product.setName": [],
+  "com.example.demo.controller.UserController.getUserByUsername": [
+    "com.example.demo.service.UserService.getUserByUsername"
+  ],
+  "com.example.demo.model.User.getUsername": [],
+  "com.example.demo.Demo1Application.main": [],
+  "com.example.demo.model.PaymentRecord.getPrice": [],
+  "com.example.demo.service.UserService.getUserByUsername": [
+    "com.example.demo.repository.UserRepository.findByUsername"
+  ]
+}

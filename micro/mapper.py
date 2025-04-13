@@ -307,6 +307,20 @@ def showGraph(G):
     plt.show()
 
 
+def staticGraph(G):
+    with open("callGraph.json", "r") as infile:
+        callGraph = json.load(infile)
+    print(callGraph)
+    for caller, callees in callGraph.items():
+        G.add_node(caller)
+        for callee in callees:
+            if G.has_edge(caller, callee):
+                G[caller][callee]["weight"] += 1
+            else:
+                G.add_edge(caller, callee, weight=1)
+    return G
+
+
 def buildGraph(source='json', saveSpans=False, saveEntries=False):
     # 创建有向图
     G = nx.DiGraph()
@@ -314,6 +328,8 @@ def buildGraph(source='json', saveSpans=False, saveEntries=False):
     if source == 'json':
         with open("spans.json", "r") as infile:
             spanss = json.load(infile)
+    elif source == 'static':
+        return staticGraph(G)
     else:
         spanss = []
         services = queryServices()
