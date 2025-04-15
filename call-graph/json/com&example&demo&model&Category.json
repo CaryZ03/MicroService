@@ -1,0 +1,139 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.fasterxml.jackson.annotation.JsonManagedReference",
+    "jakarta.persistence",
+    "java.util.List",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "Category",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "getId",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 21,
+          "end_lineno": 24,
+          "fileName": "com\\example\\demo\\model\\Category.java",
+          "return_variables": [
+            "id"
+          ]
+        },
+        {
+          "func_name": "setId",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "id"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 26,
+          "end_lineno": 29,
+          "fileName": "com\\example\\demo\\model\\Category.java",
+          "return_variables": []
+        },
+        {
+          "func_name": "getName",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 31,
+          "end_lineno": 34,
+          "fileName": "com\\example\\demo\\model\\Category.java",
+          "return_variables": [
+            "name"
+          ]
+        },
+        {
+          "func_name": "setName",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "name"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 36,
+          "end_lineno": 39,
+          "fileName": "com\\example\\demo\\model\\Category.java",
+          "return_variables": []
+        },
+        {
+          "func_name": "getProducts",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 41,
+          "end_lineno": 44,
+          "fileName": "com\\example\\demo\\model\\Category.java",
+          "return_variables": [
+            "products"
+          ]
+        },
+        {
+          "func_name": "setProducts",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "products"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 46,
+          "end_lineno": 49,
+          "fileName": "com\\example\\demo\\model\\Category.java",
+          "return_variables": []
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "id",
+        "name",
+        "products"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 8,
+      "end_lineno": 50,
+      "fileName": "com\\example\\demo\\model\\Category.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "id",
+    "name",
+    "products"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 50,
+  "fileName": "com\\example\\demo\\model\\Category.java",
+  "return_variables": []
+}

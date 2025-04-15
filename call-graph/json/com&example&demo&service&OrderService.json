@@ -1,0 +1,127 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.example.demo.model",
+    "com.example.demo.repository.OrderRepository",
+    "com.example.demo.repository.OrderDetailRepository",
+    "com.example.demo.repository.PaymentRecordRepository",
+    "org.springframework.beans.factory.annotation.Autowired",
+    "org.springframework.stereotype.Service",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "OrderService",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "createOrder",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "order",
+            "user",
+            "product",
+            "savedOrder",
+            "paymentRecord"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 31,
+          "end_lineno": 48,
+          "fileName": "com\\example\\demo\\service\\OrderService.java",
+          "return_variables": [
+            "savedOrder"
+          ]
+        },
+        {
+          "func_name": "getOrderDetailsByOrderId",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "orderId"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 50,
+          "end_lineno": 53,
+          "fileName": "com\\example\\demo\\service\\OrderService.java",
+          "return_variables": [
+            "orderDetailRepository.findByOrderId(orderId)"
+          ]
+        },
+        {
+          "func_name": "getPaymentRecordByOrderId",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "orderId"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 55,
+          "end_lineno": 58,
+          "fileName": "com\\example\\demo\\service\\OrderService.java",
+          "return_variables": [
+            "paymentRecordRepository.findByOrderId(orderId)"
+          ]
+        },
+        {
+          "func_name": "getOrderById",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "orderId",
+            "order"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 60,
+          "end_lineno": 70,
+          "fileName": "com\\example\\demo\\service\\OrderService.java",
+          "return_variables": [
+            "order"
+          ]
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "orderRepository",
+        "orderDetailRepository",
+        "paymentRecordRepository",
+        "productService",
+        "userService"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 11,
+      "end_lineno": 71,
+      "fileName": "com\\example\\demo\\service\\OrderService.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "orderRepository",
+    "orderDetailRepository",
+    "paymentRecordRepository",
+    "productService",
+    "userService"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 71,
+  "fileName": "com\\example\\demo\\service\\OrderService.java",
+  "return_variables": []
+}

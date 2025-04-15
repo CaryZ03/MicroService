@@ -1,0 +1,173 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.fasterxml.jackson.annotation.JsonBackReference",
+    "jakarta.persistence",
+    "java.math.BigDecimal",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "PaymentRecord",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "getId",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 24,
+          "end_lineno": 27,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": [
+            "id"
+          ]
+        },
+        {
+          "func_name": "setId",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "id"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 29,
+          "end_lineno": 32,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": []
+        },
+        {
+          "func_name": "getPrice",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 34,
+          "end_lineno": 37,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": [
+            "price"
+          ]
+        },
+        {
+          "func_name": "setPrice",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "price"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 39,
+          "end_lineno": 42,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": []
+        },
+        {
+          "func_name": "getStatus",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 44,
+          "end_lineno": 47,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": [
+            "status"
+          ]
+        },
+        {
+          "func_name": "setStatus",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "status"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 49,
+          "end_lineno": 52,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": []
+        },
+        {
+          "func_name": "getOrder",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 54,
+          "end_lineno": 57,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": [
+            "order"
+          ]
+        },
+        {
+          "func_name": "setOrder",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "order"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 59,
+          "end_lineno": 62,
+          "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+          "return_variables": []
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "id",
+        "price",
+        "status",
+        "order"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 8,
+      "end_lineno": 63,
+      "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "id",
+    "price",
+    "status",
+    "order"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 63,
+  "fileName": "com\\example\\demo\\model\\PaymentRecord.java",
+  "return_variables": []
+}

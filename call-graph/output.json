@@ -1,0 +1,59 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.example.demo.model.User",
+    "com.example.demo.repository.UserRepository",
+    "org.springframework.beans.factory.annotation.Autowired",
+    "org.springframework.stereotype.Service",
+    "java.util.List",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "imports": [],
+      "children": [
+        {
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "fileName": "com\\example\\demo\\service\\UserService.java",
+          "return_variables": []
+        },
+        {
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "fileName": "com\\example\\demo\\service\\UserService.java",
+          "return_variables": []
+        },
+        {
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [],
+          "global_variables": [],
+          "fileName": "com\\example\\demo\\service\\UserService.java",
+          "return_variables": []
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [],
+      "global_variables": [],
+      "fileName": "com\\example\\demo\\service\\UserService.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "userRepository"
+  ],
+  "node_type": "root",
+  "node": "package com.example.demo.service;\r\n\r\nimport com.example.demo.model.User;\r\nimport com.example.demo.repository.UserRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\nimport java.util.List;\r\nimport org.apache.skywalking.apm.toolkit.trace.Trace;\r\n\r\n@Service\r\npublic class UserService {\r\n\r\n    @Autowired\r\n    private UserRepository userRepository;\r\n\r\n    @Trace()\r\n    public User registerUser(User user) {\r\n        return userRepository.save(user);\r\n    }\r\n\r\n    @Trace()\r\n    public List\u003cUser\u003e getUserByUsername(String username) {\r\n        return userRepository.findByUsername(username);\r\n    }\r\n\r\n    @Trace()\r\n    public User getUserById(Long id) {\r\n        return userRepository.findById(id).orElse(null);\r\n    }\r\n}\r\n",
+  "fileName": "com\\example\\demo\\service\\UserService.java",
+  "return_variables": []
+}
