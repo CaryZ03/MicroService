@@ -37,18 +37,17 @@ public class CallGraphGenerator {
 
     public static void main(String[] args) throws Exception {
         // 项目根目录
-        String targetProjectRoot = "D:\\Programs\\MicroService\\micro\\demos\\demo1-origin";
-        addSkyWalkingDependency(targetProjectRoot + "\\pom.xml");
+        String targetProjectRoot = "..\\micro\\demos\\demo1-origin";
+//        addSkyWalkingDependency(targetProjectRoot + "\\pom.xml");
         File targetProjectDir = new File(targetProjectRoot);
 
         // 目标项目的编译类文件目录
-//        String targetProjectClassesDir = targetProjectRoot + "\\target\\classes";
         String targetProjectClassesDir = targetProjectRoot + "\\src\\main\\java";
         File targetProjectClasses = new File(targetProjectClassesDir);
 
         // 创建 CombinedTypeSolver
         CombinedTypeSolver combinedTypeSolver = new CombinedTypeSolver();
-//        combinedTypeSolver.add(new ReflectionTypeSolver());
+        combinedTypeSolver.add(new ReflectionTypeSolver());
         combinedTypeSolver.add(new JavaParserTypeSolver(targetProjectClasses));
 
         // 配置 JavaParser
@@ -61,13 +60,13 @@ public class CallGraphGenerator {
             System.out.println("Found " + javaFiles.size() + " Java files");
             for (File javaFile : javaFiles) {
                 System.out.println(javaFile);
-                addTraceAnnotation(parser, javaFile);
-//                getCallGraph(parser, javaFile);
+//                addTraceAnnotation(parser, javaFile);
+                getCallGraph(parser, javaFile);
 //                System.out.println(callGraph);
             }
         }
         // 输出调用链
-//        callGraph.forEach((caller, callees) -> System.out.println(caller + " -> " + callees));
+        callGraph.forEach((caller, callees) -> System.out.println(caller + " -> " + callees));
 //
 //        // 使用 Gson 将 Map 转换为 JSON 字符串
 //        Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -105,14 +104,14 @@ public class CallGraphGenerator {
             for (MethodDeclaration method : cu.findAll(MethodDeclaration.class)) {
                 String methodName = method.resolve().getQualifiedName();
 //                method.getSignature().asString();
-                System.out.println(method);
+//                System.out.println(method);
 //                System.out.println(method.findAll(MethodCallExpr.class));
                 callGraph.computeIfAbsent(methodName, k -> new ArrayList<>());
                 for (MethodCallExpr call : method.findAll(MethodCallExpr.class)) {
                     try {
-                        System.out.println(call);
+//                        System.out.println(call);
                         ResolvedMethodDeclaration resolvedCall = call.resolve();
-                        System.out.println(resolvedCall);
+//                        System.out.println(resolvedCall);
                         String calledMethodName = resolvedCall.getQualifiedName();
                         callGraph.get(methodName).add(calledMethodName);
                     } catch (Exception e) {

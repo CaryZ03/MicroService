@@ -75,12 +75,11 @@ public class ASTAnalyzer {
 
         String filename = root.getFileName();
         filename = filename.split(".java")[0].replace("\\", "&");
-        System.out.println(filename);
 
         // 输出到文本文件
         try (FileWriter writer = new FileWriter(filename + ".json")) {
             writer.write(json);
-            System.out.println("JSON 文件已成功写入到 output.json");
+            System.out.println("JSON written in " + filename + ".json");
         } catch (IOException e) {
             e.printStackTrace();
         }
