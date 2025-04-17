@@ -5,7 +5,7 @@ import time
 import os
 import sys
 
-G = buildGraph(source='static', saveSpans=True, saveEntries=False)
+G = buildGraph(source='json', saveSpans=True, saveEntries=False)
 showGraph(G)
 
 nx.write_graphml(G, "Partition/data/src/graph.graphml")
