@@ -1,0 +1,95 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.example.demo.model.User",
+    "com.example.demo.service.UserService",
+    "org.springframework.beans.factory.annotation.Autowired",
+    "org.springframework.web.bind.annotation",
+    "java.util.List",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "UserController",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "registerUser",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "user"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 17,
+          "end_lineno": 21,
+          "fileName": "com\\example\\demo\\controller\\UserController.java",
+          "return_variables": [
+            "userService.registerUser(user)"
+          ]
+        },
+        {
+          "func_name": "getUserByUsername",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "username"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 23,
+          "end_lineno": 27,
+          "fileName": "com\\example\\demo\\controller\\UserController.java",
+          "return_variables": [
+            "userService.getUserByUsername(username)"
+          ]
+        },
+        {
+          "func_name": "getUserById",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "id"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 29,
+          "end_lineno": 33,
+          "fileName": "com\\example\\demo\\controller\\UserController.java",
+          "return_variables": [
+            "userService.getUserById(id)"
+          ]
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "userService"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 10,
+      "end_lineno": 34,
+      "fileName": "com\\example\\demo\\controller\\UserController.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "userService"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 34,
+  "fileName": "com\\example\\demo\\controller\\UserController.java",
+  "return_variables": []
+}
