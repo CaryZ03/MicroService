@@ -237,7 +237,7 @@ def toRegex(name):
 def matchEntry(name, entries):
     tmp_entry = {}
     for entry in entries:
-        print("entry:", entry)
+        # print("entry:", entry)
         if entry["name"] == name:
             return entry
         elif re.fullmatch(toRegex(entry["name"]), name):
@@ -351,7 +351,7 @@ def buildGraph(source='json', saveSpans=False, saveEntries=False):
         with open("entries_demo1.json", "r") as json_file:
             entries = json.load(json_file)
     
-    print("Entries:", entries)
+    # print("Entries:", entries)
 
     for spans in spanss:
         addToGraph(G, spans, entries, saveEntries)

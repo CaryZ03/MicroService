@@ -77,7 +77,7 @@ public class ASTAnalyzer {
         filename = filename.split(".java")[0].replace("\\", "&");
 
         // 输出到文本文件
-        try (FileWriter writer = new FileWriter(filename + ".json")) {
+        try (FileWriter writer = new FileWriter("./result/" + filename + ".json")) {
             writer.write(json);
             System.out.println("JSON written in " + filename + ".json");
         } catch (IOException e) {

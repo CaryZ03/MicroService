@@ -1,0 +1,95 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.example.demo.model.User",
+    "com.example.demo.repository.UserRepository",
+    "org.springframework.beans.factory.annotation.Autowired",
+    "org.springframework.stereotype.Service",
+    "java.util.List",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "UserService",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "registerUser",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "user"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 16,
+          "end_lineno": 19,
+          "fileName": "com\\example\\demo\\service\\UserService.java",
+          "return_variables": [
+            "userRepository.save(user)"
+          ]
+        },
+        {
+          "func_name": "getUserByUsername",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "username"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 21,
+          "end_lineno": 24,
+          "fileName": "com\\example\\demo\\service\\UserService.java",
+          "return_variables": [
+            "userRepository.findByUsername(username)"
+          ]
+        },
+        {
+          "func_name": "getUserById",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "id"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 26,
+          "end_lineno": 29,
+          "fileName": "com\\example\\demo\\service\\UserService.java",
+          "return_variables": [
+            "userRepository.findById(id).orElse(null)"
+          ]
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "userRepository"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 10,
+      "end_lineno": 30,
+      "fileName": "com\\example\\demo\\service\\UserService.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "userRepository"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 30,
+  "fileName": "com\\example\\demo\\service\\UserService.java",
+  "return_variables": []
+}

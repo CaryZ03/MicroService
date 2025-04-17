@@ -1,0 +1,94 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.example.demo.model.Product",
+    "com.example.demo.repository.ProductRepository",
+    "org.springframework.beans.factory.annotation.Autowired",
+    "org.springframework.stereotype.Service",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "ProductService",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "addProduct",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "product"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 15,
+          "end_lineno": 18,
+          "fileName": "com\\example\\demo\\service\\ProductService.java",
+          "return_variables": [
+            "productRepository.save(product)"
+          ]
+        },
+        {
+          "func_name": "getProductByName",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "name"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 20,
+          "end_lineno": 23,
+          "fileName": "com\\example\\demo\\service\\ProductService.java",
+          "return_variables": [
+            "productRepository.findByName(name)"
+          ]
+        },
+        {
+          "func_name": "getProductById",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "id"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 25,
+          "end_lineno": 28,
+          "fileName": "com\\example\\demo\\service\\ProductService.java",
+          "return_variables": [
+            "productRepository.findById(id).orElse(null)"
+          ]
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "productRepository"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 9,
+      "end_lineno": 29,
+      "fileName": "com\\example\\demo\\service\\ProductService.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "productRepository"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 29,
+  "fileName": "com\\example\\demo\\service\\ProductService.java",
+  "return_variables": []
+}

@@ -1,0 +1,50 @@
+{
+  "func_name": "root",
+  "imports": [
+    "org.springframework.boot.SpringApplication",
+    "org.springframework.boot.autoconfigure.SpringBootApplication",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "Demo1Application",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "main",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "args"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 10,
+          "end_lineno": 13,
+          "fileName": "com\\example\\demo\\Demo1Application.java",
+          "return_variables": []
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 7,
+      "end_lineno": 14,
+      "fileName": "com\\example\\demo\\Demo1Application.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 14,
+  "fileName": "com\\example\\demo\\Demo1Application.java",
+  "return_variables": []
+}

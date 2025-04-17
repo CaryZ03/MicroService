@@ -1,0 +1,58 @@
+{
+  "func_name": "root",
+  "imports": [
+    "com.example.demo.model.OrderDetail",
+    "com.example.demo.repository.OrderDetailRepository",
+    "org.springframework.beans.factory.annotation.Autowired",
+    "org.springframework.stereotype.Service",
+    "org.apache.skywalking.apm.toolkit.trace.Trace"
+  ],
+  "children": [
+    {
+      "func_name": "OrderDetailService",
+      "imports": [],
+      "children": [
+        {
+          "func_name": "addOrderDetail",
+          "imports": [],
+          "children": [],
+          "use_variables": [],
+          "def_variables": [
+            "orderDetail"
+          ],
+          "global_variables": [],
+          "node_type": "function",
+          "node": "\n\ndef __init__():\n    pass\n",
+          "lineno": 15,
+          "end_lineno": 18,
+          "fileName": "com\\example\\demo\\service\\OrderDetailService.java",
+          "return_variables": [
+            "orderDetailRepository.save(orderDetail)"
+          ]
+        }
+      ],
+      "use_variables": [],
+      "def_variables": [
+        "orderDetailRepository"
+      ],
+      "global_variables": [],
+      "node_type": "class",
+      "node": "\n\ndef __init__():\n    pass\n",
+      "lineno": 9,
+      "end_lineno": 19,
+      "fileName": "com\\example\\demo\\service\\OrderDetailService.java",
+      "return_variables": []
+    }
+  ],
+  "use_variables": [],
+  "def_variables": [],
+  "global_variables": [
+    "orderDetailRepository"
+  ],
+  "node_type": "root",
+  "node": "\n\ndef __init__():\n    pass\n",
+  "lineno": 1,
+  "end_lineno": 19,
+  "fileName": "com\\example\\demo\\service\\OrderDetailService.java",
+  "return_variables": []
+}
