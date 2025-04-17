@@ -1,5 +1,5 @@
 {
-    "1": [
+    "0": [
         "POST:/payment-records",
         "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
         "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
@@ -32,25 +32,25 @@
         "GET:/products/name/{str}",
         "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
         "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
-        "GET:/categories/name/{str}",
-        "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
-        "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)"
+        "POST:/categories",
+        "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+        "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
     ],
     "4": [
         "Mysql.springboot.user",
         "com.example.demo.service.UserService.getUserById(java.lang.Long)",
         "GET:/users/id/{int}",
         "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
-        "GET:/users/username/name1",
+        "GET:/users/username/{str}",
         "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
         "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
         "POST:/users/register",
         "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
         "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)"
     ],
-    "0": [
-        "POST:/categories",
-        "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
-        "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
+    "1": [
+        "GET:/categories/name/{str}",
+        "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+        "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)"
     ]
 }
