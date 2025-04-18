@@ -12,7 +12,11 @@ public class ControllerA {
 
     @GetMapping("/test")
     public String callServiceB() {
-        return controllerB.test("hihi");
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("hihi");
+
+        return controllerB.test(user);
     }
 
 }

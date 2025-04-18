@@ -6,13 +6,15 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class ControllerB {
+    
+    @Autowired
+    private RestTemplate restTemplate;
 
-    public String test(String name) {
-        RestTemplate restTemplate;
+    public String test(User user) {
 
-        String SERVICE_PROVIDER_ADDRESS = "http://service-b.example.com:18001";
+        String SERVICE_PROVIDER_ADDRESS = "http://127.0.0.1:18001";
 
-        return restTemplate.getForObject(SERVICE_PROVIDER_ADDRESS +"/test-service-b", String.class);
+        return restTemplate.postForObject(SERVICE_PROVIDER_ADDRESS +"/B/test", user, String.class);
     }
 
 }
