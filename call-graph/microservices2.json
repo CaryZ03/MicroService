@@ -1,0 +1,9 @@
+{
+    "0": [
+        "com.example.demo.ControllerA.callServiceB()",
+        "GET:/test"
+    ],
+    "1": [
+        "com.example.demo.ControllerB.test(java.lang.String)"
+    ]
+}

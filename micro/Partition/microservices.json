@@ -1,5 +1,5 @@
 {
-    "0": [
+    "3": [
         "POST:/payment-records",
         "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
         "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
@@ -18,7 +18,7 @@
         "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
         "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"
     ],
-    "2": [
+    "5": [
         "Mysql.springboot.product",
         "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
         "GET:/products/id/{int}",
@@ -27,14 +27,11 @@
         "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
         "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"
     ],
-    "3": [
+    "0": [
         "Mysql.springboot.category",
         "GET:/products/name/{str}",
         "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
-        "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
-        "POST:/categories",
-        "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
-        "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
+        "com.example.demo.service.ProductService.getProductByName(java.lang.String)"
     ],
     "4": [
         "Mysql.springboot.user",
@@ -52,5 +49,10 @@
         "GET:/categories/name/{str}",
         "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
         "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)"
+    ],
+    "2": [
+        "POST:/categories",
+        "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+        "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
     ]
 }

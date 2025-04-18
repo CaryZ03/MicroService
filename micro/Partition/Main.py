@@ -39,6 +39,7 @@ def stage1Main() -> None:
 
         # get partition and microservices.
         partition: Dict[str, int] = louvain.partitionCommunities(graph) 
+        print(partition)
         microservices: Dict[int, List[str]] = louvain.partitionMicroservices(partition)
 
         for serviceID, functions in microservices.items():

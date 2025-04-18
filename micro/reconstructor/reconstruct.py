@@ -2,6 +2,9 @@ import requests
 import zipfile
 import io
 import json
+import shutil
+import os
+
 
 def createProject(baseDir):
     # baseDir = "demo1"
@@ -45,22 +48,26 @@ def createProject(baseDir):
         print("Status code:", response.status_code)
 
 
-jsonFile = "../microservices1.json"
+jsonFile = "../microservices2.json"
 with open(jsonFile, 'r') as file:
     data = json.load(file)
 
 print(data)
 
+
+src_folder = "../demos/demo-simple"
+
 for key, value in data.items():
-    createProject("demo" + key)
+    # createProject("demo" + key)
+    dst_folder = 'microservices/microservice' + key
+    
+    if os.path.exists(dst_folder):
+        shutil.rmtree(dst_folder)
+
+    shutil.copytree(src_folder, dst_folder)
+
+    print(f"文件夹已成功复制并重命名为：{dst_folder}")
+
+    
 
 
-# for i in range(1, 3):
-#     createProject("demo" + str(i))
-
-
-
-
-
-
-# \myapp\demo\src\main\java\
