@@ -35,7 +35,7 @@ class GraphMLHelper:
         Position: Dict[str, Tuple[float, float]] = nx.spring_layout(graph)
 
         # 2. draw nodes and edges.
-        nx.draw(graph, Position, with_labels=True, node_color="lightblue", node_size=2000, font_size=10, font_weight="bold")
+        nx.draw(graph, Position, with_labels=False, node_color="lightblue", node_size=2000, font_size=10, font_weight="bold")
 
         # 3. if the edges have weight, draw it.
         if graph.edges:

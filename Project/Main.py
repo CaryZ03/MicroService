@@ -4,23 +4,19 @@ from typing import List, Dict, Set, Tuple
 from tools.GraphMLHelper import GraphMLHelper
 from tools.LouvainHelper import LouvainHelper
 
-from entities.Node import Node
-from entities.MicroService import MicroService
-
-from dqns.DQNetwork import DQNetwork
 from dqns.DQNAgent import DQNAgent
 from dqns.GraphEnvironment import GraphEnvironment
 
-import community
-from community import community_louvain
-from community import best_partition
-
-import math
-import random
 import os
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+
+# before we start:
+# 1. install everything in requirements.txt.
+# 2. GraphMLHelper is a class that helps to read, visiualize and save graphML files.
+# 3. LouvainHelper is a class that helps to partition the graph into microservices using Louvain algorithm.
+
 
 # stage1: I didn't use the DQN model in this stage,
 # but Louvain algorithm to partition the graph into microservices.
@@ -30,22 +26,30 @@ def stage1Main() -> None:
 
     graphMLSourcePath: str = "./data/src"
     graphMLTargetPath: str = "./data/target"
+    # I assume we have many .graphml files in the source path.
     graphMLPaths: List[str] = gmh.getGraphMLPath(graphMLSourcePath)
 
+    # make partition for each .graphml file.
     for graphMLPath in graphMLPaths:
-        # get origin graph.
         graph : nx.DiGraph = gmh.getGraphFromGraphML(graphMLPath)
+        # visualize the original graph.
+        gmh.visualizeGraph(graph, f"{graphMLTargetPath}/origin_{os.path.basename(graphMLPath)}")
 
-        # get partition and microservices.
+        # get microservice partition.
         partition: Dict[str, int] = louvain.partitionCommunities(graph) 
         microservices: Dict[int, List[str]] = louvain.partitionMicroservices(partition)
 
+        # print the partition of microservice.
         for serviceID, functions in microservices.items():
             print(f"microserive {serviceID}: {functions}")
 
+        # convert the microservice partition to nx.DiGraph.
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservices)
 
-        # graph save.
+        # visualize the handled graph.
+        gmh.visualizeGraph(microserviceGraph, f"{graphMLTargetPath}/microservice_{os.path.basename(graphMLPath)}")
+
+        # save the microservice graph to a .graphml file.
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
         gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")
 
@@ -59,22 +63,27 @@ def stage2Main() -> None:
     graphMLPaths: List[str] = gmh.getGraphMLPath(graphMLSourcePath)
 
     for graphMLPath in graphMLPaths:
-        # get origin graph.
         graph : nx.DiGraph = gmh.getGraphFromGraphML(graphMLPath)
-        env: GraphEnvironment = GraphEnvironment(graph)
+        # we use the result of Louvain algorithm as our reference.
+        partition_reference: Dict[str, int] = louvain.partitionCommunities(graph)
+        microservice_reference: Dict[int, List[str]] = louvain.partitionMicroservices(partition_reference)
+
+        # initialize the environment and agent.
+        microservice_count: int = len(microservice_reference.keys())
+        env: GraphEnvironment = GraphEnvironment(graph, microservice_count)
 
         state_dim: int = env.getNodeCnt()
-        microservice_count: int = int(math.sqrt(env.getNodeCnt()))
         action_dim: int = env.getNodeCnt() * microservice_count
         agent: DQNAgent = DQNAgent(state_dim, action_dim)
 
-        episodes = 5000
+        episodes = 3000
         max_steps = 100
-        batch_size = 32
+        batch_size = 128
 
         for episode in range(episodes):
             env.reset()
-            # the state from env is DICT!!!
+            
+            # the state is a Dict, and we have to convert it into a numpy array.
             ori_state: Dict[int, int] = env.getState()
             state: np.ndarray = np.array(list(ori_state.values()))
 
@@ -83,15 +92,17 @@ def stage2Main() -> None:
             step_count = 0
             
             while not done and step_count < max_steps:
+                # get the best action.
                 action: int = agent.act(state)
-                # print("action: ", action)
+
+                # get the result of the actino.
                 res: Tuple[Dict[int, int], float, bool] = env.step(action)
-                # the state from env is DICT!!!
                 ori_next_state: Dict[int, int] = res[0]
                 next_state: np.ndarray = np.array(list(ori_next_state.values()))
                 reward: float = res[1]
                 done: bool = res[2]
 
+                # save to experience replay area.
                 agent.add_to_memory(state, action, reward, next_state, done)
 
                 if len(agent.memory) >= batch_size:
@@ -100,8 +111,9 @@ def stage2Main() -> None:
                 total_reward += reward
                 state = next_state
                 step_count += 1
-
-            if episode % 10 == 0:
+            
+            # update the target network evert 50 episodes.
+            if episode % 50 == 0:
                     agent.softUpdateTargetNetwork()
             
             if episode % 100 == 0:
@@ -111,8 +123,9 @@ def stage2Main() -> None:
         # print the partition of microservice.
         # ============================
         print("\n=== Final Microservice Partitioning Result ===")
-        node_microservice: Dict[int, int] = env.getState()
 
+        # change the state into a Dict: {microserviceID: functionName}.
+        node_microservice: Dict[int, int] = env.getState()
         microservice_to_nodes: Dict[int, List[str]] = {}
         for node_id, ms_id in node_microservice.items():
             node_name = env.nodes[node_id].name
@@ -121,6 +134,7 @@ def stage2Main() -> None:
         for ms_id, node_list in microservice_to_nodes.items():
             print(f"Microservice {ms_id}: Nodes {node_list}")
 
+        # save the partition result.
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservice_to_nodes)
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
         gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")

@@ -10,12 +10,13 @@ from entities.Edge import Edge
 from entities.MicroService import MicroService
 
 class GraphEnvironment:
-    def __init__(self, directed_graph: nx.DiGraph):
+    def __init__(self, directed_graph: nx.DiGraph, microservice_count: int):
 
         # initialize the graph and its nodes.
         self.dir_graph: nx.DiGraph = directed_graph
         self.undir_graph: nx.Graph = directed_graph.to_undirected()
 
+        # we use index to represent the node, since the neuro network can only accept numbers.
         self.nodes: Dict[int, Node] = {}
         self.node_name_to_ind: Dict[str, int] = {}
         self.node_count: int = len(self.dir_graph.nodes)
@@ -23,7 +24,7 @@ class GraphEnvironment:
         self.edges: Dict[int, List[Edge]] = {}
 
         self.microservices: Dict[int, MicroService] = {}
-        self.microservices_count: int = int(math.sqrt(self.node_count))
+        self.microservices_count: int = microservice_count
         self.node_microservice: Dict[int, int] = {}
 
         for i in range(self.microservices_count):
@@ -31,7 +32,7 @@ class GraphEnvironment:
 
         self.current_node_index = 0
 
-        # at the beginning, each node belongs to one microservice.
+        # initialize nodes with information.
         ind = 0
         for node_name, data in self.dir_graph.nodes(data=True):
             self.nodes[ind] = Node(node_name, data['execution_time'], data['count'])
@@ -42,6 +43,7 @@ class GraphEnvironment:
 
             ind += 1
         
+        # initialize edges with information.
         self.edge_size: int = 0
         self.edge_weights: int = 0
         for u, v, data in self.dir_graph.edges(data=True):
@@ -56,10 +58,8 @@ class GraphEnvironment:
 
         print("init graph environment successfully.")
         print("the node count: ", self.node_count)
-
-        self.best_reward: float = -math.inf
-        self.best_partition: Dict[int, int] = {}
-            
+    
+    # reset the environment.
     def reset(self) ->None:
         self.current_node_index = 0
         for i in range(self.node_count):
@@ -73,16 +73,13 @@ class GraphEnvironment:
     
     def step(self, action: int) -> Tuple[Dict[int, int], float, bool]:
         func_id, new_service_id = action // self.microservices_count, action % self.microservices_count
-        # print("func_id:",func_id,"new_service_id:",new_service_id)
-        # the origin node microservice dict.
         node_microservice_before: Dict[int, int] = self.node_microservice.copy()
         
         self.node_microservice[func_id] = new_service_id
-        # the updated node microservice dict.
         node_microservice_after: Dict[int, int] = self.node_microservice.copy()
         reward: float = self.calcStepReward(node_microservice_before, node_microservice_after)
 
-        # learning the greatest microservice node by node.
+        # at present, we think if we have done node_count steps, we finish the task!!
         self.current_node_index += 1
 
         done: bool = self.current_node_index >= self.node_count

@@ -11,8 +11,11 @@ from dqns.DQNetwork import DQNetwork
 class DQNAgent:
     def __init__(self, state_dim: int, action_dim: int,
                  learning_rate: float = 0.0001, gamma: float = 0.99, 
-                 epsilon: float = 0.75, epsilon_min : float= 0.05, 
+                 epsilon: float = 0.99, epsilon_min : float= 0.05, 
                  epsilon_decay: float = 0.995):
+        
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print("Using device: ", self.device)
 
         # the dimensions of the state and action for DQNetwork.
         self.state_dim: int = state_dim
@@ -31,6 +34,10 @@ class DQNAgent:
         # the main and target DQNetwork.
         self.main_network: DQNetwork = DQNetwork(state_dim, action_dim)
         self.target_network: DQNetwork = DQNetwork(state_dim, action_dim)
+
+        self.main_network.to(self.device)
+        self.target_network.to(self.device)
+
         self.target_network.load_state_dict(self.main_network.state_dict())
         self.optimizer: optim.Adam = optim.Adam(self.main_network.parameters(), lr=learning_rate)
 
@@ -43,7 +50,7 @@ class DQNAgent:
 
     def act(self, state: np.ndarray) -> int:
         # print(state)
-        state_tensor: torch.tensor = torch.tensor(state, dtype=torch.float32)
+        state_tensor: torch.tensor = torch.tensor(state, dtype=torch.float32,  device=self.device)
 
         if state_tensor.ndim == 1:
             state_tensor = state_tensor.unsqueeze(0)
@@ -61,11 +68,11 @@ class DQNAgent:
 
         minibatch = random.sample(self.memory, batch_size)
 
-        states = torch.tensor(np.array([i[0] for i in minibatch]), dtype=torch.float32)
-        actions = torch.tensor(np.array([i[1] for i in minibatch]), dtype=torch.long)
-        rewards = torch.tensor(np.array([i[2] for i in minibatch]), dtype=torch.float32)
-        next_states = torch.tensor(np.array([i[3] for i in minibatch]), dtype=torch.float32)
-        dones = torch.tensor(np.array([i[4] for i in minibatch]), dtype=torch.bool)
+        states = torch.tensor(np.array([i[0] for i in minibatch]), dtype=torch.float32, device=self.device)
+        actions = torch.tensor(np.array([i[1] for i in minibatch]), dtype=torch.long, device=self.device)
+        rewards = torch.tensor(np.array([i[2] for i in minibatch]), dtype=torch.float32, device=self.device)
+        next_states = torch.tensor(np.array([i[3] for i in minibatch]), dtype=torch.float32, device=self.device)
+        dones = torch.tensor(np.array([i[4] for i in minibatch]), dtype=torch.bool, device=self.device)
 
         # 计算当前 Q 值
         current_q = self.main_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
