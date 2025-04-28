@@ -276,10 +276,10 @@ def addToGraph(G, spans, entries, saveEntries=False):
                 parent_node = next((n for n in spans if n["spanId"] == node["parentSpanId"]), None)
                 if parent_node:
                     parent_node_id = getNodeId(parent_node, entries) if not saveEntries else parent_node["endpointName"]
-                    if G.has_edge(node_id, parent_node_id):
-                        G[node_id][parent_node_id]["weight"] += weight
+                    if G.has_edge(parent_node_id, node_id):
+                        G[parent_node_id][node_id]["weight"] += weight
                     else:
-                        G.add_edge(node_id, parent_node_id, weight=weight)
+                        G.add_edge(parent_node_id, node_id, weight=weight)
             else:
                 if saveEntries:
                     entries += [node]

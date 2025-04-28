@@ -1,5 +1,5 @@
 {
-    "3": [
+    "0": [
         "POST:/payment-records",
         "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
         "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
@@ -18,41 +18,43 @@
         "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
         "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"
     ],
-    "5": [
+    "2": [
         "Mysql.springboot.product",
+        "Mysql.springboot.category",
         "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
         "GET:/products/id/{int}",
         "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
-        "POST:/products",
-        "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
-        "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"
-    ],
-    "0": [
-        "Mysql.springboot.category",
         "GET:/products/name/{str}",
         "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
         "com.example.demo.service.ProductService.getProductByName(java.lang.String)"
     ],
-    "4": [
+    "3": [
         "Mysql.springboot.user",
         "com.example.demo.service.UserService.getUserById(java.lang.Long)",
         "GET:/users/id/{int}",
         "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
-        "GET:/users/username/{str}",
-        "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
-        "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
         "POST:/users/register",
         "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
         "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)"
     ],
-    "1": [
+    "4": [
         "GET:/categories/name/{str}",
         "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
         "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)"
     ],
-    "2": [
+    "5": [
+        "POST:/products",
+        "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+        "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"
+    ],
+    "6": [
         "POST:/categories",
         "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
         "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
+    ],
+    "1": [
+        "GET:/users/username/{str}",
+        "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+        "com.example.demo.service.UserService.getUserByUsername(java.lang.String)"
     ]
 }

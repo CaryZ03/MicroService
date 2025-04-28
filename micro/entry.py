@@ -6,7 +6,7 @@ import os
 import sys
 
 G = buildGraph(source='json', saveSpans=True, saveEntries=False)
-# showGraph(G)
+showGraph(G)
 
 nx.write_graphml(G, "Partition/data/src/graph.graphml")
 
