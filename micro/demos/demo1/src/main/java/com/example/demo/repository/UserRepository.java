@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
     @Trace
     List<User> findByUsername(String username);
 }

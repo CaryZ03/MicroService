@@ -42,17 +42,16 @@ def stage1Main() -> None:
         print(partition)
         microservices: Dict[int, List[str]] = louvain.partitionMicroservices(partition)
 
-        for serviceID, functions in microservices.items():
-            print(f"microserive {serviceID}: {functions}")
-            
-        with open("microservices.json", "w") as f:
-            json.dump(microservices, f, indent=4)
+        with open("partition.json", "w") as f:
+            json.dump(partition, f, indent=4)
 
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservices)
 
         # graph save.
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
         gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")
+        
+        return partition
 
 # stage2: use the DQN model.
 def stage2Main() -> None:

@@ -1,9 +1,23 @@
 {
-    "0": [
-        "com.example.demo.ControllerA.callServiceB()",
-        "GET:/test"
-    ],
-    "1": [
-        "com.example.demo.ControllerB.test(java.lang.String)"
-    ]
+    "0": {
+        "functions": [
+            "com.example.demo.ControllerA.callServiceB()",
+            "GET:/test"
+        ],
+        "ins": [
+        ],
+        "outs": [
+            "com.example.demo.ControllerA.callServiceB()"
+        ]
+    },
+    "1": {
+        "functions": [
+            "com.example.demo.ControllerB.test(java.lang.String)"
+        ],
+        "ins": [
+            "com.example.demo.ControllerB.test(java.lang.String)"
+        ],
+        "outs": [
+        ]
+    }
 }

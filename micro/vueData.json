@@ -1,0 +1,518 @@
+{
+    "rawData": [
+        {
+            "func_name": "ProductController.addProduct(Product)",
+            "file_path": "com/example/demo/controller/ProductController",
+            "full_name": "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "ProductService.addProduct(Product)",
+            "file_path": "com/example/demo/service/ProductService",
+            "full_name": "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "OrderDetailController.addOrderDetail(OrderDetail)",
+            "file_path": "com/example/demo/controller/OrderDetailController",
+            "full_name": "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 1
+        },
+        {
+            "func_name": "OrderDetailService.addOrderDetail(OrderDetail)",
+            "file_path": "com/example/demo/service/OrderDetailService",
+            "full_name": "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 1
+        },
+        {
+            "func_name": "OrderService.getOrderDetailsByOrderId(Long)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 1
+        },
+        {
+            "func_name": "UserService.getUserById(Long)",
+            "file_path": "com/example/demo/service/UserService",
+            "full_name": "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "UserController.getUserByUsername(String)",
+            "file_path": "com/example/demo/controller/UserController",
+            "full_name": "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "UserService.getUserByUsername(String)",
+            "file_path": "com/example/demo/service/UserService",
+            "full_name": "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "ProductService.getProductByName(String)",
+            "file_path": "com/example/demo/service/ProductService",
+            "full_name": "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 2
+        },
+        {
+            "func_name": "CategoryController.addCategory(Category)",
+            "file_path": "com/example/demo/controller/CategoryController",
+            "full_name": "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 6
+        },
+        {
+            "func_name": "CategoryService.addCategory(Category)",
+            "file_path": "com/example/demo/service/CategoryService",
+            "full_name": "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 6
+        },
+        {
+            "func_name": "PaymentRecordService.getPaymentRecordByOrderId(Long)",
+            "file_path": "com/example/demo/service/PaymentRecordService",
+            "full_name": "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 7
+        },
+        {
+            "func_name": "ProductController.getProductById(Long)",
+            "file_path": "com/example/demo/controller/ProductController",
+            "full_name": "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "ProductService.getProductById(Long)",
+            "file_path": "com/example/demo/service/ProductService",
+            "full_name": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "PaymentRecordController.getPaymentRecordByOrderId(Long)",
+            "file_path": "com/example/demo/controller/PaymentRecordController",
+            "full_name": "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 7
+        },
+        {
+            "func_name": "UserController.registerUser(User)",
+            "file_path": "com/example/demo/controller/UserController",
+            "full_name": "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "UserService.registerUser(User)",
+            "file_path": "com/example/demo/service/UserService",
+            "full_name": "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "OrderController.getOrderById(Long)",
+            "file_path": "com/example/demo/controller/OrderController",
+            "full_name": "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 1
+        },
+        {
+            "func_name": "OrderService.getOrderById(Long)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 1
+        },
+        {
+            "func_name": "OrderService.getPaymentRecordByOrderId(Long)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 1
+        },
+        {
+            "func_name": "OrderController.createOrder(Order)",
+            "file_path": "com/example/demo/controller/OrderController",
+            "full_name": "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "OrderService.createOrder(Order)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "ProductController.getProductByName(String)",
+            "file_path": "com/example/demo/controller/ProductController",
+            "full_name": "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 2
+        },
+        {
+            "func_name": "CategoryService.getCategoryByName(String)",
+            "file_path": "com/example/demo/service/CategoryService",
+            "full_name": "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 4
+        },
+        {
+            "func_name": "PaymentRecordService.addPaymentRecord(PaymentRecord)",
+            "file_path": "com/example/demo/service/PaymentRecordService",
+            "full_name": "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 5
+        },
+        {
+            "func_name": "PaymentRecordController.addPaymentRecord(PaymentRecord)",
+            "file_path": "com/example/demo/controller/PaymentRecordController",
+            "full_name": "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 5
+        },
+        {
+            "func_name": "UserController.getUserById(Long)",
+            "file_path": "com/example/demo/controller/UserController",
+            "full_name": "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
+        },
+        {
+            "func_name": "CategoryController.getCategoryByName(String)",
+            "file_path": "com/example/demo/controller/CategoryController",
+            "full_name": "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 4
+        }
+    ],
+    "rawConnections": [
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/ProductController",
+                "ProductController.addProduct(Product)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/ProductService",
+                "ProductService.addProduct(Product)"
+            ],
+            "execution_time": 10,
+            "call_count": 3
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/OrderDetailController",
+                "OrderDetailController.addOrderDetail(OrderDetail)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/OrderDetailService",
+                "OrderDetailService.addOrderDetail(OrderDetail)"
+            ],
+            "execution_time": 10,
+            "call_count": 3
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/UserController",
+                "UserController.getUserByUsername(String)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/UserService",
+                "UserService.getUserByUsername(String)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/CategoryController",
+                "CategoryController.addCategory(Category)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/CategoryService",
+                "CategoryService.addCategory(Category)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/ProductController",
+                "ProductController.getProductById(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/ProductService",
+                "ProductService.getProductById(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 3
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/PaymentRecordController",
+                "PaymentRecordController.getPaymentRecordByOrderId(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/PaymentRecordService",
+                "PaymentRecordService.getPaymentRecordByOrderId(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 1
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/UserController",
+                "UserController.registerUser(User)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/UserService",
+                "UserService.registerUser(User)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/OrderController",
+                "OrderController.getOrderById(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderById(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderById(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderDetailsByOrderId(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderById(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.getPaymentRecordByOrderId(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/OrderController",
+                "OrderController.createOrder(Order)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.createOrder(Order)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.createOrder(Order)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/UserService",
+                "UserService.getUserById(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/service/OrderService",
+                "OrderService.createOrder(Order)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/ProductService",
+                "ProductService.getProductById(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/ProductController",
+                "ProductController.getProductByName(String)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/ProductService",
+                "ProductService.getProductByName(String)"
+            ],
+            "execution_time": 10,
+            "call_count": 3
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/PaymentRecordController",
+                "PaymentRecordController.addPaymentRecord(PaymentRecord)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/PaymentRecordService",
+                "PaymentRecordService.addPaymentRecord(PaymentRecord)"
+            ],
+            "execution_time": 10,
+            "call_count": 1
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/UserController",
+                "UserController.getUserById(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/UserService",
+                "UserService.getUserById(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/CategoryController",
+                "CategoryController.getCategoryByName(String)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/CategoryService",
+                "CategoryService.getCategoryByName(String)"
+            ],
+            "execution_time": 10,
+            "call_count": 2
+        }
+    ]
+}

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>微服务节点可视化</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+      #chart {
+        width: 100%;
+        height: 100vh;
+      }
+      #tooltip {
+        position: absolute;
+        display: none;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        pointer-events: none;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <div id="tooltip"></div>
+
+    <script>
+      const rawData = [
+        {
+          func_name: "f1",
+          label: 0,
+          count: 3,
+          file_path: "a.py",
+          lineno: 10,
+          end_lineno: 20,
+          execution_time: 30,
+        },
+        {
+          func_name: "f2",
+          label: 0,
+          count: 2,
+          file_path: "a.py",
+          lineno: 30,
+          end_lineno: 35,
+          execution_time: 10,
+        },
+        {
+          func_name: "f3",
+          label: 1,
+          count: 4,
+          file_path: "b.py",
+          lineno: 5,
+          end_lineno: 15,
+          execution_time: 45,
+        },
+      ];
+
+      const rawConnections = [
+        {
+          caller_tuple: ["mod1", "f1"],
+          called_tuple: ["mod1", "f2"],
+          call_count: 5,
+          execution_time: 100,
+        },
+        {
+          caller_tuple: ["mod1", "f2"],
+          called_tuple: ["mod1", "f3"],
+          call_count: 3,
+          execution_time: 50,
+        },
+      ];
+
+      const chart = echarts.init(document.getElementById("chart"));
+      const tooltip = document.getElementById("tooltip");
+
+      const labelColors = [
+        "#ff5722",
+        "#3f51b5",
+        "#4caf50",
+        "#e91e63",
+        "#009688",
+        "#ff9800",
+      ];
+      const funcCoords = {};
+      const graphicElements = [];
+      const placedCircles = [];
+      const labelByCircle = {};
+      const padding = 20;
+
+      const grouped = rawData.reduce((acc, cur) => {
+        acc[cur.label] = acc[cur.label] || [];
+        acc[cur.label].push(cur);
+        return acc;
+      }, {});
+
+      const isCircleOverlapping = (cx, cy, r) =>
+        placedCircles.some(
+          (c) =>
+            Math.sqrt((c.cx - cx) ** 2 + (c.cy - cy) ** 2) < c.r + r + padding
+        );
+
+      Object.entries(grouped).forEach(([label, funcs]) => {
+        const funcCount = funcs.length;
+        const r = Math.max(50, Math.min(200, 20 + Math.sqrt(funcCount) * 60));
+        let cx,
+          cy,
+          attempt = 0;
+        do {
+          cx = Math.random() * 1000 + r;
+          cy = Math.random() * 600 + r;
+          attempt++;
+        } while (isCircleOverlapping(cx, cy, r) && attempt < 500);
+
+        placedCircles.push({ cx, cy, r });
+        labelByCircle[`${cx},${cy},${r}`] = parseInt(label);
+
+        // 画背景圈
+        graphicElements.push({
+          type: "circle",
+          shape: { cx, cy, r },
+          style: { fill: "#f5f5f5", stroke: "#aaa", lineWidth: 1 },
+        });
+
+        // 标签
+        graphicElements.push({
+          type: "text",
+          style: {
+            text: `微服务 ${label}`,
+            x: cx - r,
+            y: cy - r - 10,
+            fill: "#333",
+            font: "bold 14px sans-serif",
+          },
+        });
+
+        funcs.forEach((f, i) => {
+          const angle = ((2 * Math.PI) / funcs.length) * i;
+          const pr = r * 0.7;
+          const px = cx + pr * Math.cos(angle);
+          const py = cy + pr * Math.sin(angle);
+          const radius = Math.max(8, f.count * 4);
+          const color = labelColors[f.label % labelColors.length];
+
+          funcCoords[f.func_name] = { x: px, y: py };
+
+          // 画函数节点
+          graphicElements.push({
+            type: "group",
+            id: `group-${f.func_name}`,
+            draggable: true,
+            children: [
+              {
+                type: "circle",
+                shape: { cx: px, cy: py, r: radius },
+                style: { fill: color },
+                onclick: () => {
+                  showTooltip(
+                    `<b>${f.func_name}</b><br/>文件: ${f.file_path}<br/>行: ${f.lineno}-${f.end_lineno}<br/>时间: ${f.execution_time}ms<br/>次数: ${f.count}`,
+                    px,
+                    py
+                  );
+                },
+                draggable: true,
+                ondrag: (e) => {
+                  const newCx = e.event.offsetX;
+                  const newCy = e.event.offsetY;
+                  funcCoords[f.func_name] = { x: newCx, y: newCy };
+                  updateConnections();
+                  updateGroupPosition(f.func_name, newCx, newCy);
+                },
+              },
+              {
+                type: "text",
+                style: {
+                  text: f.func_name,
+                  x: px + 10,
+                  y: py,
+                  fill: "#000",
+                  font: "12px sans-serif",
+                },
+              },
+            ],
+            ondrag(e) {
+              const dx = e.event.offsetX;
+              const dy = e.event.offsetY;
+              funcCoords[f.func_name] = { x: dx, y: dy };
+
+              const circle = group.children.find((c) => c.type === "circle");
+              const text = group.children.find((t) => t.type === "text");
+              if (circle) {
+                circle.shape.cx = dx;
+                circle.shape.cy = dy;
+              }
+              if (text) {
+                text.left = dx + 10;
+                text.top = dy - 5;
+              }
+
+              updateLines(f.func_name);
+            },
+            ondragend(e) {
+              const dx = e.event.offsetX;
+              const dy = e.event.offsetY;
+              const inside = placedCircles.find(
+                (c) => Math.sqrt((dx - c.cx) ** 2 + (dy - c.cy) ** 2) < c.r
+              );
+
+              const keys = Object.values(labelByCircle);
+
+              if (!inside) {
+                const newLabel = Math.max(...keys.map(Number), 0) + 1;
+                const newR = 60;
+
+                placedCircles.push({ cx: dx, cy: dy, r: newR });
+                labelByCircle[`${dx},${dy},${newR}`] = newLabel;
+                f.label = newLabel;
+
+                circles.push({
+                  type: "circle",
+                  shape: { cx: dx, cy: dy, r: newR },
+                  style: { fill: "#f5f5f5", stroke: "#f5f5f5", lineWidth: 1 },
+                });
+
+                labels.push({
+                  type: "text",
+                  left: dx - newR,
+                  top: dy - newR - 15,
+                  style: {
+                    text: `微服务 ${newLabel}`,
+                    fill: "#333",
+                    font: "bold 14px sans-serif",
+                  },
+                });
+              } else {
+                f.label =
+                  labelByCircle[`${inside.cx},${inside.cy},${inside.r}`];
+              }
+
+              // 🧹 删除没有元素使用的圈和标签
+              const activeLabels = rawData.value.map((item) => item.label);
+              const toDelete = placedCircles.filter((c) => {
+                const label = labelByCircle[`${c.cx},${c.cy},${c.r}`];
+                return !activeLabels.includes(label);
+              });
+
+              for (const c of toDelete) {
+                const label = labelByCircle[`${c.cx},${c.cy},${c.r}`];
+
+                // 删除 placedCircles
+                const pcIndex = placedCircles.findIndex(
+                  (item) =>
+                    item.cx === c.cx && item.cy === c.cy && item.r === c.r
+                );
+                if (pcIndex !== -1) placedCircles.splice(pcIndex, 1);
+
+                // 删除 circle 图形
+                const circleIndex = circles.findIndex(
+                  (item) =>
+                    item.shape?.cx === c.cx &&
+                    item.shape?.cy === c.cy &&
+                    item.shape?.r === c.r
+                );
+                if (circleIndex !== -1) circles.splice(circleIndex, 1);
+
+                // ✅ 更稳妥地删除标签（通过 label 文本匹配）
+                const labelIndex = labels.findIndex(
+                  (item) => item.style?.text === `微服务 ${label}`
+                );
+                if (labelIndex !== -1) labels.splice(labelIndex, 1);
+
+                // 删除映射
+                delete labelByCircle[`${c.cx},${c.cy},${c.r}`];
+              }
+
+              graphicElements.value = [
+                ...circles,
+                ...points,
+                ...labels,
+                ...lines,
+              ];
+            },
+            onclick: () => hideTooltip(),
+          });
+        });
+      });
+
+      // 添加连接线
+      function updateConnections() {
+        graphicElements.forEach((element) => {
+          if (element.type === "bezierCurve") {
+            const from = funcCoords[element.shape.x1];
+            const to = funcCoords[element.shape.x2];
+            if (from && to) {
+              element.shape.x1 = from.x;
+              element.shape.y1 = from.y;
+              element.shape.x2 = to.x;
+              element.shape.y2 = to.y;
+              element.shape.cpx1 = (from.x + to.x) / 2;
+              element.shape.cpy1 = (from.y + to.y) / 2 - 30;
+            }
+          }
+        });
+        chart.setOption({ graphic: { elements: graphicElements } });
+      }
+
+      rawConnections.forEach((conn) => {
+        const from = funcCoords[conn.caller_tuple[1]];
+        const to = funcCoords[conn.called_tuple[1]];
+        if (!from || !to) return;
+
+        const midX = (from.x + to.x) / 2;
+        const midY = (from.y + to.y) / 2 - 30;
+
+        graphicElements.push({
+          type: "bezierCurve",
+          shape: {
+            x1: from.x,
+            y1: from.y,
+            x2: to.x,
+            y2: to.y,
+            cpx1: midX,
+            cpy1: midY,
+          },
+          style: {
+            stroke: "#00c853",
+            lineWidth: Math.min(10, conn.call_count),
+          },
+          onclick: () => {
+            showTooltip(
+              `<b>${conn.caller_tuple[1]} → ${conn.called_tuple[1]}</b><br/>调用次数: ${conn.call_count}<br/>执行时间: ${conn.execution_time}ms`,
+              midX,
+              midY
+            );
+          },
+        });
+      });
+
+      // 渲染图表
+      chart.setOption({
+        tooltip: {},
+        graphic: { elements: graphicElements },
+      });
+
+      // Tooltip 显示/隐藏
+      function showTooltip(content, x, y) {
+        tooltip.style.left = `${x + 15}px`;
+        tooltip.style.top = `${y + 15}px`;
+        tooltip.style.display = "block";
+        tooltip.innerHTML = content;
+      }
+
+      function hideTooltip() {
+        tooltip.style.display = "none";
+      }
+
+      function updateGroupPosition(funcName, newX, newY) {
+        graphicElements.forEach((group) => {
+          if (group.id === `group-${funcName}`) {
+            const children = group.children;
+            children.forEach((child) => {
+              if (child.type === "circle") {
+                child.shape.cx = newX;
+                child.shape.cy = newY;
+              } else if (child.type === "text") {
+                child.style.x = newX + 10;
+                child.style.y = newY;
+              }
+            });
+          }
+        });
+        chart.setOption({ graphic: { elements: graphicElements } });
+      }
+    </script>
+  </body>
+</html>

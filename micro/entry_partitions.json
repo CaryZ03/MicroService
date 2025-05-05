@@ -1,0 +1,14 @@
+{
+    "POST:/products": 0,
+    "GET:/products/id/{int}": 0,
+    "GET:/products/name/{str}": 0,
+    "POST:/order-details": 1,
+    "GET:/orders/id/{int}": 1,
+    "GET:/users/username/{str}": 3,
+    "POST:/users/register": 3,
+    "POST:/orders": 3,
+    "GET:/users/id/{int}": 3,
+    "POST:/categories": 4,
+    "GET:/categories/name/{str}": 4,
+    "POST:/payment-records": 5
+}

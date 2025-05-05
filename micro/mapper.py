@@ -10,6 +10,7 @@ from sqlglot import parse, parse_one, exp
 def queryGraphql(query, variables):
     # 设置请求的 URL 和头部
     url = "http://localhost:8081/graphql"  # 替换为你的 GraphQL 服务端点
+    # url = "http://192.168.103.117:8080/graphql"  # 替换为你的 GraphQL 服务端点
     headers = {
         "Content-Type": "application/json",
     }
@@ -71,7 +72,7 @@ def queryTraces(serviceId):
     }
     """
     
-    time_gap = timedelta(hours=72)
+    time_gap = timedelta(minutes=2)
     current_time = datetime.now()
     former_time = current_time - time_gap
     
@@ -179,8 +180,10 @@ def getAttributes(span):
     if span["endpointName"].split("/")[0] in forbid_names:
         return None
     endpointNames = [span["endpointName"]]
-    type = "service"
-    if span["layer"] == "Database":
+    type = "function"
+    if span["type"] == "Entry":
+        type = "entry"
+    elif span["layer"] == "Database":
         type = "database"
         tags = {tag["key"]: tag["value"] for tag in span["tags"]}
         sql = tags["db.statement"]
@@ -269,7 +272,7 @@ def addToGraph(G, spans, entries, saveEntries=False):
                 G.nodes[node_id]["execution_time"] += execution_time
                 G.nodes[node_id]["count"] += 1
             else:
-                G.add_node(node_id, execution_time=execution_time, count=1)
+                G.add_node(node_id, execution_time=execution_time, count=1, type=node["type"])
 
             # 如果 parentSpanId 不是 -1，则添加边
             if node["parentSpanId"] != -1:
@@ -280,6 +283,10 @@ def addToGraph(G, spans, entries, saveEntries=False):
                         G[parent_node_id][node_id]["weight"] += weight
                     else:
                         G.add_edge(parent_node_id, node_id, weight=weight)
+                    # if G.has_edge(node_id, parent_node_id):
+                    #     G[node_id][parent_node_id]["weight"] += weight
+                    # else:
+                    #     G.add_edge(node_id, parent_node_id, weight=weight)
             else:
                 if saveEntries:
                     entries += [node]
@@ -321,10 +328,7 @@ def staticGraph(G):
     return G
 
 
-def buildGraph(source='json', saveSpans=False, saveEntries=False):
-    # 创建有向图
-    G = nx.DiGraph()
-
+def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False):
     if source == 'json':
         with open("spans.json", "r") as infile:
             spanss = json.load(infile)
@@ -336,13 +340,13 @@ def buildGraph(source='json', saveSpans=False, saveEntries=False):
         # print(json.dumps(services, indent=1))
         for service in services:
             traces = queryTraces(service["id"])
-            # print(json.dumps(traces, indent=1))
+            print(json.dumps(traces, indent=1))
             for trace in traces:
                 spans = queryTrace(trace["traceIds"][0])
                 spanss.append(spans)
-            break
+            # break
         if saveSpans:
-            with open("spans.json", "w") as outfile:
+            with open("spans1.json", "w") as outfile:
                 json.dump(spanss, outfile, indent=4)
         
     if saveEntries:

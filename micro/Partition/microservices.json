@@ -1,60 +1,136 @@
 {
-    "0": [
-        "POST:/payment-records",
-        "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
-        "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
-        "Mysql.springboot.payment_record",
-        "POST:/order-details",
-        "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
-        "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
-        "Mysql.springboot.order_detail",
-        "GET:/orders/id/{int}",
-        "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
-        "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
-        "Mysql.springboot.orders",
-        "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
-        "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
-        "POST:/orders",
-        "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
-        "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"
-    ],
-    "2": [
-        "Mysql.springboot.product",
-        "Mysql.springboot.category",
-        "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
-        "GET:/products/id/{int}",
-        "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
-        "GET:/products/name/{str}",
-        "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
-        "com.example.demo.service.ProductService.getProductByName(java.lang.String)"
-    ],
-    "3": [
-        "Mysql.springboot.user",
-        "com.example.demo.service.UserService.getUserById(java.lang.Long)",
-        "GET:/users/id/{int}",
-        "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
-        "POST:/users/register",
-        "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
-        "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)"
-    ],
-    "4": [
-        "GET:/categories/name/{str}",
-        "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
-        "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)"
-    ],
-    "5": [
-        "POST:/products",
-        "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
-        "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"
-    ],
-    "6": [
-        "POST:/categories",
-        "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
-        "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
-    ],
-    "1": [
-        "GET:/users/username/{str}",
-        "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
-        "com.example.demo.service.UserService.getUserByUsername(java.lang.String)"
-    ]
+    "0": {
+        "functions": [
+            "com.example.demo.repository.PaymentRecordRepository.findByOrderId(java.lang.Long)",
+            "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
+            "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
+            "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)"
+        ],
+        "ins": [
+            "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)"
+        ],
+        "outs": []
+    },
+    "1": {
+        "functions": [
+            "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+            "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "2": {
+        "functions": [
+            "com.example.demo.model.Order.setProduct(com.example.demo.model.Product)",
+            "com.example.demo.model.PaymentRecord.setStatus(java.lang.String)",
+            "com.example.demo.model.Order.getUser()",
+            "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+            "com.example.demo.model.User.getId()",
+            "com.example.demo.model.Order.setUser(com.example.demo.model.User)",
+            "com.example.demo.model.Product.getId()",
+            "com.example.demo.model.Order.getProduct()",
+            "com.example.demo.model.PaymentRecord.setOrder(com.example.demo.model.Order)",
+            "com.example.demo.model.PaymentRecord.setPrice(double)",
+            "com.example.demo.model.Product.getPrice()",
+            "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)"
+        ],
+        "ins": [],
+        "outs": [
+            "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+            "com.example.demo.service.ProductService.getProductById(java.lang.Long)"
+        ]
+    },
+    "8": {
+        "functions": [
+            "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+            "com.example.demo.repository.OrderDetailRepository.findByOrderId(java.lang.Long)",
+            "com.example.demo.model.Order.setPaymentRecord(com.example.demo.model.PaymentRecord)",
+            "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
+            "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+            "com.example.demo.model.Order.setOrderDetail(com.example.demo.model.OrderDetail)"
+        ],
+        "ins": [],
+        "outs": [
+            "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)"
+        ]
+    },
+    "4": {
+        "functions": [
+            "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+            "com.example.demo.controller.UserController.getUserById(java.lang.Long)"
+        ],
+        "ins": [
+            "com.example.demo.service.UserService.getUserById(java.lang.Long)"
+        ],
+        "outs": []
+    },
+    "5": {
+        "functions": [
+            "com.example.demo.repository.ProductRepository.findByName(java.lang.String)",
+            "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
+            "com.example.demo.controller.ProductController.getProductByName(java.lang.String)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "6": {
+        "functions": [
+            "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+            "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "9": {
+        "functions": [
+            "com.example.demo.repository.UserRepository.findByUsername(java.lang.String)",
+            "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
+            "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "10": {
+        "functions": [
+            "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+            "com.example.demo.controller.ProductController.getProductById(java.lang.Long)"
+        ],
+        "ins": [
+            "com.example.demo.service.ProductService.getProductById(java.lang.Long)"
+        ],
+        "outs": []
+    },
+    "11": {
+        "functions": [
+            "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
+            "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "12": {
+        "functions": [
+            "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
+            "com.example.demo.repository.CategoryRepository.findByName(java.lang.String)",
+            "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "3": {
+        "functions": [
+            "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+            "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)"
+        ],
+        "ins": [],
+        "outs": []
+    },
+    "7": {
+        "functions": [
+            "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+            "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)"
+        ],
+        "ins": [],
+        "outs": []
+    }
 }
