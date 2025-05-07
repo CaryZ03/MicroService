@@ -1,0 +1,28 @@
+{
+    "service_len": 5,
+    "edge_len": 3,
+    "all_services": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "graph_pairs": [
+        {
+            "source": 2,
+            "target": 4,
+            "dataTransmitted": 1712.0
+        },
+        {
+            "source": 0,
+            "target": 4,
+            "dataTransmitted": 1712.0
+        },
+        {
+            "source": 1,
+            "target": 4,
+            "dataTransmitted": 3424.0
+        }
+    ]
+}

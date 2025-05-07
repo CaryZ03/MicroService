@@ -76,7 +76,7 @@ def stage2Main() -> None:
         action_dim: int = env.getNodeCnt() * microservice_count
         agent: DQNAgent = DQNAgent(state_dim, action_dim)
 
-        episodes = 3000
+        episodes = 2500
         max_steps = 100
         batch_size = 128
 
@@ -143,3 +143,17 @@ def stage2Main() -> None:
 if __name__ == "__main__":
     # stage1Main()
     stage2Main()
+
+    # gmh: GraphMLHelper = GraphMLHelper()
+    # graphMLSourcePath: str = "./data/src"
+    # graphMLTargetPath: str = "./data/target"
+    # graphMLPaths: List[str] = gmh.getGraphMLPath(graphMLSourcePath)
+
+    # for graphMLPath in graphMLPaths:
+    #     graph : nx.DiGraph = gmh.getGraphFromGraphML(graphMLPath)
+    #     for node_name, data in graph.nodes(data=True):
+    #         if "Mysql" in node_name:
+    #             print("node name: ", node_name, " data: ", data)
+        
+    #     for u, v, data in graph.edges(data=True):
+    #         print("edge: ", u, "->", v, " weight: ", data['weight'])

@@ -1,0 +1,20 @@
+{
+  "skywalking_backend_url": "http://192.168.103.117:8080",
+  "root_dir": "Users.xht.Desktop.split-microservice.examples.flask_demo",
+  "service_labels": [
+    "flask-trialx3"
+  ],
+  "graph_pairs_json_path": "./results/mapper_save_results/graph_pairs.json",
+  "new_graph_pairs_json_path": "./results/mapper_save_results/new_graph_pairs.json",
+  "label_match_json_path": "./results/mapper_save_results/label_match.json",
+  "call_chains_json_path": "./results/mapper_save_results/call_chains.json",
+  "graph_node_map_json_path": "./results/mapper_save_results/graph_node_map.json",
+  "traced_services_json_path": "./results/mapper_save_results/traced_services.json",
+  "semantic_similarity_numpy_path": "./results/mapper_save_results/semantic_similarity.npy",
+  "api": {
+    "api_token": "sk-jojfbmtngmlcmnkyaqhtmjvctlopjyiggdaoejpxfiyysrpk",
+    "api_url": "https://api.siliconflow.cn/v1/chat/completions",
+    "model_name": "Qwen/Qwen2.5-VL-72B-Instruct"
+  },
+  "time_gap": 10000
+}

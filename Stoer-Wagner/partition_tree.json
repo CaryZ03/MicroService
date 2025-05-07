@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cut_value": 0,
+  "children": [
+    {
+      "nodes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "cut_value": 1712,
+      "children": [
+        {
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "cut_value": 1712,
+          "children": [
+            {
+              "nodes": [
+                1,
+                4
+              ],
+              "cut_value": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

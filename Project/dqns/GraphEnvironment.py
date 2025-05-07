@@ -3,7 +3,7 @@ import community as community_louvain
 import numpy as np
 import math
 
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Set
 
 from entities.Node import Node
 from entities.Edge import Edge
@@ -30,6 +30,9 @@ class GraphEnvironment:
         for i in range(self.microservices_count):
             self.microservices[i] = MicroService(i)
 
+
+        self.node_call_database: Dict[int, Set[int]] = {}
+
         self.current_node_index = 0
 
         # initialize nodes with information.
@@ -44,17 +47,28 @@ class GraphEnvironment:
             ind += 1
         
         # initialize edges with information.
-        self.edge_size: int = 0
+        self.edge_size: int = len(self.dir_graph.edges())
         self.edge_weights: int = 0
         for u, v, data in self.dir_graph.edges(data=True):
+
             uind: int = self.node_name_to_ind[u]
             vind: int = self.node_name_to_ind[v]
 
-            new_edge: Edge = Edge(uind, vind, data['weight'])
+            # print("src node: ", v, " to node: ", u)
+
+            # the .graphml's edges seems to have REVERSE edges !!
+            new_edge: Edge = Edge(vind, uind, data['weight'])
             self.edge_weights += data['weight']
 
-            self.edges[uind].append(new_edge)
-            self.edge_size += 1
+            if self.edges.get(vind) is None:
+                self.edges[vind] = []
+            self.edges[vind].append(new_edge)
+
+            # whether v called database. If v called, then u have one more caller.
+            if "Mysql" in u:
+                if self.node_call_database.get(uind) is None:
+                    self.node_call_database[uind] = set()
+                self.node_call_database.get(uind).add(vind)
 
         print("init graph environment successfully.")
         print("the node count: ", self.node_count)
@@ -97,12 +111,13 @@ class GraphEnvironment:
         intra_cohesion = self.calcIntraServiceCohesion(node_microservice)
         inter_coupling = self.calcInterServiceCoupling(node_microservice)
         size_balance = self.calcServiceSizeBalance(node_microservice)
+        data_consistency = self.calcDataConsistency(node_microservice)
 
-        # print("module: ", modularity, "intra: ", 
-        #       intra_cohesion, "inter: ", inter_coupling, "balance: ", size_balance)
+        # print("module: ", modularity, " intra: ", 
+        #       intra_cohesion, " inter: ", inter_coupling, " balance: ", size_balance,
+        #       " data_cons: ", data_consistency)
 
-        # 现在只考虑模块化程度
-        reward = modularity
+        reward = modularity + intra_cohesion - inter_coupling + size_balance + data_consistency
         return reward
 
 
@@ -135,8 +150,25 @@ class GraphEnvironment:
 
     def calcServiceSizeBalance(self, node_microservice: Dict[int, int]) -> float:
         microservice_sizes = {}
-        for node_index, microservice_index in node_microservice.items():
+        for _, microservice_index in node_microservice.items():
             microservice_sizes[microservice_index] = microservice_sizes.get(microservice_index, 0) + 1
         # derivation.
         size_std = np.std(list(microservice_sizes.values()))
         return 1 / (1 + size_std)
+    
+    def calcDataConsistency(self, node_microservice: Dict[int, int]) -> float:
+        data_consistency : float = 0.0
+        for db_node_index, caller_node_indexes in self.node_call_database.items():
+            db_microservice_index: int = node_microservice[db_node_index]
+            data_cur_consistency: float = 0.0
+
+            for caller_node_index in caller_node_indexes:
+                caller_microservice_index: int = node_microservice[caller_node_index]
+                data_cur_consistency += db_microservice_index == caller_microservice_index
+            
+            data_cur_consistency /= len(caller_node_indexes)
+            data_consistency += data_cur_consistency
+        
+        data_consistency /= len(self.node_call_database)
+        
+        return data_consistency
