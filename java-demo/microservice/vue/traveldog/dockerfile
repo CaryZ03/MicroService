@@ -1,0 +1,4 @@
+#FROM nginx:stable-perl
+FROM swr.cn-north-4.myhuaweicloud.com/rg/nginx:stable-perl
+COPY dist/ /usr/share/nginx/html/
+COPY ./default.conf /etc/nginx/conf.d/default.conf

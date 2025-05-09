@@ -1,4 +1,5 @@
 import shutil
+import os
 
 # source = "D:\\Programs\\MicroService\\micro\\demo"
 # target = "D:\\Programs\\MicroService\\call-graph\\tools\\demo"
@@ -7,5 +8,10 @@ import shutil
 source = "D:/Programs/MicroService/micro/demos/demo1-origin-copy"
 target = "D:/Programs/MicroService/micro/demos/demo1-origin"
 
+# 如果目标文件夹存在，则先删除
+if os.path.exists(target):
+    shutil.rmtree(target)
+    print(f"目标文件夹 '{target}' 已被删除。")
+
 shutil.copytree(source, target, dirs_exist_ok=True)
-# print(f"文件夹 '{source}' 已成功复制为 '{target}'。")
+print(f"文件夹 '{source}' 已成功复制为 '{target}'。")

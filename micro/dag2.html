@@ -1,0 +1,2286 @@
+
+    <!DOCTYPE html>
+    <html style="height:100%">
+    <head>
+        <meta charset="utf-8">
+        <title>服务依赖关系图</title>
+        <script src="https://cdn.staticfile.org/echarts/5.4.2/echarts.min.js"></script>
+        <style>
+            body, html { margin:0; padding:0; height:100%; width:100%; }
+            #main { height:100vh; width:100vw; }
+        </style>
+    </head>
+    <body>
+        <div id="main"></div>
+        <script>
+            var chart = echarts.init(document.getElementById('main'));
+
+            var option = {
+                title: {
+                    text: '服务依赖关系图',
+                    left: 'center',
+                    textStyle: { color: '#666', fontSize: 24 }
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function(params) {
+                        if(params.dataType === 'node') {
+                            return `服务：${params.name}<br>
+                                    调用次数：${params.data.value.count}<br>
+                                    总耗时：${params.data.value.execution_time/1000}ms`;
+                        }
+                        return `权重：${params.value}`;
+                    }
+                },
+                animationDuration: 2000,
+                series: [{
+                    type: 'graph',
+                    layout: 'force',
+                    force: {
+                        repulsion: 3000,
+                        gravity: 0.1,
+                        edgeLength: 150,
+                        layoutAnimation: true
+                    },
+                    roam: true,
+                    focusNodeAdjacency: true,
+                    edgeSymbol: ['none', 'arrow'],
+                    edgeSymbolSize: [0, 15],
+                    label: {
+                        show: true,
+                        position: 'right',
+                        fontSize: 12,
+                        color: '#000',
+                        formatter: function(params) {
+                            // 名称截断显示
+                            return params.name.length > 15 ? 
+                                params.name.substr(0,12)+'...' : 
+                                params.name;
+                        },
+                        emphasis: { show: false }  // 悬停时不显示标签
+                    },
+                    emphasis: {
+                        label: { show: false },
+                        itemStyle: {
+                            shadowBlur: 20,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    lineStyle: {
+                        curveness: 0.2,
+                        opacity: 0.8
+                    },
+                    data: [
+    {
+        "id": "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+        "name": "controller.ProductController.addProduct(model.Product)",
+        "symbolSize": 32.0,
+        "value": {
+            "execution_time": 98,
+            "count": 10,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
+        "name": "service.ProductService.addProduct(model.Product)",
+        "symbolSize": 32.0,
+        "value": {
+            "execution_time": 97,
+            "count": 10,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+        "name": "controller.OrderDetailController.addOrderDetail(model.OrderDetail)",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 36,
+            "count": 4,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
+        "name": "service.OrderDetailService.addOrderDetail(model.OrderDetail)",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 35,
+            "count": 4,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+        "name": "service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 29,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+        "name": "service.UserService.getUserById(java.lang.Long)",
+        "symbolSize": 32.0,
+        "value": {
+            "execution_time": 57,
+            "count": 10,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+        "name": "controller.UserController.getUserByUsername(java.lang.String)",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 343,
+            "count": 8,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
+        "name": "service.UserService.getUserByUsername(java.lang.String)",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 343,
+            "count": 8,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
+        "name": "service.ProductService.getProductByName(java.lang.String)",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 166,
+            "count": 8,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+        "name": "controller.CategoryController.addCategory(model.Category)",
+        "symbolSize": 31.4,
+        "value": {
+            "execution_time": 64,
+            "count": 7,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)",
+        "name": "service.CategoryService.addCategory(model.Category)",
+        "symbolSize": 31.4,
+        "value": {
+            "execution_time": 64,
+            "count": 7,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
+        "name": "service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
+        "symbolSize": 30.0,
+        "value": {
+            "execution_time": 0,
+            "count": 0,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
+        "name": "controller.ProductController.getProductById(java.lang.Long)",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 88,
+            "count": 8,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+        "name": "service.ProductService.getProductById(java.lang.Long)",
+        "symbolSize": 32.0,
+        "value": {
+            "execution_time": 105,
+            "count": 10,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
+        "name": "controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
+        "symbolSize": 30.0,
+        "value": {
+            "execution_time": 0,
+            "count": 0,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
+        "name": "controller.UserController.registerUser(model.User)",
+        "symbolSize": 31.8,
+        "value": {
+            "execution_time": 69,
+            "count": 9,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
+        "name": "service.UserService.registerUser(model.User)",
+        "symbolSize": 31.8,
+        "value": {
+            "execution_time": 68,
+            "count": 9,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
+        "name": "controller.OrderController.getOrderById(java.lang.Long)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 75,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "name": "service.OrderService.getOrderById(java.lang.Long)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 74,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
+        "name": "service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 15,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
+        "name": "controller.OrderController.createOrder(model.Order)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 85,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+        "name": "service.OrderService.createOrder(model.Order)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 85,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
+        "name": "controller.ProductController.getProductByName(java.lang.String)",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 168,
+            "count": 8,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
+        "name": "service.CategoryService.getCategoryByName(java.lang.String)",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 87,
+            "count": 4,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+        "name": "service.PaymentRecordService.addPaymentRecord(model.PaymentRecord)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 13,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+        "name": "controller.PaymentRecordController.addPaymentRecord(model.PaymentRecord)",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 13,
+            "count": 2,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
+        "name": "controller.UserController.getUserById(java.lang.Long)",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 46,
+            "count": 8,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+        "name": "controller.CategoryController.getCategoryByName(java.lang.String)",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 87,
+            "count": 4,
+            "type": "function"
+        },
+        "itemStyle": {
+            "color": "#5470c6",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/payment-records",
+        "name": "POST:/payment-records",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 25,
+            "count": 2,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "Mysql.springboot.payment_record",
+        "name": "Mysql.springboot.payment_record",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 22,
+            "count": 8,
+            "type": "database"
+        },
+        "itemStyle": {
+            "color": "#ff7875",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/order-details",
+        "name": "POST:/order-details",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 66,
+            "count": 4,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "Mysql.springboot.order_detail",
+        "name": "Mysql.springboot.order_detail",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 28,
+            "count": 8,
+            "type": "database"
+        },
+        "itemStyle": {
+            "color": "#ff7875",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "GET:/orders/id/{int}",
+        "name": "GET:/orders/id/{int}",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 90,
+            "count": 2,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "Mysql.springboot.orders",
+        "name": "Mysql.springboot.orders",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 20,
+            "count": 8,
+            "type": "database"
+        },
+        "itemStyle": {
+            "color": "#ff7875",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "Mysql.springboot.product",
+        "name": "Mysql.springboot.product",
+        "symbolSize": 36.4,
+        "value": {
+            "execution_time": 55,
+            "count": 32,
+            "type": "database"
+        },
+        "itemStyle": {
+            "color": "#ff7875",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "Mysql.springboot.category",
+        "name": "Mysql.springboot.category",
+        "symbolSize": 40.2,
+        "value": {
+            "execution_time": 79,
+            "count": 51,
+            "type": "database"
+        },
+        "itemStyle": {
+            "color": "#ff7875",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "Mysql.springboot.user",
+        "name": "Mysql.springboot.user",
+        "symbolSize": 35.8,
+        "value": {
+            "execution_time": 40,
+            "count": 29,
+            "type": "database"
+        },
+        "itemStyle": {
+            "color": "#ff7875",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/orders",
+        "name": "POST:/orders",
+        "symbolSize": 30.4,
+        "value": {
+            "execution_time": 97,
+            "count": 2,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "GET:/products/id/{int}",
+        "name": "GET:/products/id/{int}",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 116,
+            "count": 8,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "GET:/products/name/{str}",
+        "name": "GET:/products/name/{str}",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 248,
+            "count": 8,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "GET:/categories/name/{str}",
+        "name": "GET:/categories/name/{str}",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 304,
+            "count": 4,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/products",
+        "name": "POST:/products",
+        "symbolSize": 32.0,
+        "value": {
+            "execution_time": 159,
+            "count": 10,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/categories",
+        "name": "POST:/categories",
+        "symbolSize": 31.4,
+        "value": {
+            "execution_time": 107,
+            "count": 7,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "GET:/users/id/{int}",
+        "name": "GET:/users/id/{int}",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 62,
+            "count": 8,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "GET:/users/username/{str}",
+        "name": "GET:/users/username/{str}",
+        "symbolSize": 31.6,
+        "value": {
+            "execution_time": 406,
+            "count": 8,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/users/register",
+        "name": "POST:/users/register",
+        "symbolSize": 31.8,
+        "value": {
+            "execution_time": 133,
+            "count": 9,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    }
+],
+                    links: [
+    {
+        "source": "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+        "target": "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
+        "value": 11,
+        "lineStyle": {
+            "width": 6.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
+        "target": "Mysql.springboot.product",
+        "value": 10,
+        "lineStyle": {
+            "width": 6.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+        "target": "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
+        "value": 5,
+        "lineStyle": {
+            "width": 3.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
+        "target": "Mysql.springboot.order_detail",
+        "value": 4,
+        "lineStyle": {
+            "width": 3.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+        "target": "Mysql.springboot.order_detail",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+        "target": "Mysql.springboot.orders",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+        "target": "Mysql.springboot.user",
+        "value": 10,
+        "lineStyle": {
+            "width": 6.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+        "target": "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
+        "value": 9,
+        "lineStyle": {
+            "width": 5.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
+        "target": "Mysql.springboot.user",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
+        "target": "Mysql.springboot.product",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
+        "target": "Mysql.springboot.category",
+        "value": 28,
+        "lineStyle": {
+            "width": 15.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+        "target": "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)",
+        "target": "Mysql.springboot.category",
+        "value": 7,
+        "lineStyle": {
+            "width": 4.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
+        "target": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+        "value": 9,
+        "lineStyle": {
+            "width": 5.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+        "target": "Mysql.springboot.product",
+        "value": 10,
+        "lineStyle": {
+            "width": 6.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+        "target": "Mysql.springboot.category",
+        "value": 10,
+        "lineStyle": {
+            "width": 6.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
+        "target": "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
+        "value": 1,
+        "lineStyle": {
+            "width": 1.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
+        "target": "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
+        "value": 10,
+        "lineStyle": {
+            "width": 6.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
+        "target": "Mysql.springboot.user",
+        "value": 9,
+        "lineStyle": {
+            "width": 5.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
+        "target": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "Mysql.springboot.orders",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "Mysql.springboot.order_detail",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "Mysql.springboot.payment_record",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "Mysql.springboot.product",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "Mysql.springboot.category",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
+        "target": "Mysql.springboot.user",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
+        "target": "Mysql.springboot.payment_record",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
+        "target": "Mysql.springboot.orders",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
+        "target": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+        "target": "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+        "target": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+        "target": "Mysql.springboot.orders",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+        "target": "Mysql.springboot.payment_record",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
+        "target": "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
+        "value": 9,
+        "lineStyle": {
+            "width": 5.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
+        "target": "Mysql.springboot.category",
+        "value": 4,
+        "lineStyle": {
+            "width": 3.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+        "target": "Mysql.springboot.payment_record",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+        "target": "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+        "value": 3,
+        "lineStyle": {
+            "width": 2.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
+        "target": "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+        "value": 9,
+        "lineStyle": {
+            "width": 5.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+        "target": "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
+        "value": 5,
+        "lineStyle": {
+            "width": 3.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/payment-records",
+        "target": "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/order-details",
+        "target": "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+        "value": 4,
+        "lineStyle": {
+            "width": 3.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/orders/id/{int}",
+        "target": "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/orders",
+        "target": "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/products/id/{int}",
+        "target": "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/products/name/{str}",
+        "target": "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/categories/name/{str}",
+        "target": "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+        "value": 4,
+        "lineStyle": {
+            "width": 3.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/categories/name/{str}",
+        "target": "Mysql.springboot.product",
+        "value": 2,
+        "lineStyle": {
+            "width": 2.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/products",
+        "target": "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+        "value": 10,
+        "lineStyle": {
+            "width": 6.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/categories",
+        "target": "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
+        "value": 7,
+        "lineStyle": {
+            "width": 4.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/users/id/{int}",
+        "target": "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "GET:/users/username/{str}",
+        "target": "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+        "value": 8,
+        "lineStyle": {
+            "width": 5.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/users/register",
+        "target": "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
+        "value": 9,
+        "lineStyle": {
+            "width": 5.5,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    }
+],
+                    categories: [{
+                        name: '数据库节点',
+                        itemStyle: { color: '#ff7875' }
+                    }, {
+                        name: '端口节点',
+                        itemStyle: { color: '#91cc75' }
+                    }, {
+                        name: '服务节点',
+                        itemStyle: { color: '#5470c6' }
+                    }]
+                }],
+                legend: {
+                    orient: 'vertical',
+                    right: 20,
+                    top: 60,
+                    textStyle: { color: '#666' }
+                }
+            };
+
+            chart.setOption(option);
+
+            // 窗口自适应
+            window.addEventListener('resize', () => chart.resize());
+
+            // 双击重置视图
+            chart.getZr().on('dblclick', () => {
+                chart.setOption(option);
+            });
+        </script>
+    </body>
+    </html>
+    

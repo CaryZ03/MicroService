@@ -13,6 +13,7 @@ import com.github.javaparser.resolution.types.ResolvedType;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.JarTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import org.apache.maven.model.Dependency;
@@ -47,12 +48,22 @@ public class CallGraphGenerator {
 
         // 目标项目的编译类文件目录
         String targetProjectClassesDir = targetProjectRoot + "/src/main/java";
-        File targetProjectClasses = new File(targetProjectClassesDir);
+        File targetProjectClasses = new File(targetProjectRoot);
+
 
         // 创建 CombinedTypeSolver
         CombinedTypeSolver combinedTypeSolver = new CombinedTypeSolver();
-        combinedTypeSolver.add(new ReflectionTypeSolver());
+//        combinedTypeSolver.add(new ReflectionTypeSolver());
         combinedTypeSolver.add(new JavaParserTypeSolver(targetProjectClasses));
+
+//        File dependencyDir = new File(targetProjectRoot + "/target/dependency");
+//        for (File file : dependencyDir.listFiles((dir, name) -> name.endsWith(".jar"))) {
+//            try{
+//                combinedTypeSolver.add(new JarTypeSolver(file));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         // 配置 JavaParser
         JavaParser parser = new JavaParser();
@@ -116,6 +127,7 @@ public class CallGraphGenerator {
             // 遍历所有方法并提取调用链
             for (MethodDeclaration method : cu.findAll(MethodDeclaration.class)) {
                 String methodName = method.resolve().getQualifiedSignature();
+                System.out.println("Found Method: " + methodName);
 //                method.getSignature().asString();
 //                System.out.println(method);
 //                System.out.println(method.findAll(MethodCallExpr.class));
@@ -132,24 +144,27 @@ public class CallGraphGenerator {
     private static String parseMethodName(Expression callExpr, JavaParserFacade facade) {
         if (callExpr instanceof MethodCallExpr call) {
             try {
-                System.out.println(call);
+                System.out.println("Found Call: " + call);
                 ResolvedMethodDeclaration resolvedCall = call.resolve();
-                System.out.println(resolvedCall);
+                System.out.println("Resolved Call: " + resolvedCall);
                 String calledMethodName = resolvedCall.getQualifiedSignature();
-                System.out.println(calledMethodName);
+                System.out.println("Callee Name: " + calledMethodName);
                 return calledMethodName;
             } catch (Exception e) {
+                e.printStackTrace();
                 Optional<Expression> optScope = call.getScope();
                 if (optScope.isPresent()) {
                     Expression callClass = optScope.get();
-                    System.out.println(callClass);
+                    System.out.println("Resolved Callee Class: " + callClass);
                     return parseMethodName(callClass, facade);
+                } else {
+                    System.out.println();
                 }
                 return null;
             }
         } else {
             ResolvedType resolvedCallClass = facade.getType(callExpr);
-            System.out.println(resolvedCallClass.describe());
+            System.out.println("Resolved Callee Class Describe: " + resolvedCallClass.describe());
             return resolvedCallClass.describe();
         }
     }
@@ -166,8 +181,11 @@ public class CallGraphGenerator {
             for (TypeDeclaration<?> type : cu.getTypes()) {
                 if (type.getAnnotations().stream().anyMatch(annotation -> {
                     String name = annotation.getNameAsString();
-                    return name.equals("Entity") || name.equals("Repository") || name.equals("SpringBootApplication");
+                    return name.equals("Entity") || name.equals("Repository") || name.equals("SpringBootApplication") || name.equals("TableName");
                 })) {
+                    excludedNames.add(type.getFullyQualifiedName().get());
+                    continue;
+                } else if (type.getFullyQualifiedName().toString().contains(".model.") || type.getFullyQualifiedName().toString().contains(".entity.") || type.getFullyQualifiedName().toString().contains(".reqs.") || type.getFullyQualifiedName().toString().contains(".rsps.") || type.getFullyQualifiedName().toString().contains(".util.")) {
                     excludedNames.add(type.getFullyQualifiedName().get());
                     continue;
                 }

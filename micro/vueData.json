@@ -9,7 +9,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 0
+            "label": 1
         },
         {
             "func_name": "ProductService.addProduct(Product)",
@@ -20,7 +20,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 0
+            "label": 7
         },
         {
             "func_name": "OrderDetailController.addOrderDetail(OrderDetail)",
@@ -31,7 +31,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 1
+            "label": 2
         },
         {
             "func_name": "OrderDetailService.addOrderDetail(OrderDetail)",
@@ -42,7 +42,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 1
+            "label": 7
         },
         {
             "func_name": "OrderService.getOrderDetailsByOrderId(Long)",
@@ -53,7 +53,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 1
+            "label": 4
         },
         {
             "func_name": "UserService.getUserById(Long)",
@@ -64,7 +64,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 0
         },
         {
             "func_name": "UserController.getUserByUsername(String)",
@@ -75,7 +75,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 6
         },
         {
             "func_name": "UserService.getUserByUsername(String)",
@@ -86,7 +86,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 6
         },
         {
             "func_name": "ProductService.getProductByName(String)",
@@ -97,7 +97,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 2
+            "label": 3
         },
         {
             "func_name": "CategoryController.addCategory(Category)",
@@ -108,7 +108,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 6
+            "label": 2
         },
         {
             "func_name": "CategoryService.addCategory(Category)",
@@ -119,7 +119,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 6
+            "label": 2
         },
         {
             "func_name": "PaymentRecordService.getPaymentRecordByOrderId(Long)",
@@ -130,7 +130,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 7
+            "label": 3
         },
         {
             "func_name": "ProductController.getProductById(Long)",
@@ -141,7 +141,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 0
+            "label": 4
         },
         {
             "func_name": "ProductService.getProductById(Long)",
@@ -152,7 +152,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 0
+            "label": 3
         },
         {
             "func_name": "PaymentRecordController.getPaymentRecordByOrderId(Long)",
@@ -163,7 +163,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 7
+            "label": 6
         },
         {
             "func_name": "UserController.registerUser(User)",
@@ -174,7 +174,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 7
         },
         {
             "func_name": "UserService.registerUser(User)",
@@ -185,7 +185,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 0
         },
         {
             "func_name": "OrderController.getOrderById(Long)",
@@ -207,7 +207,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 1
+            "label": 2
         },
         {
             "func_name": "OrderService.getPaymentRecordByOrderId(Long)",
@@ -218,7 +218,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 1
+            "label": 3
         },
         {
             "func_name": "OrderController.createOrder(Order)",
@@ -229,7 +229,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 4
         },
         {
             "func_name": "OrderService.createOrder(Order)",
@@ -240,7 +240,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 5
         },
         {
             "func_name": "ProductController.getProductByName(String)",
@@ -251,7 +251,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 2
+            "label": 6
         },
         {
             "func_name": "CategoryService.getCategoryByName(String)",
@@ -262,7 +262,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 4
+            "label": 3
         },
         {
             "func_name": "PaymentRecordService.addPaymentRecord(PaymentRecord)",
@@ -273,7 +273,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 5
+            "label": 1
         },
         {
             "func_name": "PaymentRecordController.addPaymentRecord(PaymentRecord)",
@@ -284,7 +284,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 5
+            "label": 1
         },
         {
             "func_name": "UserController.getUserById(Long)",
@@ -295,7 +295,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 5
         },
         {
             "func_name": "CategoryController.getCategoryByName(String)",
@@ -306,7 +306,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 4
+            "label": 7
         }
     ],
     "rawConnections": [
@@ -320,7 +320,7 @@
                 "ProductService.addProduct(Product)"
             ],
             "execution_time": 10,
-            "call_count": 3
+            "call_count": 11
         },
         {
             "caller_tuple": [
@@ -332,7 +332,7 @@
                 "OrderDetailService.addOrderDetail(OrderDetail)"
             ],
             "execution_time": 10,
-            "call_count": 3
+            "call_count": 5
         },
         {
             "caller_tuple": [
@@ -344,7 +344,7 @@
                 "UserService.getUserByUsername(String)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 9
         },
         {
             "caller_tuple": [
@@ -356,7 +356,7 @@
                 "CategoryService.addCategory(Category)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 8
         },
         {
             "caller_tuple": [
@@ -368,7 +368,7 @@
                 "ProductService.getProductById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 3
+            "call_count": 9
         },
         {
             "caller_tuple": [
@@ -392,7 +392,7 @@
                 "UserService.registerUser(User)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 10
         },
         {
             "caller_tuple": [
@@ -404,7 +404,7 @@
                 "OrderService.getOrderById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -416,7 +416,7 @@
                 "OrderService.getOrderDetailsByOrderId(Long)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -428,7 +428,7 @@
                 "OrderService.getPaymentRecordByOrderId(Long)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -440,7 +440,7 @@
                 "OrderService.createOrder(Order)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -452,7 +452,7 @@
                 "UserService.getUserById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -464,7 +464,7 @@
                 "ProductService.getProductById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -476,7 +476,7 @@
                 "ProductService.getProductByName(String)"
             ],
             "execution_time": 10,
-            "call_count": 3
+            "call_count": 9
         },
         {
             "caller_tuple": [
@@ -488,7 +488,7 @@
                 "PaymentRecordService.addPaymentRecord(PaymentRecord)"
             ],
             "execution_time": 10,
-            "call_count": 1
+            "call_count": 3
         },
         {
             "caller_tuple": [
@@ -500,7 +500,7 @@
                 "UserService.getUserById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 9
         },
         {
             "caller_tuple": [
@@ -512,7 +512,7 @@
                 "CategoryService.getCategoryByName(String)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 5
         }
     ]
 }

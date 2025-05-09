@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: backend
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      appType: backend 
+  template:             # template is a pod.
+    metadata:
+      labels:
+        appType: backend
+    spec:
+      containers:
+      - name: backend-hotel
+        image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_hotel_backend:latest
+        ports: 
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+      - name: backend-location
+        image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_location_backend:latest
+        ports:
+          - containerPort: 8081
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+      - name: backend-order
+        image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_order_backend:latest
+        ports:
+          - containerPort: 8082
+        resources:
+          requests:
+            cpu: 50m
+            memory: 10Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+      - name: backend-train
+        image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_train_backend:latest
+        ports:
+          - containerPort: 8083
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+      - name: backend-user
+        image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_user_backend:latest
+        ports:
+          - containerPort: 8084
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    appType: backend
+spec:
+  selector:
+    appType: backend
+  type: NodePort # for   test.
+  ports:
+  - name: hotel-port
+    port: 8080
+    nodePort: 30080 # for test.
+    targetPort: 8080
+    protocol: TCP
+  - name: location-port
+    port: 8081
+    nodePort: 30081
+    targetPort: 8081
+    protocol: TCP
+  - name: order-port
+    port: 8082
+    nodePort: 30082
+    targetPort: 8082
+    protocol: TCP
+  - name: train-port
+    port: 8083
+    nodePort: 30083
+    targetPort: 8083
+    protocol: TCP
+  - name: user-port
+    port: 8084
+    nodePort: 30084
+    targetPort: 8084
+    protocol: TCP

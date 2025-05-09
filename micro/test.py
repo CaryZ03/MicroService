@@ -2,19 +2,22 @@ import requests
 from mapper import matchEntry
 import json
 
-base_url = "http://localhost:8090"
+base_url = None
 
 
 def send_request(method: str, url: str, **kwargs):
-    name = method + ":" + url
-    with open("entries_demo1.json", "r") as f:
-        entries = json.load(f)
-    entry = matchEntry(name, entries)["name"]
-    with open("entry_partitions.json", "r") as f:
-        entry_partitions = json.load(f)
-    # print(entry_partitions)
-    serviceID = entry_partitions.get(entry, None)
-    url = f"http://localhost:185{serviceID:02d}{url}"
+    if base_url:
+        url = base_url + url
+    else:
+        name = method + ":" + url
+        with open("entries_demo1.json", "r") as f:
+            entries = json.load(f)
+        entry = matchEntry(name, entries)["name"]
+        with open("entry_partitions.json", "r") as f:
+            entry_partitions = json.load(f)
+        # print(entry_partitions)
+        serviceID = entry_partitions.get(entry, None)
+        url = f"http://localhost:185{serviceID:02d}{url}"
     method = method.lower()
     if not hasattr(requests, method):
         raise ValueError(f"Unsupported HTTP method: {method.upper()}")
@@ -69,7 +72,7 @@ def get_category_by_name(name):
 
 def create_order(user_id, product_id):
     status = "unpaid"
-    response = requests.post(f"http://localhost:18503/orders", json={
+    response = send_request("POST", f"/orders", json={
         "status": status,
         "user": {
             "id": user_id
@@ -102,7 +105,10 @@ def create_payment_record(order_id, price, status):
 
 
 
-def test():
+def test(port=None):
+    if port:
+        global base_url
+        base_url = f"http://localhost:{port}"
     username = "name1"
     email = "test@example.com"
     password = "password123"
@@ -111,14 +117,14 @@ def test():
     id = response.json().get("id")
     get_user_by_username(username)
     get_user_by_id(id)
-    category_name = "testCategory5"
+    category_name = "testCategor8"
     response = create_category(category_name)
     print("Create Category Response:", response.json())
     category_id = response.json().get("id")
-    product1_name = "testProduct1"
+    product1_name = "testProduct3"
     product1_stock = 10
     product1_price = 100.0
-    product2_name = "testProduct2"
+    product2_name = "testProduct4"
     product2_stock = 20
     product2_price = 200.0
     response = create_product(product1_name, product1_stock, product1_price, category_id)
@@ -136,10 +142,12 @@ def test():
     response = create_order(id, product1_id)
     print("Create Order Response:", response.json())
     order_id = response.json().get("id")
-    get_order_by_id(order_id)
-    create_order_detail(100.0, order_id, 2)
-    create_order_detail(200.0, order_id, 1)
-    create_payment_record(order_id, 100.0, "paid")
+    response = create_order_detail(order_id, 100.0, 2)
+    print("Create Order Detail Response:", response.json())
+    # create_order_detail(200.0, order_id, 1)
+    create_payment_record(order_id, 100.0, "Paid")
+    response = get_order_by_id(order_id)
+    print("Get Order Response:", response.json())
     
 
 if __name__ == "__main__":

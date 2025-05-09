@@ -7,7 +7,7 @@ def generate_echarts_html(graph: nx.DiGraph, output_file: str = "dag.html"):
     # 生成节点数据
     nodes = [{
         'id': node,
-        'name': node,
+        'name': node.replace("com.example.demo.", ""),
         'symbolSize': min(graph.nodes[node]['count'] / 5 + 30, 100),  # 限制最大尺寸
         'value': graph.nodes[node],
         'itemStyle': {

@@ -1,0 +1,5 @@
+matplotlib==3.10.1
+networkx==3.3
+numpy==2.2.4
+python_louvain==0.16
+torch==2.6.0

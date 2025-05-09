@@ -124,6 +124,9 @@ def stage2Main() -> None:
 
         for ms_id, node_list in microservice_to_nodes.items():
             print(f"Microservice {ms_id}: Nodes {node_list}")
+        
+        with open("partitionss.json", "w") as f:
+            json.dump(node_microservice, f, indent=4)
             
         with open("microservices1.json", "w") as f:
             json.dump(microservice_to_nodes, f, indent=4)
@@ -131,6 +134,8 @@ def stage2Main() -> None:
         microserviceGraph : nx.DiGraph = louvain.convertMicroservicesToGraph(graph, microservice_to_nodes)
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
         gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")
+        
+        return node_microservice
 
         
 if __name__ == "__main__":

@@ -1,0 +1,17 @@
+{
+  "com.example.demo.User.getId()": [],
+  "com.example.demo.Demo1Application.main(java.lang.String[])": [],
+  "com.example.demo.ControllerA.callServiceB()": [
+    "com.example.demo.User.setId(java.lang.Long)",
+    "com.example.demo.User.setUsername(java.lang.String)",
+    "com.example.demo.ControllerB.test(com.example.demo.User)"
+  ],
+  "com.example.demo.User.setId(java.lang.Long)": [],
+  "com.example.demo.User.setUsername(java.lang.String)": [],
+  "com.example.demo.Demo1ApplicationTests.contextLoads()": [],
+  "com.example.demo.ControllerB.test(com.example.demo.User)": [
+    "com.example.demo.User.getId()",
+    "com.example.demo.User.getUsername()"
+  ],
+  "com.example.demo.User.getUsername()": []
+}

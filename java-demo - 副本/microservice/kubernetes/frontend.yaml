@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appType: frontend
+  template:
+    metadata:
+      labels:
+        appType: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_frontend:latest
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 8085
+    nodePort: 30085
+    targetPort: 80
+    protocol: TCP
+  selector:
+    appType: frontend

@@ -28,6 +28,8 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
+# source = "D:/Programs/MicroService/java-demo/traveldog"
+source = "D:/Programs/MicroService/mall"
 target = source + "-fuxiiiii"
 
 # 如果目标目录存在，则删除它
@@ -56,7 +58,7 @@ def static():
     # with open(static_json, "r") as f:
     #     static_data = json.load(f)
     
-    excluded_names = static_data["Excluded_Names"]
+    excluded_names = static_data.get("Excluded_Names", [])
 
     for caller, callees in static_data.items():
         if caller == "Excluded_Names": continue
@@ -65,8 +67,8 @@ def static():
         # for caller, callee, attr in G.edges(data=True):
         #     print(caller, callee, attr)
         # # print(G.edges(data=True))
-        # print("caller: ", caller)
-        # print("callee: ", callees)
+        print("caller: ", caller)
+        print("callee: ", callees)
         for callee in callees:
             if callee in excluded_names or ".".join(callee.split("(")[0].split(".")[0:-1]) in excluded_names:
                 continue
@@ -79,16 +81,16 @@ def static():
 
 def dynamic():
     global G
-    G = buildGraph(G, source='jso', saveSpans=True, saveEntries=False)
+    G = buildGraph(G, source='json', saveSpans=True, saveEntries=False)
     showGraph(G)
 
 
 def partition():
     global G
     # 修改工作目录到 main.py 所在的目录
-    os.chdir("Partition")
+    os.chdir("Project")
 
-    partitions = stage1Main()
+    partitions = stage2Main()
 
     os.chdir("..")
     
@@ -114,12 +116,12 @@ def reconstruct(partitions, output):
 
     # dest_folder = "D:/Programs/MicroService/call-graph/demo-micro"
     # dest_folder = "D:/Programs/MicroService/call-graph/tools/src/main/java/com/micro/test/demo"
-    dest_folder = source + "-micro"
+    dest_folder = source + "-microo"
     
 
     for key, value in data.items():
         # print(f"Key: {key}, Value: {value}")
-        target = dest_folder + "/" + proj_name + key
+        target = dest_folder + "/" + proj_name + str(key)
 
         shutil.copytree(source, target, dirs_exist_ok=True)
         # print(f"文件夹 '{source}' 已成功复制为 '{target}'。")
@@ -142,14 +144,14 @@ def reconstruct(partitions, output):
     # print(response.text)
 
 
-def run_project():
+def run_project(port=8088):
     original_dir = os.getcwd()
     # 切换到目标目录
     os.chdir(source)
 
     # 定义要执行的命令
     mvnw_command = ["mvnw.cmd", "clean", "install"]
-    java_command = ["java", "-javaagent:D:/Programs/MicroService/apache-skywalking-apm-10.2.0/apache-skywalking-apm-bin/agent/skywalking-agent.jar", "-Dskywalking.agent.service_name=micro-dev::micro-system", "-Dskywalking.collector.backend_service=127.0.0.1:11800", "-jar", "target/demo1-0.0.1-SNAPSHOT.jar", "--server.port=8090"]
+    java_command = ["java", "-javaagent:D:/Programs/MicroService/apache-skywalking-apm-10.2.0/apache-skywalking-apm-bin/agent/skywalking-agent.jar", "-Dskywalking.agent.service_name=micro-dev::micro-system", "-Dskywalking.collector.backend_service=127.0.0.1:11800", "-jar", "target/demo1-0.0.1-SNAPSHOT.jar", f"--server.port={port}"]
 
     # 执行 ./mvnw clean install 命令
     print("Executing ./mvnw clean install...")
@@ -164,21 +166,23 @@ def run_project():
     # 执行 java 命令
     print("Starting Java application...")
     # java_process = subprocess.run(java_command)
-    java_process = subprocess.Popen(java_command, stdout=None, stderr=None)
+    try:
+        java_process = subprocess.Popen(java_command, stdout=None, stderr=None)
 
-    # 等待项目启动完毕
-    print("Waiting for the Java application to start...")
-    time.sleep(20)  # 假设项目启动需要10秒，你可以根据实际情况调整等待时间
+        # 等待项目启动完毕
+        print("Waiting for the Java application to start...")
+        time.sleep(20)  # 假设项目启动需要10秒，你可以根据实际情况调整等待时间
 
-    # 检查项目是否启动成功
-    if java_process.poll() is None:
-        print("Java application is running.")
-        test()
-    else:
-        print("Java application failed to start.")
-        print("Error:", java_process.stderr.read().decode())
-    
-    java_process.terminate()  # 终止 Java 进程
+        # 检查项目是否启动成功
+        if java_process.poll() is None:
+            print("Java application is running.")
+            os.chdir(original_dir)
+            test(port)
+        else:
+            print("Java application failed to start.")
+            print("Error:", java_process.stderr.read().decode())
+    finally:
+        java_process.terminate()  # 终止 Java 进程
     # 等待 Java 进程结束
     java_process.wait()
     print("Java application terminated.")
@@ -265,12 +269,16 @@ def save_microservices(partitions, G):
             # 查找所有在 graph 中指向 func 节点的边
             predecessors = list(G.predecessors(func))  # 获取所有指向 func 的节点
             for predecessor in predecessors:
+                if predecessor not in partitions:
+                    continue
                 in_serviceID = partitions[predecessor]
                 if in_serviceID != serviceID:
                     if func not in output[serviceID]["ins"]:
                         output[serviceID]["ins"].append(func)
             successors = list(G.successors(func))  # 获取所有指向 func 的节点
             for successor in successors:
+                if successor not in partitions:
+                    continue
                 out_serviceID = partitions[successor]
                 if out_serviceID != serviceID:
                     if func not in output[serviceID]["outs"]:
@@ -278,48 +286,58 @@ def save_microservices(partitions, G):
         
     with open("microservices.json", "w") as f:
         json.dump(output, f, indent=4)
+    
+    with open("partitions.json", "w") as f:
+        json.dump(partitions, f, indent=4)
         
     return output
 
 
 def main():
+    global G
     static()
-    showGraph(G)
-    # return
-    run_project()
-    print("run_project success!")
-    dynamic()
-    
-    G.remove_nodes_from(list(nx.isolates(G)))
     # showGraph(G)
-    generate_echarts_html(G, output_file="dag1.html")
-    nx.write_graphml(G, "Partition/data/src/graph.graphml")
-    # return
+    generate_echarts_html(G, output_file="dag.html")
+    return
+    # # run_project(8057)
+    # # print("run_project success!")
+    # dynamic()
     
-    partitions = partition()
+    # generate_echarts_html(G, output_file="dag1.html")
+    
+    # G.remove_nodes_from(list(nx.isolates(G)))
+    # # showGraph(G)
+    # generate_echarts_html(G, output_file="dag2.html")
+    # nx.write_graphml(G, "Project/data/src/graph.graphml")
+    # # return
+    
+    # partitions = partition()
     
     # print("partitions: ", partitions)
     
-    # G = nx.read_graphml("Partition/data/src/graph.graphml")
+    G = nx.read_graphml("Project/data/src/graph.graphml")
     
-    # with open("partitions_user.json", "r") as f:
-    #     partitions = json.load(f)
+    with open("partitions_user.json", "r") as f:
+        partitions = json.load(f)
+        
+    # with open("microservices.json", "r") as f:
+    #     output = json.load(f)
     
-    # output = save_microservices(partitions, G)
+    output = save_microservices(partitions, G)
     
-    # # save_to_json(partitions, G)
+    # save_to_json(partitions, G)
     
-    # reconstruct(partitions, output)
+    reconstruct(partitions, output)
     
     
 
 # 获取当前脚本的绝对路径
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # 获取 tools 模块所在的目录
-tools_dir = os.path.join(current_dir, "Partition")
+tools_dir = os.path.join(current_dir, "Project")
 # 将 tools 模块所在的目录添加到 sys.path
 sys.path.insert(0, tools_dir)
-from Partition.Main import *
+from Project.Main import *
 
 main()
 

@@ -1,0 +1,57 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### other ###
+log/
+login/
+
+vue/traveldog/node_modules
+
+log/*
+
+
+### Dockerfile ###
+!**/Dockerfile
+
+### frontend ###
+/**/dist/
