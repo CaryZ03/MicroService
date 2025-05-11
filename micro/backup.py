@@ -8,6 +8,10 @@ import os
 source = "D:/Programs/MicroService/micro/demos/demo1-origin-copy"
 target = "D:/Programs/MicroService/micro/demos/demo1-origin"
 
+source = "D:/Programs/MicroService/traveldog/traveldog"
+target = source
+source = source + "-backup"
+
 # 如果目标文件夹存在，则先删除
 if os.path.exists(target):
     shutil.rmtree(target)

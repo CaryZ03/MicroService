@@ -9,7 +9,7 @@ from sqlglot import parse, parse_one, exp
 
 def queryGraphql(query, variables):
     # 设置请求的 URL 和头部
-    url = "http://localhost:8081/graphql"  # 替换为你的 GraphQL 服务端点
+    url = "http://localhost:8033/graphql"  # 替换为你的 GraphQL 服务端点
     # url = "http://192.168.103.117:8080/graphql"  # 替换为你的 GraphQL 服务端点
     headers = {
         "Content-Type": "application/json",
@@ -72,7 +72,7 @@ def queryTraces(serviceId):
     }
     """
     
-    time_gap = timedelta(minutes=2)
+    time_gap = timedelta(hours=1)
     current_time = datetime.now()
     former_time = current_time - time_gap
     
@@ -330,7 +330,7 @@ def staticGraph(G):
 
 def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False):
     if source == 'json':
-        with open("spans.json", "r") as infile:
+        with open("spans1.json", "r") as infile:
             spanss = json.load(infile)
     elif source == 'static':
         return staticGraph(G)
@@ -367,7 +367,7 @@ def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False
         entries = [{"name": entry_name, "weight": 1} for entry_name in entry_names]
 
         # 写入 JSON 文件
-        with open("entries_demo.json", "w") as json_file:
+        with open("entries_traveldog.json", "w") as json_file:
             json.dump(entries, json_file, indent=4)  # 使用 indent 参数美化输出
     
     return G

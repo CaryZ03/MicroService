@@ -1,0 +1,694 @@
+2025-05-05 20:08:25.213  INFO 33948 --- [restartedMain] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21 on DESKTOP-5PSI0FG with PID 33948 (C:\PRM\Majority\Software_Engineering\FINAL\target\classes started by MuJue in C:\PRM\Majority\Software_Engineering\FINAL)
+2025-05-05 20:08:25.218  INFO 33948 --- [restartedMain] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-05 20:08:25.287  INFO 33948 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-05-05 20:08:25.288  INFO 33948 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-05-05 20:08:26.565  INFO 33948 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-05-05 20:08:26.581  INFO 33948 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-05 20:08:26.581  INFO 33948 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-05 20:08:26.697  INFO 33948 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-05 20:08:26.697  INFO 33948 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1409 ms
+2025-05-05 20:08:26.999  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-05 20:08:27.190  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-05 20:08:27.228  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-05 20:08:27.228  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-05 20:08:27.250  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-05 20:08:27.279  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-05 20:08:27.306  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-05 20:08:27.334  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-05 20:08:27.381  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-05 20:08:27.382  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-05 20:08:27.408  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-05 20:08:27.432  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-05 20:08:27.457  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-05 20:08:27.476  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-05 20:08:27.477  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-05 20:08:27.511  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-05 20:08:27.512  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-05 20:08:27.533  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-05 20:08:27.564  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-05 20:08:27.617  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-05 20:08:27.663  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-05 20:08:27.710  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-05 20:08:28.099  WARN 33948 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-05 20:08:28.229  INFO 33948 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-05 20:08:28.233  WARN 33948 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-05 20:08:28.274  WARN 33948 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2025-05-05 20:08:28.278  INFO 33948 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-05 20:08:28.288  INFO 33948 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2025-05-05 20:08:28.308 ERROR 33948 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-05-05 20:10:45.646  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21 on DESKTOP-5PSI0FG with PID 34428 (C:\PRM\Majority\Software_Engineering\FINAL\target\classes started by MuJue in C:\PRM\Majority\Software_Engineering\FINAL)
+2025-05-05 20:10:45.647  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-05 20:10:45.703  INFO 34428 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-05-05 20:10:45.703  INFO 34428 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-05-05 20:10:46.916  INFO 34428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-05 20:10:46.925  INFO 34428 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-05 20:10:46.926  INFO 34428 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-05 20:10:47.008  INFO 34428 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-05 20:10:47.008  INFO 34428 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1304 ms
+2025-05-05 20:10:47.251  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-05 20:10:47.418  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-05 20:10:47.466  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-05 20:10:47.467  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-05 20:10:47.488  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-05 20:10:47.512  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-05 20:10:47.543  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-05 20:10:47.568  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-05 20:10:47.618  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-05 20:10:47.618  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-05 20:10:47.675  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-05 20:10:47.700  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-05 20:10:47.735  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-05 20:10:47.758  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-05 20:10:47.758  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-05 20:10:47.787  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-05 20:10:47.788  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-05 20:10:47.803  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-05 20:10:47.820  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-05 20:10:47.854  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-05 20:10:47.886  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-05 20:10:47.916  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-05 20:10:48.167  WARN 34428 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-05 20:10:48.279  INFO 34428 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-05 20:10:48.284  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-05 20:10:48.337  INFO 34428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-05 20:10:48.347  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : Started FinalApplication in 3.063 seconds (JVM running for 3.72)
+2025-05-05 20:11:00.376  INFO 34428 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 116 class path changes (0 additions, 116 deletions, 0 modifications)
+2025-05-05 20:11:00.389  INFO 34428 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-05 20:11:00.456  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21 on DESKTOP-5PSI0FG with PID 34428 (C:\PRM\Majority\Software_Engineering\FINAL\target\classes started by MuJue in C:\PRM\Majority\Software_Engineering\FINAL)
+2025-05-05 20:11:00.457  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-05 20:11:00.579  WARN 34428 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.dofinal.RG.mapper]' package. Please check your configuration.
+2025-05-05 20:11:00.617  INFO 34428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-05 20:11:00.618  INFO 34428 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-05 20:11:00.618  INFO 34428 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-05 20:11:00.638  INFO 34428 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-05 20:11:00.638  INFO 34428 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 179 ms
+2025-05-05 20:11:00.689  WARN 34428 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-05 20:11:00.726  INFO 34428 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-05 20:11:00.735  INFO 34428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-05 20:11:00.737  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : Started FinalApplication in 0.303 seconds (JVM running for 16.109)
+2025-05-05 20:11:00.738  INFO 34428 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-05-05 20:11:02.634  INFO 34428 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 116 class path changes (116 additions, 0 deletions, 0 modifications)
+2025-05-05 20:11:02.640  INFO 34428 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-05 20:11:02.691  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21 on DESKTOP-5PSI0FG with PID 34428 (C:\PRM\Majority\Software_Engineering\FINAL\target\classes started by MuJue in C:\PRM\Majority\Software_Engineering\FINAL)
+2025-05-05 20:11:02.692  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-05 20:11:02.947  INFO 34428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-05 20:11:02.948  INFO 34428 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-05 20:11:02.948  INFO 34428 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-05 20:11:02.965  INFO 34428 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-05 20:11:02.965  INFO 34428 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 272 ms
+2025-05-05 20:11:02.995  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-05 20:11:03.023  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-05 20:11:03.047  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-05 20:11:03.047  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-05 20:11:03.061  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-05 20:11:03.077  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-05 20:11:03.102  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-05 20:11:03.119  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-05 20:11:03.149  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-05 20:11:03.149  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-05 20:11:03.164  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-05 20:11:03.177  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-05 20:11:03.201  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-05 20:11:03.219  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-05 20:11:03.219  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-05 20:11:03.251  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-05 20:11:03.252  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-05 20:11:03.278  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-05 20:11:03.293  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-05 20:11:03.320  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-05 20:11:03.334  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-05 20:11:03.346  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-05 20:11:03.466  WARN 34428 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-05 20:11:03.482  INFO 34428 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-05 20:11:03.484  WARN 34428 --- [restartedMain] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-05 20:11:03.503  INFO 34428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-05 20:11:03.504  INFO 34428 --- [restartedMain] com.dofinal.RG.FinalApplication          : Started FinalApplication in 0.83 seconds (JVM running for 18.877)
+2025-05-05 20:11:03.506  INFO 34428 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-05-05 20:17:51.142  INFO 34428 --- [http-nio-8082-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-05 20:17:51.143  INFO 34428 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-05-05 20:17:51.146  INFO 34428 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-05-05 20:17:51.230  INFO 34428 --- [http-nio-8082-exec-2] com.zaxxer.hikari.HikariDataSource       : traveldog - Starting...
+2025-05-05 20:17:51.648  INFO 34428 --- [http-nio-8082-exec-2] com.zaxxer.hikari.HikariDataSource       : traveldog - Start completed.
+2025-05-05 20:39:52.132 ERROR 34428 --- [http-nio-8082-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(AuthenticationServiceImpl.java:71) ~[classes/:na]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$FastClassBySpringCGLIB$$b6c4b911.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704) ~[spring-aop-5.3.23.jar:5.3.23]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$EnhancerBySpringCGLIB$$8c0f7333.logout(<generated>) ~[classes/:na]
+	at com.dofinal.RG.controller.AuthenticationController.logout(AuthenticationController.java:92) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-05-05 20:41:58.465 ERROR 34428 --- [http-nio-8082-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(AuthenticationServiceImpl.java:71) ~[classes/:na]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$FastClassBySpringCGLIB$$b6c4b911.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704) ~[spring-aop-5.3.23.jar:5.3.23]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$EnhancerBySpringCGLIB$$8c0f7333.logout(<generated>) ~[classes/:na]
+	at com.dofinal.RG.controller.AuthenticationController.logout(AuthenticationController.java:92) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-05-05 20:43:56.231 ERROR 34428 --- [http-nio-8082-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(AuthenticationServiceImpl.java:71) ~[classes/:na]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$FastClassBySpringCGLIB$$b6c4b911.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704) ~[spring-aop-5.3.23.jar:5.3.23]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$EnhancerBySpringCGLIB$$8c0f7333.logout(<generated>) ~[classes/:na]
+	at com.dofinal.RG.controller.AuthenticationController.logout(AuthenticationController.java:92) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-05-05 20:45:08.940 ERROR 34428 --- [http-nio-8082-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(AuthenticationServiceImpl.java:71) ~[classes/:na]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$FastClassBySpringCGLIB$$b6c4b911.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704) ~[spring-aop-5.3.23.jar:5.3.23]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$EnhancerBySpringCGLIB$$8c0f7333.logout(<generated>) ~[classes/:na]
+	at com.dofinal.RG.controller.AuthenticationController.logout(AuthenticationController.java:92) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-05-05 20:45:30.320 ERROR 34428 --- [http-nio-8082-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`traveldog`.`users_customers`, CONSTRAINT `users_customers_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`))
+### The error may exist in com/dofinal/RG/mapper/UserCustomerMapper.java (best guess)
+### The error may involve com.dofinal.RG.mapper.UserCustomerMapper.insertUserCustomer-Inline
+### The error occurred while setting parameters
+### SQL: insert into traveldog.users_customers(u_id, c_id) values(?, ?)
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`traveldog`.`users_customers`, CONSTRAINT `users_customers_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`))
+; Cannot add or update a child row: a foreign key constraint fails (`traveldog`.`users_customers`, CONSTRAINT `users_customers_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`)); nested exception is java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`traveldog`.`users_customers`, CONSTRAINT `users_customers_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`))] with root cause
+
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`traveldog`.`users_customers`, CONSTRAINT `users_customers_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117) ~[mysql-connector-j-8.0.31.jar:8.0.31]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.31.jar:8.0.31]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.31.jar:8.0.31]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354) ~[mysql-connector-j-8.0.31.jar:8.0.31]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44) ~[HikariCP-4.0.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java) ~[HikariCP-4.0.3.jar:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48) ~[mybatis-3.5.13.jar:3.5.13]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75) ~[mybatis-3.5.13.jar:3.5.13]
+	at com.baomidou.mybatisplus.core.executor.MybatisSimpleExecutor.doUpdate(MybatisSimpleExecutor.java:56) ~[mybatis-plus-core-3.4.1.jar:3.4.1]
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117) ~[mybatis-3.5.13.jar:3.5.13]
+	at com.baomidou.mybatisplus.core.executor.MybatisCachingExecutor.update(MybatisCachingExecutor.java:85) ~[mybatis-plus-core-3.4.1.jar:3.4.1]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197) ~[mybatis-3.5.13.jar:3.5.13]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:184) ~[mybatis-3.5.13.jar:3.5.13]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426) ~[mybatis-spring-2.0.5.jar:2.0.5]
+	at jdk.proxy2/jdk.proxy2.$Proxy63.insert(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:271) ~[mybatis-spring-2.0.5.jar:2.0.5]
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:60) ~[mybatis-plus-core-3.4.1.jar:3.4.1]
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:148) ~[mybatis-plus-core-3.4.1.jar:3.4.1]
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89) ~[mybatis-plus-core-3.4.1.jar:3.4.1]
+	at jdk.proxy4/jdk.proxy4.$Proxy132.insertUserCustomer(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137) ~[spring-tx-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215) ~[spring-aop-5.3.23.jar:5.3.23]
+	at jdk.proxy4/jdk.proxy4.$Proxy133.insertUserCustomer(Unknown Source) ~[na:na]
+	at com.dofinal.RG.service.impl.UserServiceImpl.addUserCustomer(UserServiceImpl.java:135) ~[classes/:na]
+	at com.dofinal.RG.service.impl.UserServiceImpl$$FastClassBySpringCGLIB$$adc49ede.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704) ~[spring-aop-5.3.23.jar:5.3.23]
+	at com.dofinal.RG.service.impl.UserServiceImpl$$EnhancerBySpringCGLIB$$1d32acba.addUserCustomer(<generated>) ~[classes/:na]
+	at com.dofinal.RG.controller.UserController.addUserCustomer(UserController.java:179) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-05-05 20:45:49.016 ERROR 34428 --- [http-nio-8082-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "com.dofinal.RG.entity.user.User.setStatus(String)" because "user" is null
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(AuthenticationServiceImpl.java:71) ~[classes/:na]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$FastClassBySpringCGLIB$$b6c4b911.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85) ~[spring-aop-5.3.23.jar:5.3.23]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704) ~[spring-aop-5.3.23.jar:5.3.23]
+	at com.dofinal.RG.service.impl.AuthenticationServiceImpl$$EnhancerBySpringCGLIB$$8c0f7333.logout(<generated>) ~[classes/:na]
+	at com.dofinal.RG.controller.AuthenticationController.logout(AuthenticationController.java:92) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.23.jar:5.3.23]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.68.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.23.jar:5.3.23]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.68.jar:9.0.68]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-05-05 21:03:22.138  INFO 34428 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : traveldog - Shutdown initiated...
+2025-05-05 21:03:22.147  INFO 34428 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : traveldog - Shutdown completed.
+2025-05-06 21:21:34.317  INFO 22252 --- [main] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21.0.6 on DESKTOP-ZKR with PID 22252 (D:\Programs\MicroService\java-demo\traveldog\target\FINAL-0.0.1-SNAPSHOT.jar started by zhangkr in D:\Programs\MicroService\java-demo\traveldog)
+2025-05-06 21:21:34.322  INFO 22252 --- [main] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-06 21:21:35.526  INFO 22252 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-06 21:21:35.526  INFO 22252 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.35] using APR version [1.7.0].
+2025-05-06 21:21:35.527  INFO 22252 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2025-05-06 21:21:35.527  INFO 22252 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2025-05-06 21:21:35.529  INFO 22252 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1q  5 Jul 2022]
+2025-05-06 21:21:35.537  INFO 22252 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-06 21:21:35.538  INFO 22252 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-06 21:21:35.607  INFO 22252 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-06 21:21:35.607  INFO 22252 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1226 ms
+2025-05-06 21:21:35.928  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-06 21:21:36.106  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-06 21:21:36.145  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-06 21:21:36.145  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-06 21:21:36.180  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-06 21:21:36.215  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-06 21:21:36.244  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-06 21:21:36.283  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-06 21:21:36.331  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-06 21:21:36.331  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-06 21:21:36.355  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-06 21:21:36.378  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-06 21:21:36.411  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-06 21:21:36.430  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-06 21:21:36.431  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-06 21:21:36.463  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-06 21:21:36.464  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-06 21:21:36.485  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-06 21:21:36.508  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-06 21:21:36.563  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-06 21:21:36.592  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-06 21:21:36.615  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-06 21:21:37.218  WARN 22252 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-06 21:21:37.318  WARN 22252 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-06 21:21:37.425  INFO 22252 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-06 21:21:37.440  INFO 22252 --- [main] com.dofinal.RG.FinalApplication          : Started FinalApplication in 3.78 seconds (JVM running for 4.154)
+2025-05-06 21:23:12.083  INFO 29972 --- [main] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21.0.6 on DESKTOP-ZKR with PID 29972 (D:\Programs\MicroService\java-demo\traveldog\target\FINAL-0.0.1-SNAPSHOT.jar started by zhangkr in D:\Programs\MicroService\java-demo\traveldog)
+2025-05-06 21:23:12.086  INFO 29972 --- [main] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-06 21:23:13.221  INFO 29972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-06 21:23:13.222  INFO 29972 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.35] using APR version [1.7.0].
+2025-05-06 21:23:13.223  INFO 29972 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2025-05-06 21:23:13.223  INFO 29972 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2025-05-06 21:23:13.225  INFO 29972 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1q  5 Jul 2022]
+2025-05-06 21:23:13.234  INFO 29972 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-06 21:23:13.234  INFO 29972 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-06 21:23:13.307  INFO 29972 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-06 21:23:13.307  INFO 29972 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1171 ms
+2025-05-06 21:23:13.651  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-06 21:23:13.811  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-06 21:23:13.846  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-06 21:23:13.846  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-06 21:23:13.871  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-06 21:23:13.892  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-06 21:23:13.915  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-06 21:23:13.938  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-06 21:23:13.978  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-06 21:23:13.979  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-06 21:23:14.001  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-06 21:23:14.021  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-06 21:23:14.060  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-06 21:23:14.082  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-06 21:23:14.082  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-06 21:23:14.115  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-06 21:23:14.115  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-06 21:23:14.136  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-06 21:23:14.154  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-06 21:23:14.205  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-06 21:23:14.234  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-06 21:23:14.255  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-06 21:23:14.861  WARN 29972 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-06 21:23:14.969  WARN 29972 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-06 21:23:15.071  INFO 29972 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-06 21:23:15.087  INFO 29972 --- [main] com.dofinal.RG.FinalApplication          : Started FinalApplication in 3.518 seconds (JVM running for 3.858)
+2025-05-06 21:25:37.633  INFO 16344 --- [main] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21.0.6 on DESKTOP-ZKR with PID 16344 (D:\Programs\MicroService\java-demo\traveldog\target\FINAL-0.0.1-SNAPSHOT.jar started by zhangkr in D:\Programs\MicroService\java-demo\traveldog)
+2025-05-06 21:25:37.635  INFO 16344 --- [main] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-06 21:25:38.758  INFO 16344 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-06 21:25:38.759  INFO 16344 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.35] using APR version [1.7.0].
+2025-05-06 21:25:38.760  INFO 16344 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2025-05-06 21:25:38.760  INFO 16344 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2025-05-06 21:25:38.762  INFO 16344 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1q  5 Jul 2022]
+2025-05-06 21:25:38.771  INFO 16344 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-06 21:25:38.771  INFO 16344 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-06 21:25:38.845  INFO 16344 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-06 21:25:38.845  INFO 16344 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1161 ms
+2025-05-06 21:25:39.171  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-06 21:25:39.316  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-06 21:25:39.348  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-06 21:25:39.348  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-06 21:25:39.370  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-06 21:25:39.392  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-06 21:25:39.414  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-06 21:25:39.436  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-06 21:25:39.474  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-06 21:25:39.474  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-06 21:25:39.494  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-06 21:25:39.514  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-06 21:25:39.541  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-06 21:25:39.559  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-06 21:25:39.559  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-06 21:25:39.591  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-06 21:25:39.592  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-06 21:25:39.616  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-06 21:25:39.637  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-06 21:25:39.685  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-06 21:25:39.712  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-06 21:25:39.734  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-06 21:25:40.321  WARN 16344 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-06 21:25:40.436  WARN 16344 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-06 21:25:40.545  INFO 16344 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-06 21:25:40.561  INFO 16344 --- [main] com.dofinal.RG.FinalApplication          : Started FinalApplication in 3.492 seconds (JVM running for 3.827)
+2025-05-06 21:26:17.110  INFO 38956 --- [main] com.dofinal.RG.FinalApplication          : Starting FinalApplication using Java 21.0.6 on DESKTOP-ZKR with PID 38956 (D:\Programs\MicroService\java-demo\traveldog\target\FINAL-0.0.1-SNAPSHOT.jar started by zhangkr in D:\Programs\MicroService\java-demo\traveldog)
+2025-05-06 21:26:17.113  INFO 38956 --- [main] com.dofinal.RG.FinalApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-05-06 21:26:18.234  INFO 38956 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2025-05-06 21:26:18.235  INFO 38956 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.35] using APR version [1.7.0].
+2025-05-06 21:26:18.235  INFO 38956 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2025-05-06 21:26:18.236  INFO 38956 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2025-05-06 21:26:18.239  INFO 38956 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1q  5 Jul 2022]
+2025-05-06 21:26:18.249  INFO 38956 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-06 21:26:18.249  INFO 38956 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-06 21:26:18.317  INFO 38956 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-06 21:26:18.317  INFO 38956 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1147 ms
+2025-05-06 21:26:18.623  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.User",So @TableField will not work!
+2025-05-06 21:26:18.757  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserNotice".
+2025-05-06 21:26:18.792  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.user.Customer",So @TableField will not work!
+2025-05-06 21:26:18.792  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.user.Customer"
+2025-05-06 21:26:18.812  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.user.UserCustomer".
+2025-05-06 21:26:18.835  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.TrainCustomerOrder".
+2025-05-06 21:26:18.858  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.HotelCustomerOrder".
+2025-05-06 21:26:18.881  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.UserOrder".
+2025-05-06 21:26:18.926  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Hotel",So @TableField will not work!
+2025-05-06 21:26:18.926  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Hotel"
+2025-05-06 21:26:18.946  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.mapper.LocationMapper".
+2025-05-06 21:26:18.966  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelComment".
+2025-05-06 21:26:18.995  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.HotelRoom".
+2025-05-06 21:26:19.019  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.hotel.Room",So @TableField will not work!
+2025-05-06 21:26:19.019  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.hotel.Room"
+2025-05-06 21:26:19.052  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Meal",So @TableField will not work!
+2025-05-06 21:26:19.052  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This primary key of "id" is primitive !不建议如此请使用包装类 in Class: "com.dofinal.RG.entity.train.Meal"
+2025-05-06 21:26:19.070  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainMeal".
+2025-05-06 21:26:19.091  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : This "id" is the table primary key by default name for `id` in Class: "com.dofinal.RG.entity.train.Train",So @TableField will not work!
+2025-05-06 21:26:19.143  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainArrival".
+2025-05-06 21:26:19.171  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.order.MealCustomerOrder".
+2025-05-06 21:26:19.195  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.train.TrainSeat".
+2025-05-06 21:26:19.693  WARN 38956 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-06 21:26:19.801  WARN 38956 --- [main] c.b.m.core.metadata.TableInfoHelper      : Can not find table primary key in Class: "com.dofinal.RG.entity.hotel.Rate".
+2025-05-06 21:26:19.891  INFO 38956 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2025-05-06 21:26:19.907  INFO 38956 --- [main] com.dofinal.RG.FinalApplication          : Started FinalApplication in 3.368 seconds (JVM running for 3.714)

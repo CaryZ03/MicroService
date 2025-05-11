@@ -1,0 +1,66 @@
+[
+    {
+        "name": "PUT:/user/update/",
+        "weight": 1
+    },
+    {
+        "name": "POST:/customer/getCidByTidStrict/{str}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/websocket",
+        "weight": 1
+    },
+    {
+        "name": "GET:/user/getByUid/{str}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/user/getNoticeByUid/{str}",
+        "weight": 1
+    },
+    {
+        "name": "PUT:/user/rateHotelByOid",
+        "weight": 1
+    },
+    {
+        "name": "POST:/user/addOrder",
+        "weight": 1
+    },
+    {
+        "name": "POST:/logout",
+        "weight": 1
+    },
+    {
+        "name": "POST:/meal/getTrainMeals",
+        "weight": 1
+    },
+    {
+        "name": "POST:/hotel/getByLocation",
+        "weight": 1
+    },
+    {
+        "name": "POST:/user/payOrder",
+        "weight": 1
+    },
+    {
+        "name": "POST:/user/getUserOrder/{str}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/customer/getByCid/{str}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/customer/getByUid/{str}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/train/getTidByUid/{str}",
+        "weight": 1
+    },
+    {
+        "name": "GET:/customer/getCidByHid/{str}",
+        "weight": 1
+    }
+]

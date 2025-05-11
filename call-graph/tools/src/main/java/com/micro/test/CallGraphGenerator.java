@@ -48,7 +48,7 @@ public class CallGraphGenerator {
 
         // 目标项目的编译类文件目录
         String targetProjectClassesDir = targetProjectRoot + "/src/main/java";
-        File targetProjectClasses = new File(targetProjectRoot);
+        File targetProjectClasses = new File(targetProjectClassesDir);
 
 
         // 创建 CombinedTypeSolver

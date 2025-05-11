@@ -5,397 +5,935 @@
   <key id="d1" for="node" attr.name="count" attr.type="long" />
   <key id="d0" for="node" attr.name="execution_time" attr.type="long" />
   <graph edgedefault="directed">
-    <node id="com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)">
-      <data key="d0">98</data>
-      <data key="d1">10</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)">
-      <data key="d0">97</data>
-      <data key="d1">10</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)">
-      <data key="d0">36</data>
-      <data key="d1">4</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)">
-      <data key="d0">35</data>
-      <data key="d1">4</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)">
-      <data key="d0">29</data>
-      <data key="d1">2</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.UserService.getUserById(java.lang.Long)">
-      <data key="d0">57</data>
-      <data key="d1">10</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.controller.UserController.getUserByUsername(java.lang.String)">
-      <data key="d0">343</data>
-      <data key="d1">8</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.UserService.getUserByUsername(java.lang.String)">
-      <data key="d0">343</data>
-      <data key="d1">8</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.ProductService.getProductByName(java.lang.String)">
-      <data key="d0">166</data>
-      <data key="d1">8</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)">
-      <data key="d0">64</data>
-      <data key="d1">7</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)">
-      <data key="d0">64</data>
-      <data key="d1">7</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)">
+    <node id="com.dofinal.RG.login.handleLogin.IllegalUid()">
       <data key="d0">0</data>
       <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.ProductController.getProductById(java.lang.Long)">
-      <data key="d0">88</data>
-      <data key="d1">8</data>
-      <data key="d2">function</data>
-    </node>
-    <node id="com.example.demo.service.ProductService.getProductById(java.lang.Long)">
-      <data key="d0">105</data>
+    <node id="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d0">106</data>
       <data key="d1">10</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)">
+    <node id="com.dofinal.RG.service.OrderService.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
       <data key="d0">0</data>
       <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)">
-      <data key="d0">69</data>
-      <data key="d1">9</data>
+    <node id="com.dofinal.RG.exceptions.PurchaseException.getMessage()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)">
-      <data key="d0">68</data>
-      <data key="d1">9</data>
+    <node id="com.dofinal.RG.service.NoticeService">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.OrderController.getOrderById(java.lang.Long)">
-      <data key="d0">75</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.service.OrderService.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.service.OrderService.getOrderById(java.lang.Long)">
-      <data key="d0">74</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.controller.OrderController.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)">
-      <data key="d0">15</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.service.OrderService.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)">
-      <data key="d0">85</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.controller.OrderController.commentHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">12</data>
+      <data key="d1">1</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)">
-      <data key="d0">85</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.service.OrderService.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.ProductController.getProductByName(java.lang.String)">
-      <data key="d0">168</data>
-      <data key="d1">8</data>
+    <node id="com.dofinal.RG.service.OrderService.getHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)">
-      <data key="d0">87</data>
-      <data key="d1">4</data>
+    <node id="com.dofinal.RG.controller.OrderController.getHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)">
-      <data key="d0">13</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.service.OrderService.deleteHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)">
-      <data key="d0">13</data>
-      <data key="d1">2</data>
+    <node id="com.dofinal.RG.controller.TrainController.getTrains()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.UserController.getUserById(java.lang.Long)">
-      <data key="d0">46</data>
-      <data key="d1">8</data>
+    <node id="com.dofinal.RG.service.TrainService.findTrains()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)">
-      <data key="d0">87</data>
-      <data key="d1">4</data>
+    <node id="com.dofinal.RG.service.SeatService">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="POST:/payment-records">
-      <data key="d0">25</data>
-      <data key="d1">2</data>
-      <data key="d2">entry</data>
+    <node id="com.dofinal.RG.controller.OrderController.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
     </node>
-    <node id="Mysql.springboot.payment_record">
-      <data key="d0">22</data>
-      <data key="d1">8</data>
-      <data key="d2">database</data>
+    <node id="com.dofinal.RG.service.OrderService.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
     </node>
-    <node id="POST:/order-details">
+    <node id="com.dofinal.RG.controller.RoomController.findHotelRoomByHid(int)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.RoomService.findHotelRoomByHid(int)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.controller.MealController.getTrainMeals(com.dofinal.RG.reqs.entity.MealReq)">
       <data key="d0">66</data>
+      <data key="d1">12</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.MealService">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.login.handleLogin.Register()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.login.handleLogin.CheckIfExist()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.login.handleLogin.IllegalPassword()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerById(int)">
+      <data key="d0">5</data>
       <data key="d1">4</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.controller.HotelController.getHotelByLocationTime(com.dofinal.RG.reqs.entity.HotelReq)">
+      <data key="d0">139</data>
+      <data key="d1">7</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.HotelService">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.controller.CustomerController.getCustomers()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.CustomerService.findCustomers()">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.controller.SeatController.getSeatCount(com.dofinal.RG.reqs.entity.SeatReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.controller.OrderController.deleteHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">0</data>
+      <data key="d1">0</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)">
+      <data key="d0">100</data>
+      <data key="d1">5</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.HotelServiceImpl.findHotelByLocation(com.dofinal.RG.entity.location.Location)">
+      <data key="d0">21</data>
+      <data key="d1">7</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="POST:/user/getUserOrder/123">
+      <data key="d0">299</data>
+      <data key="d1">17</data>
       <data key="d2">entry</data>
     </node>
-    <node id="Mysql.springboot.order_detail">
-      <data key="d0">28</data>
-      <data key="d1">8</data>
-      <data key="d2">database</data>
+    <node id="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d0">25</data>
+      <data key="d1">47</data>
+      <data key="d2">function</data>
     </node>
-    <node id="GET:/orders/id/{int}">
-      <data key="d0">90</data>
-      <data key="d1">2</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="Mysql.springboot.orders">
-      <data key="d0">20</data>
-      <data key="d1">8</data>
-      <data key="d2">database</data>
-    </node>
-    <node id="Mysql.springboot.product">
-      <data key="d0">55</data>
-      <data key="d1">32</data>
-      <data key="d2">database</data>
-    </node>
-    <node id="Mysql.springboot.category">
-      <data key="d0">79</data>
-      <data key="d1">51</data>
-      <data key="d2">database</data>
-    </node>
-    <node id="Mysql.springboot.user">
-      <data key="d0">40</data>
-      <data key="d1">29</data>
-      <data key="d2">database</data>
-    </node>
-    <node id="POST:/orders">
-      <data key="d0">97</data>
-      <data key="d1">2</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="GET:/products/id/{int}">
-      <data key="d0">116</data>
-      <data key="d1">8</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="GET:/products/name/{str}">
+    <node id="com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)">
       <data key="d0">248</data>
-      <data key="d1">8</data>
+      <data key="d1">17</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)">
+      <data key="d0">248</data>
+      <data key="d1">17</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.orders">
+      <data key="d0">55</data>
+      <data key="d1">59</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.meal_orders">
+      <data key="d0">11</data>
+      <data key="d1">37</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.customers">
+      <data key="d0">55</data>
+      <data key="d1">173</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.meals">
+      <data key="d0">39</data>
+      <data key="d1">98</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.trains_orders">
+      <data key="d0">27</data>
+      <data key="d1">69</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.locations">
+      <data key="d0">32</data>
+      <data key="d1">109</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.hotel_orders">
+      <data key="d0">24</data>
+      <data key="d1">28</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.hotels">
+      <data key="d0">20</data>
+      <data key="d1">73</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="GET:/customer/getByUid/123">
+      <data key="d0">44</data>
+      <data key="d1">12</data>
       <data key="d2">entry</data>
     </node>
-    <node id="GET:/categories/name/{str}">
-      <data key="d0">304</data>
-      <data key="d1">4</data>
-      <data key="d2">entry</data>
+    <node id="com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)">
+      <data key="d0">23</data>
+      <data key="d1">12</data>
+      <data key="d2">function</data>
     </node>
-    <node id="POST:/products">
-      <data key="d0">159</data>
-      <data key="d1">10</data>
-      <data key="d2">entry</data>
+    <node id="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerByUid(java.lang.String)">
+      <data key="d0">22</data>
+      <data key="d1">12</data>
+      <data key="d2">function</data>
     </node>
-    <node id="POST:/categories">
-      <data key="d0">107</data>
+    <node id="Mysql.traveldog.users_customers">
+      <data key="d0">7</data>
+      <data key="d1">12</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="GET:/user/getByUid/123">
+      <data key="d0">20</data>
       <data key="d1">7</data>
       <data key="d2">entry</data>
     </node>
-    <node id="GET:/users/id/{int}">
-      <data key="d0">62</data>
-      <data key="d1">8</data>
+    <node id="com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)">
+      <data key="d0">9</data>
+      <data key="d1">7</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.UserServiceImpl.findUserByUid(java.lang.String)">
+      <data key="d0">9</data>
+      <data key="d1">10</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.users">
+      <data key="d0">54</data>
+      <data key="d1">35</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="POST:/meal/getTrainMeals">
+      <data key="d0">89</data>
+      <data key="d1">12</data>
       <data key="d2">entry</data>
     </node>
-    <node id="GET:/users/username/{str}">
-      <data key="d0">406</data>
-      <data key="d1">8</data>
+    <node id="com.dofinal.RG.service.impl.MealServiceImpl.getMealsByTid(java.lang.String)">
+      <data key="d0">66</data>
+      <data key="d1">12</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.train_meal">
+      <data key="d0">8</data>
+      <data key="d1">24</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="Mysql.traveldog.trains">
+      <data key="d0">12</data>
+      <data key="d1">15</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="GET:/train/getTidByUid/123">
+      <data key="d0">32</data>
+      <data key="d1">6</data>
       <data key="d2">entry</data>
     </node>
-    <node id="POST:/users/register">
-      <data key="d0">133</data>
-      <data key="d1">9</data>
+    <node id="com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)">
+      <data key="d0">25</data>
+      <data key="d1">6</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.TrainServiceImpl.getTidByUid(java.lang.String)">
+      <data key="d0">25</data>
+      <data key="d1">6</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="PUT:/user/rateHotelByOid">
+      <data key="d0">15</data>
+      <data key="d1">1</data>
       <data key="d2">entry</data>
     </node>
-    <edge source="com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)" target="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)">
-      <data key="d3">11</data>
-    </edge>
-    <edge source="com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)" target="Mysql.springboot.product">
-      <data key="d3">10</data>
-    </edge>
-    <edge source="com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)" target="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)">
-      <data key="d3">5</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)" target="Mysql.springboot.order_detail">
-      <data key="d3">4</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)" target="Mysql.springboot.order_detail">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)" target="Mysql.springboot.orders">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.UserService.getUserById(java.lang.Long)" target="Mysql.springboot.user">
-      <data key="d3">10</data>
-    </edge>
-    <edge source="com.example.demo.controller.UserController.getUserByUsername(java.lang.String)" target="com.example.demo.service.UserService.getUserByUsername(java.lang.String)">
-      <data key="d3">9</data>
-    </edge>
-    <edge source="com.example.demo.service.UserService.getUserByUsername(java.lang.String)" target="Mysql.springboot.user">
-      <data key="d3">8</data>
-    </edge>
-    <edge source="com.example.demo.service.ProductService.getProductByName(java.lang.String)" target="Mysql.springboot.product">
-      <data key="d3">8</data>
-    </edge>
-    <edge source="com.example.demo.service.ProductService.getProductByName(java.lang.String)" target="Mysql.springboot.category">
-      <data key="d3">28</data>
-    </edge>
-    <edge source="com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)" target="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)">
-      <data key="d3">8</data>
-    </edge>
-    <edge source="com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)" target="Mysql.springboot.category">
-      <data key="d3">7</data>
-    </edge>
-    <edge source="com.example.demo.controller.ProductController.getProductById(java.lang.Long)" target="com.example.demo.service.ProductService.getProductById(java.lang.Long)">
-      <data key="d3">9</data>
-    </edge>
-    <edge source="com.example.demo.service.ProductService.getProductById(java.lang.Long)" target="Mysql.springboot.product">
-      <data key="d3">10</data>
-    </edge>
-    <edge source="com.example.demo.service.ProductService.getProductById(java.lang.Long)" target="Mysql.springboot.category">
-      <data key="d3">10</data>
-    </edge>
-    <edge source="com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)" target="com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)">
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d0">12</data>
+      <data key="d1">1</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.hotel_comment">
+      <data key="d0">7</data>
+      <data key="d1">16</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="POST:/user/payOrder">
+      <data key="d0">124</data>
+      <data key="d1">10</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d0">67</data>
+      <data key="d1">10</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderNotice(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
+      <data key="d0">58</data>
+      <data key="d1">15</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderPay(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
+      <data key="d0">39</data>
+      <data key="d1">10</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.user_notice">
+      <data key="d0">50</data>
+      <data key="d1">19</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="PUT:/user/update/">
+      <data key="d0">23</data>
+      <data key="d1">3</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.controller.UserController.updateUser(com.dofinal.RG.reqs.entity.UserReq)">
+      <data key="d0">16</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.UserServiceImpl.updateUser(com.dofinal.RG.reqs.entity.UserReq)">
+      <data key="d0">15</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="POST:/hotel/getByLocation">
+      <data key="d0">160</data>
+      <data key="d1">7</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomDemoByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)">
+      <data key="d0">92</data>
+      <data key="d1">14</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)">
+      <data key="d0">13</data>
+      <data key="d1">14</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.hotel_room">
+      <data key="d0">9</data>
+      <data key="d1">19</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.RoomServiceImpl.getDay(java.sql.Timestamp)">
+      <data key="d0">0</data>
+      <data key="d1">76</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.RoomServiceImpl.handleRoomDemo(java.util.List,java.util.List)">
+      <data key="d0">78</data>
+      <data key="d1">14</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="Mysql.traveldog.rooms">
+      <data key="d0">32</data>
+      <data key="d1">124</data>
+      <data key="d2">database</data>
+    </node>
+    <node id="POST:/user/addOrder">
+      <data key="d0">110</data>
+      <data key="d1">5</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)">
+      <data key="d0">54</data>
+      <data key="d1">5</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)">
+      <data key="d0">14</data>
+      <data key="d1">2</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidRidTime(int,int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)">
+      <data key="d0">2</data>
+      <data key="d1">2</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.RoomServiceImpl.orderRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,[B)">
+      <data key="d0">0</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.setUserOrderPrice(com.dofinal.RG.entity.order.UserOrder,java.lang.String)">
+      <data key="d0">11</data>
+      <data key="d1">5</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderGenerate(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
+      <data key="d0">19</data>
+      <data key="d1">5</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="GET:/customer/getCidByHid/5">
+      <data key="d0">2</data>
+      <data key="d1">1</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.controller.CustomerController.getCidByHid(int)">
+      <data key="d0">4</data>
+      <data key="d1">2</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByHid(int)">
+      <data key="d0">3</data>
+      <data key="d1">2</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="GET:/customer/getCidByHid/1">
+      <data key="d0">5</data>
+      <data key="d1">1</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="GET:/user/getNoticeByUid/123">
+      <data key="d0">14</data>
+      <data key="d1">4</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)">
+      <data key="d0">5</data>
+      <data key="d1">4</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.NoticeServiceImpl.getUserNoticeByUid(java.lang.String)">
+      <data key="d0">5</data>
+      <data key="d1">4</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="POST:/logout">
+      <data key="d0">18</data>
+      <data key="d1">3</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.controller.AuthenticationController.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)">
+      <data key="d0">10</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)">
+      <data key="d0">10</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)">
+      <data key="d0">16</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.MealServiceImpl.buyMeal(java.lang.String,int)">
+      <data key="d0">4</data>
+      <data key="d1">4</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="GET:/customer/getByCid/2">
+      <data key="d0">8</data>
+      <data key="d1">3</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)">
+      <data key="d0">5</data>
+      <data key="d1">4</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="GET:/customer/getByCid/1">
+      <data key="d0">2</data>
+      <data key="d1">1</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="POST:/customer/getCidByTidStrict/K11">
+      <data key="d0">4</data>
+      <data key="d1">1</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)">
+      <data key="d0">8</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTidStrict(java.lang.String)">
+      <data key="d0">8</data>
+      <data key="d1">3</data>
+      <data key="d2">function</data>
+    </node>
+    <node id="POST:/customer/getCidByTidStrict/J10">
+      <data key="d0">8</data>
+      <data key="d1">2</data>
+      <data key="d2">entry</data>
+    </node>
+    <edge source="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.OrderService.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
       <data key="d3">1</data>
     </edge>
-    <edge source="com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)" target="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)">
+    <edge source="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.exceptions.PurchaseException.getMessage()">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.NoticeService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
       <data key="d3">10</data>
     </edge>
-    <edge source="com.example.demo.service.UserService.registerUser(com.example.demo.model.User)" target="Mysql.springboot.user">
-      <data key="d3">9</data>
-    </edge>
-    <edge source="com.example.demo.controller.OrderController.getOrderById(java.lang.Long)" target="com.example.demo.service.OrderService.getOrderById(java.lang.Long)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="Mysql.springboot.orders">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="Mysql.springboot.order_detail">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="Mysql.springboot.payment_record">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="Mysql.springboot.product">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="Mysql.springboot.category">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getOrderById(java.lang.Long)" target="Mysql.springboot.user">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)" target="Mysql.springboot.payment_record">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)" target="Mysql.springboot.orders">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)" target="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)" target="com.example.demo.service.UserService.getUserById(java.lang.Long)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)" target="com.example.demo.service.ProductService.getProductById(java.lang.Long)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)" target="Mysql.springboot.orders">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)" target="Mysql.springboot.payment_record">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.controller.ProductController.getProductByName(java.lang.String)" target="com.example.demo.service.ProductService.getProductByName(java.lang.String)">
-      <data key="d3">9</data>
-    </edge>
-    <edge source="com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)" target="Mysql.springboot.category">
-      <data key="d3">4</data>
-    </edge>
-    <edge source="com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)" target="Mysql.springboot.payment_record">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)" target="com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)">
-      <data key="d3">3</data>
-    </edge>
-    <edge source="com.example.demo.controller.UserController.getUserById(java.lang.Long)" target="com.example.demo.service.UserService.getUserById(java.lang.Long)">
-      <data key="d3">9</data>
-    </edge>
-    <edge source="com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)" target="com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)">
-      <data key="d3">5</data>
-    </edge>
-    <edge source="POST:/payment-records" target="com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="POST:/order-details" target="com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)">
-      <data key="d3">4</data>
-    </edge>
-    <edge source="GET:/orders/id/{int}" target="com.example.demo.controller.OrderController.getOrderById(java.lang.Long)">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="POST:/orders" target="com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="GET:/products/id/{int}" target="com.example.demo.controller.ProductController.getProductById(java.lang.Long)">
-      <data key="d3">8</data>
-    </edge>
-    <edge source="GET:/products/name/{str}" target="com.example.demo.controller.ProductController.getProductByName(java.lang.String)">
-      <data key="d3">8</data>
-    </edge>
-    <edge source="GET:/categories/name/{str}" target="com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)">
-      <data key="d3">4</data>
-    </edge>
-    <edge source="GET:/categories/name/{str}" target="Mysql.springboot.product">
-      <data key="d3">2</data>
-    </edge>
-    <edge source="POST:/products" target="com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)">
+    <edge source="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderNotice(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
       <data key="d3">10</data>
     </edge>
-    <edge source="POST:/categories" target="com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)">
+    <edge source="com.dofinal.RG.controller.OrderController.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.OrderService.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.NoticeService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.commentHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="com.dofinal.RG.service.OrderService.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.commentHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.getHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="com.dofinal.RG.service.OrderService.getHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.TrainController.getTrains()" target="com.dofinal.RG.service.TrainService.findTrains()">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.TrainController.getTrains()" target="com.dofinal.RG.service.SeatService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.OrderService.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.NoticeService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.RoomController.findHotelRoomByHid(int)" target="com.dofinal.RG.service.RoomService.findHotelRoomByHid(int)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.MealController.getTrainMeals(com.dofinal.RG.reqs.entity.MealReq)" target="com.dofinal.RG.service.MealService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.MealController.getTrainMeals(com.dofinal.RG.reqs.entity.MealReq)" target="com.dofinal.RG.service.impl.MealServiceImpl.getMealsByTid(java.lang.String)">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.login.handleLogin.Register()" target="com.dofinal.RG.login.handleLogin.IllegalUid()">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.login.handleLogin.Register()" target="com.dofinal.RG.login.handleLogin.CheckIfExist()">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.login.handleLogin.Register()" target="com.dofinal.RG.login.handleLogin.IllegalPassword()">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerById(int)" target="Mysql.traveldog.customers">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.HotelController.getHotelByLocationTime(com.dofinal.RG.reqs.entity.HotelReq)" target="com.dofinal.RG.service.HotelService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.HotelController.getHotelByLocationTime(com.dofinal.RG.reqs.entity.HotelReq)" target="com.dofinal.RG.service.impl.HotelServiceImpl.findHotelByLocation(com.dofinal.RG.entity.location.Location)">
       <data key="d3">7</data>
     </edge>
-    <edge source="GET:/users/id/{int}" target="com.example.demo.controller.UserController.getUserById(java.lang.Long)">
+    <edge source="com.dofinal.RG.controller.HotelController.getHotelByLocationTime(com.dofinal.RG.reqs.entity.HotelReq)" target="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomDemoByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)">
+      <data key="d3">14</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.CustomerController.getCustomers()" target="com.dofinal.RG.service.CustomerService.findCustomers()">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.SeatController.getSeatCount(com.dofinal.RG.reqs.entity.SeatReq)" target="com.dofinal.RG.service.SeatService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.deleteHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="com.dofinal.RG.service.OrderService.deleteHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.OrderService.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.NoticeService">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderNotice(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.HotelServiceImpl.findHotelByLocation(com.dofinal.RG.entity.location.Location)" target="Mysql.traveldog.locations">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.HotelServiceImpl.findHotelByLocation(com.dofinal.RG.entity.location.Location)" target="Mysql.traveldog.hotels">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.HotelServiceImpl.findHotelByLocation(com.dofinal.RG.entity.location.Location)" target="Mysql.traveldog.hotel_comment">
+      <data key="d3">14</data>
+    </edge>
+    <edge source="POST:/user/getUserOrder/123" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">17</data>
+    </edge>
+    <edge source="POST:/user/getUserOrder/123" target="com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)">
+      <data key="d3">17</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)" target="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)">
+      <data key="d3">17</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.orders">
+      <data key="d3">17</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.meal_orders">
+      <data key="d3">30</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.customers">
+      <data key="d3">138</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.meals">
+      <data key="d3">40</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.trains_orders">
+      <data key="d3">51</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.locations">
+      <data key="d3">102</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.hotel_orders">
+      <data key="d3">20</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)" target="Mysql.traveldog.hotels">
+      <data key="d3">20</data>
+    </edge>
+    <edge source="GET:/customer/getByUid/123" target="com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)" target="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerByUid(java.lang.String)">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerByUid(java.lang.String)" target="Mysql.traveldog.users_customers">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerByUid(java.lang.String)" target="Mysql.traveldog.customers">
+      <data key="d3">24</data>
+    </edge>
+    <edge source="GET:/user/getByUid/123" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="GET:/user/getByUid/123" target="com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)" target="com.dofinal.RG.service.impl.UserServiceImpl.findUserByUid(java.lang.String)">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.UserServiceImpl.findUserByUid(java.lang.String)" target="Mysql.traveldog.users">
+      <data key="d3">10</data>
+    </edge>
+    <edge source="POST:/meal/getTrainMeals" target="com.dofinal.RG.controller.MealController.getTrainMeals(com.dofinal.RG.reqs.entity.MealReq)">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.MealServiceImpl.getMealsByTid(java.lang.String)" target="Mysql.traveldog.train_meal">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.MealServiceImpl.getMealsByTid(java.lang.String)" target="Mysql.traveldog.trains">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.MealServiceImpl.getMealsByTid(java.lang.String)" target="Mysql.traveldog.meals">
+      <data key="d3">48</data>
+    </edge>
+    <edge source="GET:/train/getTidByUid/123" target="com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)">
+      <data key="d3">6</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)" target="com.dofinal.RG.service.impl.TrainServiceImpl.getTidByUid(java.lang.String)">
+      <data key="d3">6</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.TrainServiceImpl.getTidByUid(java.lang.String)" target="Mysql.traveldog.orders">
+      <data key="d3">6</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.TrainServiceImpl.getTidByUid(java.lang.String)" target="Mysql.traveldog.trains_orders">
+      <data key="d3">12</data>
+    </edge>
+    <edge source="PUT:/user/rateHotelByOid" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="PUT:/user/rateHotelByOid" target="com.dofinal.RG.controller.OrderController.commentHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="Mysql.traveldog.orders">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="Mysql.traveldog.hotel_orders">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="Mysql.traveldog.hotels">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)" target="Mysql.traveldog.hotel_comment">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="POST:/user/payOrder" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">10</data>
+    </edge>
+    <edge source="POST:/user/payOrder" target="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
+      <data key="d3">10</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="Mysql.traveldog.orders">
+      <data key="d3">16</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="Mysql.traveldog.users">
+      <data key="d3">16</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderNotice(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)" target="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderPay(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
+      <data key="d3">10</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderNotice(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)" target="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderGenerate(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderPay(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)" target="Mysql.traveldog.user_notice">
+      <data key="d3">10</data>
+    </edge>
+    <edge source="PUT:/user/update/" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="PUT:/user/update/" target="com.dofinal.RG.controller.UserController.updateUser(com.dofinal.RG.reqs.entity.UserReq)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.UserController.updateUser(com.dofinal.RG.reqs.entity.UserReq)" target="com.dofinal.RG.service.impl.UserServiceImpl.updateUser(com.dofinal.RG.reqs.entity.UserReq)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.UserController.updateUser(com.dofinal.RG.reqs.entity.UserReq)" target="com.dofinal.RG.service.impl.UserServiceImpl.findUserByUid(java.lang.String)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.UserServiceImpl.updateUser(com.dofinal.RG.reqs.entity.UserReq)" target="Mysql.traveldog.users">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="POST:/hotel/getByLocation" target="com.dofinal.RG.controller.HotelController.getHotelByLocationTime(com.dofinal.RG.reqs.entity.HotelReq)">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomDemoByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)">
+      <data key="d3">14</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomDemoByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.RoomServiceImpl.handleRoomDemo(java.util.List,java.util.List)">
+      <data key="d3">14</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)" target="Mysql.traveldog.hotel_room">
+      <data key="d3">14</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.RoomServiceImpl.getDay(java.sql.Timestamp)">
+      <data key="d3">56</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.handleRoomDemo(java.util.List,java.util.List)" target="Mysql.traveldog.rooms">
+      <data key="d3">121</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.handleRoomDemo(java.util.List,java.util.List)" target="Mysql.traveldog.hotels">
+      <data key="d3">41</data>
+    </edge>
+    <edge source="POST:/user/addOrder" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="POST:/user/addOrder" target="com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="Mysql.traveldog.orders">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="Mysql.traveldog.hotels">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.setUserOrderPrice(com.dofinal.RG.entity.order.UserOrder,java.lang.String)">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="Mysql.traveldog.customers">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="Mysql.traveldog.meals">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.orders">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidRidTime(int,int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.hotels">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.rooms">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.RoomServiceImpl.orderRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,[B)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.hotel_room">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.hotel_orders">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidRidTime(int,int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)" target="Mysql.traveldog.hotel_room">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidRidTime(int,int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.RoomServiceImpl.getDay(java.sql.Timestamp)">
       <data key="d3">8</data>
     </edge>
-    <edge source="GET:/users/username/{str}" target="com.example.demo.controller.UserController.getUserByUsername(java.lang.String)">
-      <data key="d3">8</data>
+    <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.orderRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,[B)" target="com.dofinal.RG.service.impl.RoomServiceImpl.getDay(java.sql.Timestamp)">
+      <data key="d3">12</data>
     </edge>
-    <edge source="POST:/users/register" target="com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)">
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.setUserOrderPrice(com.dofinal.RG.entity.order.UserOrder,java.lang.String)" target="Mysql.traveldog.hotel_orders">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.setUserOrderPrice(com.dofinal.RG.entity.order.UserOrder,java.lang.String)" target="Mysql.traveldog.orders">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.setUserOrderPrice(com.dofinal.RG.entity.order.UserOrder,java.lang.String)" target="Mysql.traveldog.meal_orders">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderGenerate(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)" target="Mysql.traveldog.user_notice">
+      <data key="d3">5</data>
+    </edge>
+    <edge source="GET:/customer/getCidByHid/5" target="com.dofinal.RG.controller.CustomerController.getCidByHid(int)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.CustomerController.getCidByHid(int)" target="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByHid(int)">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByHid(int)" target="Mysql.traveldog.hotel_orders">
+      <data key="d3">2</data>
+    </edge>
+    <edge source="GET:/customer/getCidByHid/1" target="com.dofinal.RG.controller.CustomerController.getCidByHid(int)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="GET:/user/getNoticeByUid/123" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="GET:/user/getNoticeByUid/123" target="com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)" target="com.dofinal.RG.service.impl.NoticeServiceImpl.getUserNoticeByUid(java.lang.String)">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.NoticeServiceImpl.getUserNoticeByUid(java.lang.String)" target="Mysql.traveldog.user_notice">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="POST:/logout" target="com.dofinal.RG.controller.AuthenticationController.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.AuthenticationController.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)" target="com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)" target="Mysql.traveldog.users">
+      <data key="d3">6</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.orders">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.train_meal">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.meals">
+      <data key="d3">7</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.trains">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)" target="com.dofinal.RG.service.impl.MealServiceImpl.buyMeal(java.lang.String,int)">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)" target="Mysql.traveldog.meal_orders">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.MealServiceImpl.buyMeal(java.lang.String,int)" target="Mysql.traveldog.train_meal">
       <data key="d3">9</data>
+    </edge>
+    <edge source="GET:/customer/getByCid/2" target="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)" target="com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerById(int)">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="GET:/customer/getByCid/1" target="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="POST:/customer/getCidByTidStrict/K11" target="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)">
+      <data key="d3">1</data>
+    </edge>
+    <edge source="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)" target="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTidStrict(java.lang.String)">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTidStrict(java.lang.String)" target="Mysql.traveldog.trains_orders">
+      <data key="d3">6</data>
+    </edge>
+    <edge source="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTidStrict(java.lang.String)" target="Mysql.traveldog.orders">
+      <data key="d3">3</data>
+    </edge>
+    <edge source="POST:/customer/getCidByTidStrict/J10" target="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)">
+      <data key="d3">2</data>
     </edge>
   </graph>
 </graphml>

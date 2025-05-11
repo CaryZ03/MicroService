@@ -8,6 +8,7 @@ import subprocess
 import os
 import sys
 import json
+import glob
 
 from graph import generate_echarts_html
 from test import test
@@ -28,8 +29,9 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
-# source = "D:/Programs/MicroService/java-demo/traveldog"
-source = "D:/Programs/MicroService/mall"
+source = "D:/Programs/MicroService/java-demo/traveldog"
+source = "D:/Programs/MicroService/traveldog/traveldog"
+# source = "D:/Programs/MicroService/mall"
 target = source + "-fuxiiiii"
 
 # 如果目标目录存在，则删除它
@@ -81,7 +83,7 @@ def static():
 
 def dynamic():
     global G
-    G = buildGraph(G, source='json', saveSpans=True, saveEntries=False)
+    G = buildGraph(G, source='json', saveSpans=False, saveEntries=False)
     showGraph(G)
 
 
@@ -144,14 +146,32 @@ def reconstruct(partitions, output):
     # print(response.text)
 
 
-def run_project(port=8088):
+
+def get_jar_name(target_dir):
+    """
+    获取 target 目录下最新的 JAR 文件名称
+    :param target_dir: Maven 构建的目标目录
+    :return: JAR 文件的完整路径
+    """
+    # 构建目标目录路径
+    target_path = os.path.join(target_dir + "/target", "*.jar")
+    # 获取所有 JAR 文件
+    jar_files = glob.glob(target_path)
+    if not jar_files:
+        raise FileNotFoundError(f"No JAR files found in {target_dir}")
+    # 返回最新的 JAR 文件
+    latest_jar = max(jar_files, key=os.path.getctime)
+    return os.path.relpath(latest_jar, target_dir)
+
+
+def run_project(port=None):
     original_dir = os.getcwd()
+    
     # 切换到目标目录
     os.chdir(source)
 
     # 定义要执行的命令
     mvnw_command = ["mvnw.cmd", "clean", "install"]
-    java_command = ["java", "-javaagent:D:/Programs/MicroService/apache-skywalking-apm-10.2.0/apache-skywalking-apm-bin/agent/skywalking-agent.jar", "-Dskywalking.agent.service_name=micro-dev::micro-system", "-Dskywalking.collector.backend_service=127.0.0.1:11800", "-jar", "target/demo1-0.0.1-SNAPSHOT.jar", f"--server.port={port}"]
 
     # 执行 ./mvnw clean install 命令
     print("Executing ./mvnw clean install...")
@@ -166,6 +186,13 @@ def run_project(port=8088):
     # 执行 java 命令
     print("Starting Java application...")
     # java_process = subprocess.run(java_command)
+    java_command = ["java", 
+                    "-javaagent:D:/Programs/MicroService/apache-skywalking-apm-10.2.0/apache-skywalking-apm-bin/agent/skywalking-agent.jar", 
+                    "-Dskywalking.agent.service_name=micro-dev::micro-system", 
+                    "-Dskywalking.collector.backend_service=127.0.0.1:11800", 
+                    "-jar", 
+                    get_jar_name(source), 
+                    f"--server.port={port}" if port else ""]
     try:
         java_process = subprocess.Popen(java_command, stdout=None, stderr=None)
 
@@ -177,7 +204,9 @@ def run_project(port=8088):
         if java_process.poll() is None:
             print("Java application is running.")
             os.chdir(original_dir)
-            test(port)
+            
+            input(f"waiting for test, port: {port}, click enter to continue...")
+            # test(port)
         else:
             print("Java application failed to start.")
             print("Error:", java_process.stderr.read().decode())
@@ -207,6 +236,10 @@ def get_type(func):
 
     
 def save_to_json(partitions, G):
+    
+    with open("partitions.json", "w") as f:
+        json.dump(partitions, f, indent=4)
+    
     rawData = [{
         "func_name": to_func_name(func),
         "file_path": to_file_path(func),
@@ -286,9 +319,6 @@ def save_microservices(partitions, G):
         
     with open("microservices.json", "w") as f:
         json.dump(output, f, indent=4)
-    
-    with open("partitions.json", "w") as f:
-        json.dump(partitions, f, indent=4)
         
     return output
 
@@ -298,36 +328,46 @@ def main():
     static()
     # showGraph(G)
     generate_echarts_html(G, output_file="dag.html")
-    return
-    # # run_project(8057)
-    # # print("run_project success!")
-    # dynamic()
-    
-    # generate_echarts_html(G, output_file="dag1.html")
-    
-    # G.remove_nodes_from(list(nx.isolates(G)))
-    # # showGraph(G)
-    # generate_echarts_html(G, output_file="dag2.html")
-    # nx.write_graphml(G, "Project/data/src/graph.graphml")
     # # return
+    # run_project()
+    # # print("run_project success!")
+    # # return
+    dynamic()
     
-    # partitions = partition()
+    generate_echarts_html(G, output_file="dag1.html")
     
-    # print("partitions: ", partitions)
+    G.remove_nodes_from(list(nx.isolates(G)))
+    showGraph(G)
+    generate_echarts_html(G, output_file="dag2.html")
+    # nx.write_graphml(G, "Project/data/src/graph.graphml")
+    # return
+    
+    ###########################################
+    
     
     G = nx.read_graphml("Project/data/src/graph.graphml")
     
-    with open("partitions_user.json", "r") as f:
+    # partitions = partition()
+    
+    with open("partitions.json", "r") as f:
         partitions = json.load(f)
+    
+    print("partitions: ", partitions)
+    
+    save_to_json(partitions, G)
+    
+    input(f"waiting for modify, click enter to continue...")
+    
+    # with open("partitions_user.json", "r") as f:
+    #     partitions = json.load(f)
         
-    # with open("microservices.json", "r") as f:
-    #     output = json.load(f)
+    # # with open("microservices.json", "r") as f:
+    # #     output = json.load(f)
     
     output = save_microservices(partitions, G)
     
-    # save_to_json(partitions, G)
     
-    reconstruct(partitions, output)
+    # reconstruct(partitions, output)
     
     
 
@@ -342,22 +382,3 @@ from Project.Main import *
 main()
 
 
-# @app.route('/init', methods=['GET'])
-# def get_partitions():
-#     with open("vueData.json", "r") as f:
-#         vueData = json.load(f)
-    
-#     return vueData
-
-
-# @app.route('/save', methods=['Post'])
-# def save_partitions():
-#     partitions = request.get_json()
-    
-#     with open("partitions_user.json", "w") as f:
-#         json.dump(partitions, f, indent=4)
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-    

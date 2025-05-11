@@ -1,0 +1,7 @@
+com\dofinal\RG\exceptions\InsertException.class
+com\dofinal\RG\rsps\Notice\NoticeRsp.class
+com\dofinal\RG\mapper\HotelRateMapper.class
+com\dofinal\RG\exceptions\DeleteException.class
+com\dofinal\RG\exceptions\SelectException.class
+com\dofinal\RG\exceptions\UpdateException.class
+com\dofinal\RG\entity\hotel\Rate.class

@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunktraveldog"]=self["webpackChunktraveldog"]||[]).push([[892],{2892:function(e,u,n){n.r(u),n.d(u,{default:function(){return f}});var r=function(){var e=this,u=e._self._c;return u("div",[u("router-view")],1)},t=[],l={},s=l,a=n(1656),c=(0,a.A)(s,r,t,!1,null,null,null),f=c.exports}}]);
+//# sourceMappingURL=892.656e1eed.js.map
