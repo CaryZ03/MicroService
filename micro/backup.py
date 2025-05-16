@@ -5,10 +5,9 @@ import os
 # target = "D:\\Programs\\MicroService\\call-graph\\tools\\demo"
 
 
-source = "D:/Programs/MicroService/micro/demos/demo1-origin-copy"
-target = "D:/Programs/MicroService/micro/demos/demo1-origin"
+source = "D:/Programs/MicroService/micro/demos/demo1-origin"
 
-source = "D:/Programs/MicroService/traveldog/traveldog"
+# source = "D:/Programs/MicroService/traveldog/traveldog"
 target = source
 source = source + "-backup"
 

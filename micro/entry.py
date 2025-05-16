@@ -29,10 +29,10 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
-source = "D:/Programs/MicroService/java-demo/traveldog"
-source = "D:/Programs/MicroService/traveldog/traveldog"
+# source = "D:/Programs/MicroService/java-demo/traveldog"
+# source = "D:/Programs/MicroService/traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
-target = source + "-fuxiiiii"
+target = source + "-fuxii"
 
 # 如果目标目录存在，则删除它
 if os.path.exists(target):
@@ -83,7 +83,7 @@ def static():
 
 def dynamic():
     global G
-    G = buildGraph(G, source='json', saveSpans=False, saveEntries=False)
+    G = buildGraph(G, source='jso', saveSpans=False, saveEntries=False)
     showGraph(G)
 
 
@@ -92,7 +92,7 @@ def partition():
     # 修改工作目录到 main.py 所在的目录
     os.chdir("Project")
 
-    partitions = stage2Main()
+    partitions = stage1Main()
 
     os.chdir("..")
     
@@ -120,6 +120,9 @@ def reconstruct(partitions, output):
     # dest_folder = "D:/Programs/MicroService/call-graph/tools/src/main/java/com/micro/test/demo"
     dest_folder = source + "-microo"
     
+    # 如果目标目录存在，则删除它
+    if os.path.exists(dest_folder):
+        shutil.rmtree(dest_folder)
 
     for key, value in data.items():
         # print(f"Key: {key}, Value: {value}")
@@ -329,8 +332,8 @@ def main():
     # showGraph(G)
     generate_echarts_html(G, output_file="dag.html")
     # # return
-    # run_project()
-    # # print("run_project success!")
+    run_project()
+    # print("run_project success!")
     # # return
     dynamic()
     
@@ -339,7 +342,7 @@ def main():
     G.remove_nodes_from(list(nx.isolates(G)))
     showGraph(G)
     generate_echarts_html(G, output_file="dag2.html")
-    # nx.write_graphml(G, "Project/data/src/graph.graphml")
+    nx.write_graphml(G, "Project/data/src/graph.graphml")
     # return
     
     ###########################################
@@ -347,10 +350,10 @@ def main():
     
     G = nx.read_graphml("Project/data/src/graph.graphml")
     
-    # partitions = partition()
+    partitions = partition()
     
-    with open("partitions.json", "r") as f:
-        partitions = json.load(f)
+    # with open("partitions.json", "r") as f:
+    #     partitions = json.load(f)
     
     print("partitions: ", partitions)
     
@@ -358,16 +361,15 @@ def main():
     
     input(f"waiting for modify, click enter to continue...")
     
-    # with open("partitions_user.json", "r") as f:
-    #     partitions = json.load(f)
+    with open("partitions_user.json", "r") as f:
+        partitions = json.load(f)
         
     # # with open("microservices.json", "r") as f:
     # #     output = json.load(f)
     
     output = save_microservices(partitions, G)
     
-    
-    # reconstruct(partitions, output)
+    reconstruct(partitions, output)
     
     
 

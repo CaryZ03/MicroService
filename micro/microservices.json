@@ -1,34 +1,14 @@
 {
     "6": {
         "functions": [
-            "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
-            "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
-            "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
-            "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
-            "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
-            "com.example.demo.controller.ProductController.getProductByName(java.lang.String)"
-        ],
-        "ins": [
-            "com.example.demo.service.ProductService.getProductById(java.lang.Long)"
-        ],
-        "outs": []
-    },
-    "2": {
-        "functions": [
-            "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
-            "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)"
-        ],
-        "ins": [],
-        "outs": []
-    },
-    "4": {
-        "functions": [
-            "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+            "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
+            "com.example.demo.service.UserService",
+            "com.example.demo.service.ProductService",
+            "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
             "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
             "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
-            "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
-            "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
-            "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)"
+            "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
+            "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)"
         ],
         "ins": [],
         "outs": [
@@ -36,14 +16,30 @@
             "com.example.demo.service.ProductService.getProductById(java.lang.Long)"
         ]
     },
-    "0": {
+    "3": {
         "functions": [
-            "com.example.demo.service.UserService.getUserById(java.lang.Long)",
-            "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
-            "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
-            "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
+            "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
+            "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
+            "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+            "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
+            "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
+            "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
+            "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
+            "com.example.demo.service.ProductService.getProductByName(java.lang.String)"
+        ],
+        "ins": [
+            "com.example.demo.service.ProductService.getProductById(java.lang.Long)"
+        ],
+        "outs": []
+    },
+    "1": {
+        "functions": [
             "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
-            "com.example.demo.controller.UserController.getUserById(java.lang.Long)"
+            "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
+            "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+            "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
+            "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+            "com.example.demo.service.UserService.getUserByUsername(java.lang.String)"
         ],
         "ins": [
             "com.example.demo.service.UserService.getUserById(java.lang.Long)"
@@ -52,20 +48,12 @@
     },
     "7": {
         "functions": [
+            "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
+            "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
             "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
             "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)",
-            "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
-            "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)"
-        ],
-        "ins": [],
-        "outs": []
-    },
-    "3": {
-        "functions": [
-            "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
-            "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
-            "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
-            "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)"
+            "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+            "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)"
         ],
         "ins": [],
         "outs": []

@@ -52,6 +52,8 @@ def stage1Main() -> None:
         # save the microservice graph to a .graphml file.
         graphMLRelativePath: str = os.path.relpath(graphMLPath, start = graphMLSourcePath)
         gmh.saveGraphAsGraphML(microserviceGraph, f"{graphMLTargetPath}/microservice_{graphMLRelativePath}")
+        
+        return partition
 
 # stage2: use the DQN model.
 def stage2Main() -> None:

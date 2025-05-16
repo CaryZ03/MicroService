@@ -15,7 +15,7 @@ def get_partitions():
     return vueData
 
 
-@app.route('/save', methods=['Post'])
+@app.route('/save', methods=['POST'])
 def save_partitions():
     partitions = request.get_json()
     
@@ -25,7 +25,7 @@ def save_partitions():
     return {"message": "Partitions saved successfully!"}
 
 
-@app.route('/create', methods=['Post'])
+@app.route('/create', methods=['POST'])
 def create_microservices():
     partitions = request.get_json()
     
@@ -35,5 +35,5 @@ def create_microservices():
     return {"message": "Partitions saved successfully!"}
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=18996)
