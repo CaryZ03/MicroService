@@ -7,7 +7,7 @@ import os
 
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
 
-# source = "D:/Programs/MicroService/traveldog/traveldog"
+source = "D:/Programs/MicroService/traveldog/traveldog"
 target = source
 source = source + "-backup"
 

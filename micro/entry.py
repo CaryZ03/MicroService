@@ -28,9 +28,8 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 
-source = "D:/Programs/MicroService/micro/demos/demo1-origin"
-# source = "D:/Programs/MicroService/java-demo/traveldog"
-# source = "D:/Programs/MicroService/traveldog/traveldog"
+# source = "D:/Programs/MicroService/micro/demos/demo1-origin"
+source = "D:/Programs/MicroService/traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
 target = source + "-fuxii"
 
@@ -50,6 +49,31 @@ G = nx.DiGraph()
 def static():
     global G
     print("hihi: ", source)
+    
+    original_dir = os.getcwd()
+    
+    # 切换到目标目录
+    os.chdir(source)
+
+    # 定义要执行的命令
+    mvnw_command = [
+        "mvnw.cmd",
+        "dependency:copy-dependencies",
+        "-DoutputDirectory=fuxi-static-dependency"
+    ]
+
+    # 执行 ./mvnw clean install 命令
+    print("Executing ./mvnw dependency:copy-dependencies -DoutputDirectory=dependency...")
+    try:
+        mvnw_process = subprocess.run(mvnw_command, check=True)
+        print("mvnw command completed successfully.")
+    except Exception as e:
+        print(f"Error executing mvnw command: {e}")
+        sys.exit(1)  # 终止程序
+        return
+    
+    os.chdir(original_dir)
+    
     response = requests.post("http://127.0.0.1:18555/callGraph", data=source)
     # print(response.text)
 
@@ -72,7 +96,7 @@ def static():
         print("caller: ", caller)
         print("callee: ", callees)
         for callee in callees:
-            if callee in excluded_names or ".".join(callee.split("(")[0].split(".")[0:-1]) in excluded_names:
+            if callee not in static_data or callee in excluded_names or ".".join(callee.split("(")[0].split(".")[0:-1]) in excluded_names:
                 continue
             G.add_node(callee, execution_time=0, count=0, type="function")
             G.add_edge(caller, callee, weight=1)
@@ -83,8 +107,8 @@ def static():
 
 def dynamic():
     global G
-    G = buildGraph(G, source='jso', saveSpans=False, saveEntries=False)
-    showGraph(G)
+    G = buildGraph(G, source='json', saveSpans=False, saveEntries=False)
+    # showGraph(G)
 
 
 def partition():
@@ -332,7 +356,7 @@ def main():
     # showGraph(G)
     generate_echarts_html(G, output_file="dag.html")
     # # return
-    run_project()
+    # run_project()
     # print("run_project success!")
     # # return
     dynamic()
@@ -340,10 +364,10 @@ def main():
     generate_echarts_html(G, output_file="dag1.html")
     
     G.remove_nodes_from(list(nx.isolates(G)))
-    showGraph(G)
+    # showGraph(G)
     generate_echarts_html(G, output_file="dag2.html")
     nx.write_graphml(G, "Project/data/src/graph.graphml")
-    # return
+    return
     
     ###########################################
     

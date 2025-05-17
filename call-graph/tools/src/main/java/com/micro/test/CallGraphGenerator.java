@@ -2,6 +2,7 @@ package com.micro.test;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.Expression;
@@ -53,17 +54,17 @@ public class CallGraphGenerator {
 
         // 创建 CombinedTypeSolver
         CombinedTypeSolver combinedTypeSolver = new CombinedTypeSolver();
-//        combinedTypeSolver.add(new ReflectionTypeSolver());
+        combinedTypeSolver.add(new ReflectionTypeSolver());
         combinedTypeSolver.add(new JavaParserTypeSolver(targetProjectClasses));
 
-//        File dependencyDir = new File(targetProjectRoot + "/target/dependency");
-//        for (File file : dependencyDir.listFiles((dir, name) -> name.endsWith(".jar"))) {
-//            try{
-//                combinedTypeSolver.add(new JarTypeSolver(file));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+        File dependencyDir = new File(targetProjectRoot + "/fuxi-static-dependency");
+        for (File file : dependencyDir.listFiles((dir, name) -> name.endsWith(".jar"))) {
+            try{
+                combinedTypeSolver.add(new JarTypeSolver(file));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         // 配置 JavaParser
         JavaParser parser = new JavaParser();
@@ -74,11 +75,13 @@ public class CallGraphGenerator {
         Map<String, List<String>> callGraph = new HashMap<>();
         callGraph.computeIfAbsent("Excluded_Names", k -> new ArrayList<>());
 
+        Map<String, List<String>> interfaceImpl = new HashMap<>();
+
         List<File> javaFiles = listJavaFilesRecursively(targetProjectClasses);
         System.out.println("Found " + javaFiles.size() + " Java files");
         for (File javaFile : javaFiles) {
-            System.out.println(javaFile);
-            List<String> excludedNames = addTraceAnnotation(parser, javaFile);
+            System.out.println("Processing: " + javaFile);
+            List<String> excludedNames = addTraceAnnotation(parser, javaFile, interfaceImpl);
             if (excludedNames.isEmpty()) {
                 getCallGraph(parser, facade, javaFile, callGraph);
             }
@@ -123,21 +126,29 @@ public class CallGraphGenerator {
     private static void getCallGraph(JavaParser parser, JavaParserFacade facade, File javaFile, Map<String, List<String>> callGraph) {
         try (FileInputStream in = new FileInputStream(javaFile)) {
             CompilationUnit cu = parser.parse(in).getResult().orElseThrow();
-//            System.out.println(cu.findAll(MethodDeclaration.class));
+            System.out.println("Compilation Unit: " + cu);
+            System.out.println("Methods: " + cu.findAll(MethodDeclaration.class));
             // 遍历所有方法并提取调用链
             for (MethodDeclaration method : cu.findAll(MethodDeclaration.class)) {
-                String methodName = method.resolve().getQualifiedSignature();
-                System.out.println("Found Method: " + methodName);
-//                method.getSignature().asString();
-//                System.out.println(method);
-//                System.out.println(method.findAll(MethodCallExpr.class));
-                callGraph.computeIfAbsent(methodName, k -> new ArrayList<>());
-                for (MethodCallExpr call : method.findAll(MethodCallExpr.class)) {
-                    callGraph.get(methodName).add(parseMethodName(call, facade));
+                System.out.println(method);
+                try{
+                    String methodName = method.resolve().getQualifiedSignature();
+                    System.out.println("Found Method: " + methodName);
+    //                method.getSignature().asString();
+    //                System.out.println(method);
+    //                System.out.println(method.findAll(MethodCallExpr.class));
+                    callGraph.computeIfAbsent(methodName, k -> new ArrayList<>());
+                    for (MethodCallExpr call : method.findAll(MethodCallExpr.class)) {
+                        callGraph.get(methodName).add(parseMethodName(call, facade));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -158,7 +169,7 @@ public class CallGraphGenerator {
                     System.out.println("Resolved Callee Class: " + callClass);
                     return parseMethodName(callClass, facade);
                 } else {
-                    System.out.println();
+                    System.out.println(call);
                 }
                 return null;
             }
@@ -169,7 +180,7 @@ public class CallGraphGenerator {
         }
     }
 
-    private static List<String> addTraceAnnotation(JavaParser parser, File javaFile) {
+    private static List<String> addTraceAnnotation(JavaParser parser, File javaFile, Map<String, List<String>> interfaceImpl) {
 
         List<String> excludedNames = new ArrayList<>();
 
@@ -179,6 +190,16 @@ public class CallGraphGenerator {
             boolean found = false;
             // 遍历所有方法并添加 @Trace 注解
             for (TypeDeclaration<?> type : cu.getTypes()) {
+                if (type instanceof ClassOrInterfaceDeclaration coi) {
+                    if (coi.isInterface()) {
+                        excludedNames.add(type.getFullyQualifiedName().get());
+                        continue;
+                    }
+                } else {
+                    excludedNames.add(type.getFullyQualifiedName().get());
+                    continue;
+                }
+
                 if (type.getAnnotations().stream().anyMatch(annotation -> {
                     String name = annotation.getNameAsString();
                     return name.equals("Entity") || name.equals("Repository") || name.equals("SpringBootApplication") || name.equals("TableName");

@@ -330,7 +330,7 @@ def staticGraph(G):
 
 def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False):
     if source == 'json':
-        with open("spans1.json", "r") as infile:
+        with open("spans_traveldog.json", "r") as infile:
             spanss = json.load(infile)
     elif source == 'static':
         return staticGraph(G)
