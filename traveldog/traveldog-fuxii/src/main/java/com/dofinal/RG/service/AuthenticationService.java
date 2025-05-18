@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dofinal.RG.entity.user.User;
 import com.dofinal.RG.exceptions.AuthenticationException;
 import com.dofinal.RG.reqs.entity.AuthenticationReq;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
 
 /**
  * &#064;Classname AuthenticationService
@@ -14,12 +13,9 @@ import org.apache.skywalking.apm.toolkit.trace.Trace;
  */
 public interface AuthenticationService extends IService<User> {
 
-    @Trace
     boolean register(AuthenticationReq req) throws AuthenticationException;
 
-    @Trace
     User login(AuthenticationReq req) throws AuthenticationException;
 
-    @Trace
     void logout(AuthenticationReq req);
 }

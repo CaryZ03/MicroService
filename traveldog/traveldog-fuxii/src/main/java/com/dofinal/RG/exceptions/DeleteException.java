@@ -1,7 +1,5 @@
 package com.dofinal.RG.exceptions;
 
-import org.apache.skywalking.apm.toolkit.trace.Trace;
-
 /**
  * &#064;Classname DeleteException
  * &#064;Description  TODO
@@ -13,7 +11,6 @@ public class DeleteException extends Exception {
     private final String message;
 
     @Override
-    @Trace
     public String getMessage() {
         return message;
     }

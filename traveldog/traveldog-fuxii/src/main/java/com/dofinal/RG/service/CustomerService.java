@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dofinal.RG.entity.user.Customer;
 import com.dofinal.RG.reqs.entity.CustomerReq;
 import java.util.List;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
 
 /**
  * &#064;Classname CustomerService
@@ -14,30 +13,21 @@ import org.apache.skywalking.apm.toolkit.trace.Trace;
  */
 public interface CustomerService extends IService<Customer> {
 
-    @Trace
     Customer findCustomerById(int cid);
 
-    @Trace
     List<Customer> findCustomerByUid(String uid);
 
-    @Trace
     List<Customer> findCustomers();
 
-    @Trace
     List<Integer> getCidByTid(String tid);
 
-    @Trace
     List<Integer> getCidByTidStrict(String tid);
 
-    @Trace
     List<Integer> getCidByHid(int hid);
 
-    @Trace
     int addCustomer(CustomerReq customerReq);
 
-    @Trace
     int updateCustomer(CustomerReq customerReq);
 
-    @Trace
     int deleteCustomerByCid(int cid);
 }

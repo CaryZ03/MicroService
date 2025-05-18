@@ -13,7 +13,12 @@ spring:
         - id: service-a
           uri: lb://service-a
           predicates:
-            - Path=/test/**
+            - Path=/test/{int:\d+}
+
+        - id: service-a
+          uri: lb://service-a
+          predicates:
+            - Path=/test/{str:[a-zA-Z]+}
 
         - id: service-b
           uri: lb://service-b

@@ -8,8 +8,11 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.printer.PrettyPrinter;
 import com.github.javaparser.resolution.declarations.ResolvedMethodDeclaration;
+import com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration;
+import com.github.javaparser.resolution.types.ResolvedReferenceType;
 import com.github.javaparser.resolution.types.ResolvedType;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
@@ -33,6 +36,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @RestController
@@ -58,9 +63,14 @@ public class CallGraphGenerator {
         combinedTypeSolver.add(new JavaParserTypeSolver(targetProjectClasses));
 
         File dependencyDir = new File(targetProjectRoot + "/fuxi-static-dependency");
+        File tempDir = new File("temp-jars");
+        if (!tempDir.exists()) tempDir.mkdir();
+
         for (File file : dependencyDir.listFiles((dir, name) -> name.endsWith(".jar"))) {
             try{
-                combinedTypeSolver.add(new JarTypeSolver(file));
+                File copied = new File(tempDir, file.getName());
+                Files.copy(file.toPath(), copied.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                combinedTypeSolver.add(new JarTypeSolver(copied));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -75,19 +85,43 @@ public class CallGraphGenerator {
         Map<String, List<String>> callGraph = new HashMap<>();
         callGraph.computeIfAbsent("Excluded_Names", k -> new ArrayList<>());
 
-        Map<String, List<String>> interfaceImpl = new HashMap<>();
+        Map<String, List<String>> impls = new HashMap<>();
 
         List<File> javaFiles = listJavaFilesRecursively(targetProjectClasses);
         System.out.println("Found " + javaFiles.size() + " Java files");
         for (File javaFile : javaFiles) {
             System.out.println("Processing: " + javaFile);
-            List<String> excludedNames = addTraceAnnotation(parser, javaFile, interfaceImpl);
+            List<String> excludedNames = addTraceAnnotation(parser, javaFile, impls);
             if (excludedNames.isEmpty()) {
                 getCallGraph(parser, facade, javaFile, callGraph);
             }
             callGraph.get("Excluded_Names").addAll(excludedNames);
-//                System.out.println(callGraph);
+//            System.out.println(callGraph);
         }
+        System.out.println(impls);
+        System.out.println(callGraph.get("Excluded_Names"));
+
+        Map<String, List<String>> newCallGraph = new HashMap<>();
+
+        for (Map.Entry<String, List<String>> entry : callGraph.entrySet()) {
+
+            if (entry.getKey().equals("Excluded_Names")) continue;
+            String caller = replaceInterfaceWithImpl(entry.getKey(), impls);
+            List<String> callees = new ArrayList<>();
+            for (String callee : entry.getValue()) {
+                callees.add(replaceInterfaceWithImpl(callee, impls));
+            }
+            newCallGraph.put(caller, callees);
+        }
+        callGraph = newCallGraph;
+
+
+        for (File f : tempDir.listFiles()) {
+            f.delete();
+        }
+        tempDir.delete();
+
+
 //        excludedNames.forEach(name -> System.out.println("Name: " + name));
 //
 //        callGraph.get("Excluded_Names").addAll(excludedNames);
@@ -106,6 +140,27 @@ public class CallGraphGenerator {
 //            e.printStackTrace();
 //        }
         return callGraph;
+    }
+
+    private static String replaceInterfaceWithImpl(String methodSignature, Map<String, List<String>> impls) {
+        System.out.println(methodSignature);
+        // 提取类全名，比如从 com.a.b.c() 提取 com.a.b
+        int dotPos = methodSignature.substring(0, methodSignature.indexOf("(")).lastIndexOf(".");
+        System.out.println(dotPos);
+
+        String className = methodSignature.substring(0, dotPos);
+        System.out.println(className);
+        String methodName = methodSignature.substring(dotPos);
+        System.out.println(methodName);
+
+        for (String interfaceName : impls.keySet()) {
+            if (className.equals(interfaceName) && impls.get(interfaceName).size() == 1) {
+                String implClass = impls.get(interfaceName).get(0);
+                return implClass + methodName;
+            }
+        }
+
+        return methodSignature; // 没有替换则返回原样
     }
 
     private static List<File> listJavaFilesRecursively(File dir) {
@@ -190,15 +245,6 @@ public class CallGraphGenerator {
             boolean found = false;
             // 遍历所有方法并添加 @Trace 注解
             for (TypeDeclaration<?> type : cu.getTypes()) {
-                if (type instanceof ClassOrInterfaceDeclaration coi) {
-                    if (coi.isInterface()) {
-                        excludedNames.add(type.getFullyQualifiedName().get());
-                        continue;
-                    }
-                } else {
-                    excludedNames.add(type.getFullyQualifiedName().get());
-                    continue;
-                }
 
                 if (type.getAnnotations().stream().anyMatch(annotation -> {
                     String name = annotation.getNameAsString();
@@ -210,6 +256,40 @@ public class CallGraphGenerator {
                     excludedNames.add(type.getFullyQualifiedName().get());
                     continue;
                 }
+
+                if (type instanceof ClassOrInterfaceDeclaration coi) {
+                    if (coi.isInterface()) {
+//                        excludedNames.add(type.getFullyQualifiedName().get());
+                        continue;
+                    }
+                } else {
+                    excludedNames.add(type.getFullyQualifiedName().get());
+                    continue;
+                }
+
+                ResolvedReferenceTypeDeclaration resolved = coi.resolve();
+                boolean isException = false;
+                for (ResolvedReferenceType ancestor : resolved.getAllAncestors()) {
+                    String ancestorName = ancestor.getQualifiedName();
+                    if (ancestorName.equals("java.lang.Exception") || ancestorName.equals("java.lang.Throwable")) {
+                        isException = true;
+                        break;
+                    }
+                }
+                if (isException) {
+                    excludedNames.add(type.getFullyQualifiedName().get());
+                    continue;
+                }
+
+                List<ClassOrInterfaceType> implementedTypes = coi.getImplementedTypes();
+                for (ClassOrInterfaceType impl : implementedTypes) {
+                    String implName = impl.resolve().describe();
+                    interfaceImpl.computeIfAbsent(implName, k -> new ArrayList<>());
+                    interfaceImpl.get(implName).add(coi.getFullyQualifiedName().orElse(null));
+//                    System.out.println("Implements: " + );
+                }
+
+
                 for (MethodDeclaration method : type.getMethods()) {
                     found = true;
                     if (!method.getAnnotations().stream().anyMatch(a -> a.getNameAsString().equals("Trace"))) {

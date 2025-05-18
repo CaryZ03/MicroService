@@ -8,7 +8,6 @@ import com.dofinal.RG.entity.user.User;
 import com.dofinal.RG.reqs.entity.CustomerReq;
 import com.dofinal.RG.reqs.entity.UserReq;
 import java.util.List;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
 
 /**
  * &#064;Classname UserService
@@ -18,27 +17,19 @@ import org.apache.skywalking.apm.toolkit.trace.Trace;
  */
 public interface UserService extends IService<User> {
 
-    @Trace
     List<User> findUsers();
 
-    @Trace
     User findUserByUid(String uid);
 
-    @Trace
     User findUserWithOrderAndCustomerByUid(String uid);
 
-    @Trace
     int deleteUserByUid(String uid);
 
-    @Trace
     int updateUser(UserReq UserReq);
 
-    @Trace
     int addUserCustomer(CustomerReq customerReq);
 
-    @Trace
     int deleteUserCustomer(CustomerReq customerReq);
 
-    @Trace
     List<Customer> getCustomersByUid(String uid);
 }

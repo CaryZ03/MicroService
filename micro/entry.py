@@ -89,6 +89,7 @@ def static():
     for caller, callees in static_data.items():
         if caller == "Excluded_Names": continue
         # print(f"Key: {caller}, Value: {callees}")
+        caller = caller.replace(", ", ",")
         G.add_node(caller, execution_time=0, count=0, type="function")
         # for caller, callee, attr in G.edges(data=True):
         #     print(caller, callee, attr)
@@ -98,6 +99,7 @@ def static():
         for callee in callees:
             if callee not in static_data or callee in excluded_names or ".".join(callee.split("(")[0].split(".")[0:-1]) in excluded_names:
                 continue
+            callee = callee.replace(", ", ",")
             G.add_node(callee, execution_time=0, count=0, type="function")
             G.add_edge(caller, callee, weight=1)
     # showGraph(G)
@@ -353,6 +355,12 @@ def save_microservices(partitions, G):
 def main():
     global G
     static()
+    
+    # nodes = list(G.nodes)
+    
+    # for node in nodes:
+    #     print(node, ": ", G.nodes[node])
+    
     # showGraph(G)
     generate_echarts_html(G, output_file="dag.html")
     # # return
@@ -361,13 +369,18 @@ def main():
     # # return
     dynamic()
     
+    nodes = list(G.nodes)
+    
+    for node in nodes:
+        print(node, ": ", G.nodes[node])
+    
     generate_echarts_html(G, output_file="dag1.html")
     
     G.remove_nodes_from(list(nx.isolates(G)))
     # showGraph(G)
     generate_echarts_html(G, output_file="dag2.html")
     nx.write_graphml(G, "Project/data/src/graph.graphml")
-    return
+    # return
     
     ###########################################
     

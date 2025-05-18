@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dofinal.RG.entity.location.Location;
 import com.dofinal.RG.entity.hotel.Hotel;
 import java.util.List;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
 
 /**
  * Classname HotelService
@@ -14,12 +13,9 @@ import org.apache.skywalking.apm.toolkit.trace.Trace;
  */
 public interface HotelService extends IService<Hotel> {
 
-    @Trace
     List<Hotel> findHotelByLocation(Location location);
 
-    @Trace
     Hotel findHotelById(int hid);
 
-    @Trace
     int deleteHotelByHid(int hid);
 }

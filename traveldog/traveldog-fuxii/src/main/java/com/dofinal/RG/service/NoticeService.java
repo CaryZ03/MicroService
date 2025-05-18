@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dofinal.RG.entity.user.UserNotice;
 import com.dofinal.RG.rsps.Notice.NoticeRsp;
 import java.util.List;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
 
 /**
  * &#064;Classname NoticeService
@@ -14,9 +13,7 @@ import org.apache.skywalking.apm.toolkit.trace.Trace;
  */
 public interface NoticeService extends IService<UserNotice> {
 
-    @Trace
     List<UserNotice> getUserNoticeByUid(String uid);
 
-    @Trace
     void handleOrderNotice(NoticeRsp rsp, String uid);
 }
