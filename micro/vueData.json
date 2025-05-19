@@ -1,31 +1,9 @@
 {
     "rawData": [
         {
-            "func_name": "UserServiceImpl.deleteUserByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.deleteUserByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 0
-        },
-        {
-            "func_name": "OrderController.payUserOrder(OtherUserOrderReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 1
-        },
-        {
-            "func_name": "OrderServiceImpl.payUserOrder(OtherUserOrderReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)",
+            "func_name": "ProductController.addProduct(Product)",
+            "file_path": "com/example/demo/controller/ProductController",
+            "full_name": "com.example.demo.controller.ProductController.addProduct(com.example.demo.model.Product)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -34,9 +12,9 @@
             "label": 2
         },
         {
-            "func_name": "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)",
-            "file_path": "com/dofinal/RG/service/impl/NoticeServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderNotice(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)",
+            "func_name": "ProductService.addProduct(Product)",
+            "file_path": "com/example/demo/service/ProductService",
+            "full_name": "com.example.demo.service.ProductService.addProduct(com.example.demo.model.Product)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -45,9 +23,20 @@
             "label": 1
         },
         {
-            "func_name": "LoginInterceptor.preHandle(HttpServletRequest, HttpServletResponse, Object)",
-            "file_path": "com/dofinal/RG/Interceptor/LoginInterceptor",
-            "full_name": "com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)",
+            "func_name": "OrderDetailController.addOrderDetail(OrderDetail)",
+            "file_path": "com/example/demo/controller/OrderDetailController",
+            "full_name": "com.example.demo.controller.OrderDetailController.addOrderDetail(com.example.demo.model.OrderDetail)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 2
+        },
+        {
+            "func_name": "OrderDetailService.addOrderDetail(OrderDetail)",
+            "file_path": "com/example/demo/service/OrderDetailService",
+            "full_name": "com.example.demo.service.OrderDetailService.addOrderDetail(com.example.demo.model.OrderDetail)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -56,9 +45,9 @@
             "label": 1
         },
         {
-            "func_name": "UserController.getUserOrderByUid(String)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)",
+            "func_name": "OrderService.getOrderDetailsByOrderId(Long)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.getOrderDetailsByOrderId(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -67,9 +56,42 @@
             "label": 1
         },
         {
-            "func_name": "OrderServiceImpl.getUserOrdersByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.getUserOrdersByUid(java.lang.String)",
+            "func_name": "UserService.getUserById(Long)",
+            "file_path": "com/example/demo/service/UserService",
+            "full_name": "com.example.demo.service.UserService.getUserById(java.lang.Long)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "UserController.getUserByUsername(String)",
+            "file_path": "com/example/demo/controller/UserController",
+            "full_name": "com.example.demo.controller.UserController.getUserByUsername(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "UserService.getUserByUsername(String)",
+            "file_path": "com/example/demo/service/UserService",
+            "full_name": "com.example.demo.service.UserService.getUserByUsername(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 0
+        },
+        {
+            "func_name": "ProductService.getProductByName(String)",
+            "file_path": "com/example/demo/service/ProductService",
+            "full_name": "com.example.demo.service.ProductService.getProductByName(java.lang.String)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -78,97 +100,9 @@
             "label": 3
         },
         {
-            "func_name": "CustomerServiceImpl.findCustomers()",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomers()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 4
-        },
-        {
-            "func_name": "NoticeController.getUserNoticeByUid(String)",
-            "file_path": "com/dofinal/RG/controller/NoticeController",
-            "full_name": "com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 1
-        },
-        {
-            "func_name": "NoticeServiceImpl.getUserNoticeByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/NoticeServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.NoticeServiceImpl.getUserNoticeByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 1
-        },
-        {
-            "func_name": "TrainController.getTrainByTid(String)",
-            "file_path": "com/dofinal/RG/controller/TrainController",
-            "full_name": "com.dofinal.RG.controller.TrainController.getTrainByTid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 5
-        },
-        {
-            "func_name": "TrainServiceImpl.findTrainByTid(String)",
-            "file_path": "com/dofinal/RG/service/impl/TrainServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.TrainServiceImpl.findTrainByTid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 5
-        },
-        {
-            "func_name": "SeatServiceImpl.getSeatDemoByTid(String)",
-            "file_path": "com/dofinal/RG/service/impl/SeatServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.SeatServiceImpl.getSeatDemoByTid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 5
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomByHid(int)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 6
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomByHidRidRNumber(int, int, String)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidRidRNumber(int,int,java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "UserController.getUserByUid(String)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)",
+            "func_name": "CategoryController.addCategory(Category)",
+            "file_path": "com/example/demo/controller/CategoryController",
+            "full_name": "com.example.demo.controller.CategoryController.addCategory(com.example.demo.model.Category)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -177,9 +111,9 @@
             "label": 2
         },
         {
-            "func_name": "UserServiceImpl.findUserByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.findUserByUid(java.lang.String)",
+            "func_name": "CategoryService.addCategory(Category)",
+            "file_path": "com/example/demo/service/CategoryService",
+            "full_name": "com.example.demo.service.CategoryService.addCategory(com.example.demo.model.Category)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -188,196 +122,20 @@
             "label": 2
         },
         {
-            "func_name": "RoomController.findHotelRoomByHid(int)",
-            "file_path": "com/dofinal/RG/controller/RoomController",
-            "full_name": "com.dofinal.RG.controller.RoomController.findHotelRoomByHid(int)",
+            "func_name": "PaymentRecordService.getPaymentRecordByOrderId(Long)",
+            "file_path": "com/example/demo/service/PaymentRecordService",
+            "full_name": "com.example.demo.service.PaymentRecordService.getPaymentRecordByOrderId(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 6
+            "label": 3
         },
         {
-            "func_name": "OrderServiceImpl.generateMealOrder(int, MealOrderReq, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.generateMealOrder(int,com.dofinal.RG.reqs.userOrder.MealOrderReq,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 8
-        },
-        {
-            "func_name": "MealServiceImpl.buyMeal(String, int)",
-            "file_path": "com/dofinal/RG/service/impl/MealServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.MealServiceImpl.buyMeal(java.lang.String,int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 8
-        },
-        {
-            "func_name": "handleLogin.IllegalPassword()",
-            "file_path": "com/dofinal/RG/login/handleLogin",
-            "full_name": "com.dofinal.RG.login.handleLogin.IllegalPassword()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 9
-        },
-        {
-            "func_name": "MealController.CancelMeal(MealReq)",
-            "file_path": "com/dofinal/RG/controller/MealController",
-            "full_name": "com.dofinal.RG.controller.MealController.CancelMeal(com.dofinal.RG.reqs.entity.MealReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "MealServiceImpl.cancelMeal(String, int)",
-            "file_path": "com/dofinal/RG/service/impl/MealServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.MealServiceImpl.cancelMeal(java.lang.String,int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "handleLogin.Register()",
-            "file_path": "com/dofinal/RG/login/handleLogin",
-            "full_name": "com.dofinal.RG.login.handleLogin.Register()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 9
-        },
-        {
-            "func_name": "handleLogin.IllegalUid()",
-            "file_path": "com/dofinal/RG/login/handleLogin",
-            "full_name": "com.dofinal.RG.login.handleLogin.IllegalUid()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 9
-        },
-        {
-            "func_name": "handleLogin.CheckIfExist()",
-            "file_path": "com/dofinal/RG/login/handleLogin",
-            "full_name": "com.dofinal.RG.login.handleLogin.CheckIfExist()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 9
-        },
-        {
-            "func_name": "CustomerServiceImpl.findCustomerById(int)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerById(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 11
-        },
-        {
-            "func_name": "UserController.addUserCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.addUserCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 12
-        },
-        {
-            "func_name": "UserServiceImpl.addUserCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.addUserCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 12
-        },
-        {
-            "func_name": "OrderServiceImpl.deleteHotelComment(HotelCommentReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.deleteHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 13
-        },
-        {
-            "func_name": "HotelController.getHotelByLocationTime(HotelReq)",
-            "file_path": "com/dofinal/RG/controller/HotelController",
-            "full_name": "com.dofinal.RG.controller.HotelController.getHotelByLocationTime(com.dofinal.RG.reqs.entity.HotelReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "HotelServiceImpl.findHotelByLocation(Location)",
-            "file_path": "com/dofinal/RG/service/impl/HotelServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.HotelServiceImpl.findHotelByLocation(com.dofinal.RG.entity.location.Location)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomDemoByHidAndTime(int, Timestamp, Timestamp, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomDemoByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomByRidAndTime(int, Timestamp, Timestamp, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByRidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 15
-        },
-        {
-            "func_name": "OrderServiceImpl.deleteUserOrder(OtherUserOrderReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)",
+            "func_name": "ProductController.getProductById(Long)",
+            "file_path": "com/example/demo/controller/ProductController",
+            "full_name": "com.example.demo.controller.ProductController.getProductById(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -386,86 +144,20 @@
             "label": 1
         },
         {
-            "func_name": "SeatServiceImpl.cancelSeatByTidAndStationIndex(String, String, int, int)",
-            "file_path": "com/dofinal/RG/service/impl/SeatServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.SeatServiceImpl.cancelSeatByTidAndStationIndex(java.lang.String,java.lang.String,int,int)",
+            "func_name": "ProductService.getProductById(Long)",
+            "file_path": "com/example/demo/service/ProductService",
+            "full_name": "com.example.demo.service.ProductService.getProductById(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 10
+            "label": 1
         },
         {
-            "func_name": "AuthenticationController.register(AuthenticationReq)",
-            "file_path": "com/dofinal/RG/controller/AuthenticationController",
-            "full_name": "com.dofinal.RG.controller.AuthenticationController.register(com.dofinal.RG.reqs.entity.AuthenticationReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 16
-        },
-        {
-            "func_name": "AuthenticationServiceImpl.register(AuthenticationReq)",
-            "file_path": "com/dofinal/RG/service/impl/AuthenticationServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.AuthenticationServiceImpl.register(com.dofinal.RG.reqs.entity.AuthenticationReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 16
-        },
-        {
-            "func_name": "CustomerServiceImpl.findCustomerByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.findCustomerByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 17
-        },
-        {
-            "func_name": "TrainServiceImpl.findTrainByLocationAndTime(Timestamp, Location, Location)",
-            "file_path": "com/dofinal/RG/service/impl/TrainServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.TrainServiceImpl.findTrainByLocationAndTime(java.sql.Timestamp,com.dofinal.RG.entity.location.Location,com.dofinal.RG.entity.location.Location)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 18
-        },
-        {
-            "func_name": "SeatController.buySeat(SeatReq)",
-            "file_path": "com/dofinal/RG/controller/SeatController",
-            "full_name": "com.dofinal.RG.controller.SeatController.buySeat(com.dofinal.RG.reqs.entity.SeatReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 19
-        },
-        {
-            "func_name": "SeatServiceImpl.buySeatByTidAndStationIndex(String, int, int, String)",
-            "file_path": "com/dofinal/RG/service/impl/SeatServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.SeatServiceImpl.buySeatByTidAndStationIndex(java.lang.String,int,int,java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 19
-        },
-        {
-            "func_name": "AuthenticationServiceImpl.logout(AuthenticationReq)",
-            "file_path": "com/dofinal/RG/service/impl/AuthenticationServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.AuthenticationServiceImpl.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)",
+            "func_name": "PaymentRecordController.getPaymentRecordByOrderId(Long)",
+            "file_path": "com/example/demo/controller/PaymentRecordController",
+            "full_name": "com.example.demo.controller.PaymentRecordController.getPaymentRecordByOrderId(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -474,64 +166,9 @@
             "label": 2
         },
         {
-            "func_name": "OrderServiceImpl.cancelMealOrder(MealCustomerOrder>)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.cancelMealOrder(java.util.List<com.dofinal.RG.entity.order.MealCustomerOrder>)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "OrderServiceImpl.setUserOrderPrice(UserOrder, String)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.setUserOrderPrice(com.dofinal.RG.entity.order.UserOrder,java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 1
-        },
-        {
-            "func_name": "SeatController.cancelSeat(SeatReq)",
-            "file_path": "com/dofinal/RG/controller/SeatController",
-            "full_name": "com.dofinal.RG.controller.SeatController.cancelSeat(com.dofinal.RG.reqs.entity.SeatReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "CustomerController.updateCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.updateCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 20
-        },
-        {
-            "func_name": "CustomerServiceImpl.updateCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.updateCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 20
-        },
-        {
-            "func_name": "UserController.deleteUserById(String)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.deleteUserById(java.lang.String)",
+            "func_name": "UserController.registerUser(User)",
+            "file_path": "com/example/demo/controller/UserController",
+            "full_name": "com.example.demo.controller.UserController.registerUser(com.example.demo.model.User)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -540,372 +177,20 @@
             "label": 0
         },
         {
-            "func_name": "SeatServiceImpl.getSeatCountByTidAndStationIndex(String, int, int, String)",
-            "file_path": "com/dofinal/RG/service/impl/SeatServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.SeatServiceImpl.getSeatCountByTidAndStationIndex(java.lang.String,int,int,java.lang.String)",
+            "func_name": "UserService.registerUser(User)",
+            "file_path": "com/example/demo/service/UserService",
+            "full_name": "com.example.demo.service.UserService.registerUser(com.example.demo.model.User)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 19
+            "label": 0
         },
         {
-            "func_name": "RoomServiceImpl.findHotelRoomByHidAndTime(int, Timestamp, Timestamp, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidAndTime(int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "OrderServiceImpl.generateHotelOrder(int, HotelOrderReq, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.generateHotelOrder(int,com.dofinal.RG.reqs.userOrder.HotelOrderReq,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomByHidRidTime(int, int, Timestamp, Timestamp, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByHidRidTime(int,int,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, byte[])",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.orderRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,byte[])",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "OrderController.commentHotel(HotelCommentReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.commentHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "OrderServiceImpl.rateHotel(HotelCommentReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.rateHotel(com.dofinal.RG.reqs.entity.HotelCommentReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "UserServiceImpl.getCustomersByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.getCustomersByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 21
-        },
-        {
-            "func_name": "TrainController.getTrains()",
-            "file_path": "com/dofinal/RG/controller/TrainController",
-            "full_name": "com.dofinal.RG.controller.TrainController.getTrains()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 5
-        },
-        {
-            "func_name": "TrainServiceImpl.findTrains()",
-            "file_path": "com/dofinal/RG/service/impl/TrainServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.TrainServiceImpl.findTrains()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 5
-        },
-        {
-            "func_name": "CustomerController.getCidByTidStrict(String)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "CustomerServiceImpl.getCidByTidStrict(String)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTidStrict(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "MealController.getTrainMeals(MealReq)",
-            "file_path": "com/dofinal/RG/controller/MealController",
-            "full_name": "com.dofinal.RG.controller.MealController.getTrainMeals(com.dofinal.RG.reqs.entity.MealReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 8
-        },
-        {
-            "func_name": "MealServiceImpl.getMealsByTid(String)",
-            "file_path": "com/dofinal/RG/service/impl/MealServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.MealServiceImpl.getMealsByTid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 8
-        },
-        {
-            "func_name": "UserServiceImpl.findUsers()",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.findUsers()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 22
-        },
-        {
-            "func_name": "SeatServiceImpl.getSeatCountByTidType(String, String)",
-            "file_path": "com/dofinal/RG/service/impl/SeatServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.SeatServiceImpl.getSeatCountByTidType(java.lang.String,java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 5
-        },
-        {
-            "func_name": "UserController.getUserWithOrderAndCustomerByUid(String)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.getUserWithOrderAndCustomerByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 21
-        },
-        {
-            "func_name": "UserServiceImpl.findUserWithOrderAndCustomerByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.findUserWithOrderAndCustomerByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 21
-        },
-        {
-            "func_name": "OrderServiceImpl.generateTrainOrder(int, TrainOrderReq, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.generateTrainOrder(int,com.dofinal.RG.reqs.userOrder.TrainOrderReq,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 19
-        },
-        {
-            "func_name": "RoomController.findHotelRoomByRidAndTime(RoomReq)",
-            "file_path": "com/dofinal/RG/controller/RoomController",
-            "full_name": "com.dofinal.RG.controller.RoomController.findHotelRoomByRidAndTime(com.dofinal.RG.reqs.entity.RoomReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 15
-        },
-        {
-            "func_name": "RoomController.findHotelRoomByHidAndTime(RoomReq)",
-            "file_path": "com/dofinal/RG/controller/RoomController",
-            "full_name": "com.dofinal.RG.controller.RoomController.findHotelRoomByHidAndTime(com.dofinal.RG.reqs.entity.RoomReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "AuthenticationController.login(AuthenticationReq)",
-            "file_path": "com/dofinal/RG/controller/AuthenticationController",
-            "full_name": "com.dofinal.RG.controller.AuthenticationController.login(com.dofinal.RG.reqs.entity.AuthenticationReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 23
-        },
-        {
-            "func_name": "AuthenticationServiceImpl.login(AuthenticationReq)",
-            "file_path": "com/dofinal/RG/service/impl/AuthenticationServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.AuthenticationServiceImpl.login(com.dofinal.RG.reqs.entity.AuthenticationReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 23
-        },
-        {
-            "func_name": "UserServiceImpl.updateUser(UserReq)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.updateUser(com.dofinal.RG.reqs.entity.UserReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "OrderServiceImpl.cancelTrainOrder(TrainCustomerOrder>)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.cancelTrainOrder(java.util.List<com.dofinal.RG.entity.order.TrainCustomerOrder>)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "OrderServiceImpl.cancelHotelOrder(HotelCustomerOrder>)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.cancelHotelOrder(java.util.List<com.dofinal.RG.entity.order.HotelCustomerOrder>)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "OrderController.deleteHotelComment(HotelCommentReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.deleteHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 13
-        },
-        {
-            "func_name": "RoomController.cancelRoom(RoomReq)",
-            "file_path": "com/dofinal/RG/controller/RoomController",
-            "full_name": "com.dofinal.RG.controller.RoomController.cancelRoom(com.dofinal.RG.reqs.entity.RoomReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "RoomServiceImpl.cancelRoom(Timestamp, Timestamp, Timestamp, byte[])",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.cancelRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,byte[])",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "RoomServiceImpl.updateHotelRoom(HotelRoom)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.updateHotelRoom(com.dofinal.RG.entity.hotel.HotelRoom)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "HotelServiceImpl.findHotelById(int)",
-            "file_path": "com/dofinal/RG/service/impl/HotelServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.HotelServiceImpl.findHotelById(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "RoomServiceImpl.getDay(Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.getDay(java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "OrderServiceImpl.generateUserOrder(AddUserOrderReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.generateUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)",
+            "func_name": "OrderController.getOrderById(Long)",
+            "file_path": "com/example/demo/controller/OrderController",
+            "full_name": "com.example.demo.controller.OrderController.getOrderById(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -914,9 +199,9 @@
             "label": 1
         },
         {
-            "func_name": "OrderController.addUserOrder(AddUserOrderReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.addUserOrder(com.dofinal.RG.reqs.userOrder.AddUserOrderReq)",
+            "func_name": "OrderService.getOrderById(Long)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.getOrderById(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -925,273 +210,9 @@
             "label": 1
         },
         {
-            "func_name": "TrainServiceImpl.getTidByUid(String)",
-            "file_path": "com/dofinal/RG/service/impl/TrainServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.TrainServiceImpl.getTidByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "RoomController.orderRoom(RoomReq)",
-            "file_path": "com/dofinal/RG/controller/RoomController",
-            "full_name": "com.dofinal.RG.controller.RoomController.orderRoom(com.dofinal.RG.reqs.entity.RoomReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "RoomServiceImpl.checkHotelRoom(HotelRoom, Timestamp, Timestamp, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.checkHotelRoom(com.dofinal.RG.entity.hotel.HotelRoom,java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "MealServiceImpl.getMealByMid(int)",
-            "file_path": "com/dofinal/RG/service/impl/MealServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.MealServiceImpl.getMealByMid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 8
-        },
-        {
-            "func_name": "CustomerController.getCustomerByCid(int)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 11
-        },
-        {
-            "func_name": "UserController.getUsers()",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.getUsers()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 22
-        },
-        {
-            "func_name": "SeatServiceImpl.getSeatDemoByTidAndLocation(String, Location, Location)",
-            "file_path": "com/dofinal/RG/service/impl/SeatServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.SeatServiceImpl.getSeatDemoByTidAndLocation(java.lang.String,com.dofinal.RG.entity.location.Location,com.dofinal.RG.entity.location.Location)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 18
-        },
-        {
-            "func_name": "CustomerController.getCustomerByUid(String)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 17
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomDemoByHid(int)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomDemoByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "CustomerController.getCidByHid(int)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.getCidByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 24
-        },
-        {
-            "func_name": "CustomerServiceImpl.getCidByHid(int)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 24
-        },
-        {
-            "func_name": "HotelController.getHotelByHid(int)",
-            "file_path": "com/dofinal/RG/controller/HotelController",
-            "full_name": "com.dofinal.RG.controller.HotelController.getHotelByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "CustomerController.deleteCustomerByCid(int)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.deleteCustomerByCid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 25
-        },
-        {
-            "func_name": "CustomerServiceImpl.deleteCustomerByCid(int)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.deleteCustomerByCid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 25
-        },
-        {
-            "func_name": "FileController.saveFile(MultipartFile, String)",
-            "file_path": "com/dofinal/RG/controller/demo/FileController",
-            "full_name": "com.dofinal.RG.controller.demo.FileController.saveFile(org.springframework.web.multipart.MultipartFile,java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 26
-        },
-        {
-            "func_name": "AuthenticationController.logout(AuthenticationReq)",
-            "file_path": "com/dofinal/RG/controller/AuthenticationController",
-            "full_name": "com.dofinal.RG.controller.AuthenticationController.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "UserController.cancelUserCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.cancelUserCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 27
-        },
-        {
-            "func_name": "UserServiceImpl.deleteUserCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/service/impl/UserServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.UserServiceImpl.deleteUserCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 27
-        },
-        {
-            "func_name": "HotelController.deleteHotelByHid(int)",
-            "file_path": "com/dofinal/RG/controller/HotelController",
-            "full_name": "com.dofinal.RG.controller.HotelController.deleteHotelByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 28
-        },
-        {
-            "func_name": "HotelServiceImpl.deleteHotelByHid(int)",
-            "file_path": "com/dofinal/RG/service/impl/HotelServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.HotelServiceImpl.deleteHotelByHid(int)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 28
-        },
-        {
-            "func_name": "CustomerController.addCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.addCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 29
-        },
-        {
-            "func_name": "CustomerServiceImpl.addCustomer(CustomerReq)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.addCustomer(com.dofinal.RG.reqs.entity.CustomerReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 29
-        },
-        {
-            "func_name": "CustomerController.getCustomers()",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.getCustomers()",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 4
-        },
-        {
-            "func_name": "RoomServiceImpl.findHotelRoomByTime(Timestamp, Timestamp, Timestamp)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.findHotelRoomByTime(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 14
-        },
-        {
-            "func_name": "NoticeServiceImpl.handleOrderPay(NoticeRsp, String)",
-            "file_path": "com/dofinal/RG/service/impl/NoticeServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderPay(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)",
+            "func_name": "OrderService.getPaymentRecordByOrderId(Long)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.getPaymentRecordByOrderId(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -1200,64 +221,9 @@
             "label": 1
         },
         {
-            "func_name": "UserController.getUserCustomerByUid(String)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.getUserCustomerByUid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 21
-        },
-        {
-            "func_name": "SeatController.getSeatCount(SeatReq)",
-            "file_path": "com/dofinal/RG/controller/SeatController",
-            "full_name": "com.dofinal.RG.controller.SeatController.getSeatCount(com.dofinal.RG.reqs.entity.SeatReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 19
-        },
-        {
-            "func_name": "UserController.updateUser(UserReq)",
-            "file_path": "com/dofinal/RG/controller/UserController",
-            "full_name": "com.dofinal.RG.controller.UserController.updateUser(com.dofinal.RG.reqs.entity.UserReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 2
-        },
-        {
-            "func_name": "CustomerServiceImpl.getCidByTid(String)",
-            "file_path": "com/dofinal/RG/service/impl/CustomerServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTid(java.lang.String)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 30
-        },
-        {
-            "func_name": "FileController.up(String, MultipartFile, HttpServletRequest)",
-            "file_path": "com/dofinal/RG/controller/demo/FileController",
-            "full_name": "com.dofinal.RG.controller.demo.FileController.up(java.lang.String,org.springframework.web.multipart.MultipartFile,javax.servlet.http.HttpServletRequest)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 26
-        },
-        {
-            "func_name": "OrderController.deleteUserOrder(OtherUserOrderReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.deleteUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)",
+            "func_name": "OrderController.createOrder(Order)",
+            "file_path": "com/example/demo/controller/OrderController",
+            "full_name": "com.example.demo.controller.OrderController.createOrder(com.example.demo.model.Order)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -1266,64 +232,9 @@
             "label": 1
         },
         {
-            "func_name": "OrderController.getHotelComment(HotelCommentReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.getHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 31
-        },
-        {
-            "func_name": "OrderServiceImpl.getHotelComment(HotelCommentReq)",
-            "file_path": "com/dofinal/RG/service/impl/OrderServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.OrderServiceImpl.getHotelComment(com.dofinal.RG.reqs.entity.HotelCommentReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 31
-        },
-        {
-            "func_name": "OrderController.cancelUserOrder(OtherUserOrderReq)",
-            "file_path": "com/dofinal/RG/controller/OrderController",
-            "full_name": "com.dofinal.RG.controller.OrderController.cancelUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 10
-        },
-        {
-            "func_name": "TrainController.getTrainByLocationsAndTimes(TrainReq)",
-            "file_path": "com/dofinal/RG/controller/TrainController",
-            "full_name": "com.dofinal.RG.controller.TrainController.getTrainByLocationsAndTimes(com.dofinal.RG.reqs.entity.TrainReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 18
-        },
-        {
-            "func_name": "MealController.BuyMeal(MealReq)",
-            "file_path": "com/dofinal/RG/controller/MealController",
-            "full_name": "com.dofinal.RG.controller.MealController.BuyMeal(com.dofinal.RG.reqs.entity.MealReq)",
-            "lineno": 0,
-            "end_lineno": 0,
-            "docstring": 0,
-            "execution_time": 0,
-            "count": 0,
-            "label": 8
-        },
-        {
-            "func_name": "NoticeServiceImpl.handleOrderGenerate(NoticeRsp, String)",
-            "file_path": "com/dofinal/RG/service/impl/NoticeServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.NoticeServiceImpl.handleOrderGenerate(com.dofinal.RG.rsps.Notice.NoticeRsp,java.lang.String)",
+            "func_name": "OrderService.createOrder(Order)",
+            "file_path": "com/example/demo/service/OrderService",
+            "full_name": "com.example.demo.service.OrderService.createOrder(com.example.demo.model.Order)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -1332,20 +243,20 @@
             "label": 1
         },
         {
-            "func_name": "RoomController.findHotelRoomByTime(RoomReq)",
-            "file_path": "com/dofinal/RG/controller/RoomController",
-            "full_name": "com.dofinal.RG.controller.RoomController.findHotelRoomByTime(com.dofinal.RG.reqs.entity.RoomReq)",
+            "func_name": "ProductController.getProductByName(String)",
+            "file_path": "com/example/demo/controller/ProductController",
+            "full_name": "com.example.demo.controller.ProductController.getProductByName(java.lang.String)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 14
+            "label": 3
         },
         {
-            "func_name": "TrainController.getTidByUid(String)",
-            "file_path": "com/dofinal/RG/controller/TrainController",
-            "full_name": "com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)",
+            "func_name": "CategoryService.getCategoryByName(String)",
+            "file_path": "com/example/demo/service/CategoryService",
+            "full_name": "com.example.demo.service.CategoryService.getCategoryByName(java.lang.String)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
@@ -1354,1251 +265,254 @@
             "label": 2
         },
         {
-            "func_name": "CustomerController.getCidByTid(String)",
-            "file_path": "com/dofinal/RG/controller/CustomerController",
-            "full_name": "com.dofinal.RG.controller.CustomerController.getCidByTid(java.lang.String)",
+            "func_name": "PaymentRecordService.addPaymentRecord(PaymentRecord)",
+            "file_path": "com/example/demo/service/PaymentRecordService",
+            "full_name": "com.example.demo.service.PaymentRecordService.addPaymentRecord(com.example.demo.model.PaymentRecord)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 30
+            "label": 2
         },
         {
-            "func_name": "RoomServiceImpl.handleRoomDemo(List, List)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.handleRoomDemo(java.util.List,java.util.List)",
+            "func_name": "PaymentRecordController.addPaymentRecord(PaymentRecord)",
+            "file_path": "com/example/demo/controller/PaymentRecordController",
+            "full_name": "com.example.demo.controller.PaymentRecordController.addPaymentRecord(com.example.demo.model.PaymentRecord)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 7
+            "label": 1
         },
         {
-            "func_name": "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, [B)",
-            "file_path": "com/dofinal/RG/service/impl/RoomServiceImpl",
-            "full_name": "com.dofinal.RG.service.impl.RoomServiceImpl.orderRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,[B)",
+            "func_name": "UserController.getUserById(Long)",
+            "file_path": "com/example/demo/controller/UserController",
+            "full_name": "com.example.demo.controller.UserController.getUserById(java.lang.Long)",
             "lineno": 0,
             "end_lineno": 0,
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 14
+            "label": 0
+        },
+        {
+            "func_name": "CategoryController.getCategoryByName(String)",
+            "file_path": "com/example/demo/controller/CategoryController",
+            "full_name": "com.example.demo.controller.CategoryController.getCategoryByName(java.lang.String)",
+            "lineno": 0,
+            "end_lineno": 0,
+            "docstring": 0,
+            "execution_time": 0,
+            "count": 0,
+            "label": 3
         }
     ],
     "rawConnections": [
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.payUserOrder(OtherUserOrderReq)"
+                "com/example/demo/controller/ProductController",
+                "ProductController.addProduct(Product)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.payUserOrder(OtherUserOrderReq)"
+                "com/example/demo/service/ProductService",
+                "ProductService.addProduct(Product)"
             ],
             "execution_time": 10,
             "call_count": 11
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.payUserOrder(OtherUserOrderReq)"
+                "com/example/demo/controller/OrderDetailController",
+                "OrderDetailController.addOrderDetail(OrderDetail)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 11
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderPay(NoticeRsp, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 10
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderGenerate(NoticeRsp, String)"
+                "com/example/demo/service/OrderDetailService",
+                "OrderDetailService.addOrderDetail(OrderDetail)"
             ],
             "execution_time": 10,
             "call_count": 5
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.getUserOrderByUid(String)"
+                "com/example/demo/controller/UserController",
+                "UserController.getUserByUsername(String)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.getUserOrdersByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 18
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/NoticeController",
-                "NoticeController.getUserNoticeByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.getUserNoticeByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 5
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTrainByTid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/TrainServiceImpl",
-                "TrainServiceImpl.findTrainByTid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTrainByTid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatDemoByTid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatDemoByTid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatCountByTidType(String, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.getUserByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.findUserByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 8
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.findHotelRoomByHid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHid(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateMealOrder(int, MealOrderReq, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/MealServiceImpl",
-                "MealServiceImpl.buyMeal(String, int)"
-            ],
-            "execution_time": 10,
-            "call_count": 5
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/MealController",
-                "MealController.CancelMeal(MealReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/MealServiceImpl",
-                "MealServiceImpl.cancelMeal(String, int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/login/handleLogin",
-                "handleLogin.Register()"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/login/handleLogin",
-                "handleLogin.IllegalUid()"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/login/handleLogin",
-                "handleLogin.Register()"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/login/handleLogin",
-                "handleLogin.CheckIfExist()"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/login/handleLogin",
-                "handleLogin.Register()"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/login/handleLogin",
-                "handleLogin.IllegalPassword()"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.addUserCustomer(CustomerReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.addUserCustomer(CustomerReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/HotelController",
-                "HotelController.getHotelByLocationTime(HotelReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/HotelServiceImpl",
-                "HotelServiceImpl.findHotelByLocation(Location)"
-            ],
-            "execution_time": 10,
-            "call_count": 8
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/HotelController",
-                "HotelController.getHotelByLocationTime(HotelReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomDemoByHidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 15
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomDemoByHidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 14
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomDemoByHidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.handleRoomDemo(List, List)"
-            ],
-            "execution_time": 10,
-            "call_count": 14
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/AuthenticationController",
-                "AuthenticationController.register(AuthenticationReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/AuthenticationServiceImpl",
-                "AuthenticationServiceImpl.register(AuthenticationReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/SeatController",
-                "SeatController.buySeat(SeatReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.buySeatByTidAndStationIndex(String, int, int, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelMealOrder(MealCustomerOrder>)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/MealServiceImpl",
-                "MealServiceImpl.cancelMeal(String, int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/SeatController",
-                "SeatController.cancelSeat(SeatReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.cancelSeatByTidAndStationIndex(String, String, int, int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.updateCustomer(CustomerReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.updateCustomer(CustomerReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.deleteUserById(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.deleteUserByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.getDay(Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 56
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateHotelOrder(int, HotelOrderReq, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidRidTime(int, int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 3
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateHotelOrder(int, HotelOrderReq, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, byte[])"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateHotelOrder(int, HotelOrderReq, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, [B)"
-            ],
-            "execution_time": 10,
-            "call_count": 3
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidRidTime(int, int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.getDay(Timestamp)"
+                "com/example/demo/service/UserService",
+                "UserService.getUserByUsername(String)"
             ],
             "execution_time": 10,
             "call_count": 9
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, byte[])"
+                "com/example/demo/controller/CategoryController",
+                "CategoryController.addCategory(Category)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.getDay(Timestamp)"
+                "com/example/demo/service/CategoryService",
+                "CategoryService.addCategory(Category)"
+            ],
+            "execution_time": 10,
+            "call_count": 8
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/ProductController",
+                "ProductController.getProductById(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/ProductService",
+                "ProductService.getProductById(Long)"
+            ],
+            "execution_time": 10,
+            "call_count": 9
+        },
+        {
+            "caller_tuple": [
+                "com/example/demo/controller/PaymentRecordController",
+                "PaymentRecordController.getPaymentRecordByOrderId(Long)"
+            ],
+            "called_tuple": [
+                "com/example/demo/service/PaymentRecordService",
+                "PaymentRecordService.getPaymentRecordByOrderId(Long)"
             ],
             "execution_time": 10,
             "call_count": 1
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.commentHotel(HotelCommentReq)"
+                "com/example/demo/controller/UserController",
+                "UserController.registerUser(User)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.rateHotel(HotelCommentReq)"
+                "com/example/demo/service/UserService",
+                "UserService.registerUser(User)"
             ],
             "execution_time": 10,
-            "call_count": 2
+            "call_count": 10
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTrains()"
+                "com/example/demo/controller/OrderController",
+                "OrderController.getOrderById(Long)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/TrainServiceImpl",
-                "TrainServiceImpl.findTrains()"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTrains()"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatDemoByTid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.getCidByTidStrict(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.getCidByTidStrict(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 4
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/MealController",
-                "MealController.getTrainMeals(MealReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/MealServiceImpl",
-                "MealServiceImpl.getMealsByTid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 13
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.getUserWithOrderAndCustomerByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.findUserWithOrderAndCustomerByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.findUserWithOrderAndCustomerByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.getCustomersByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.findUserWithOrderAndCustomerByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.getUserOrdersByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateTrainOrder(int, TrainOrderReq, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatCountByTidAndStationIndex(String, int, int, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateTrainOrder(int, TrainOrderReq, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.buySeatByTidAndStationIndex(String, int, int, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.findHotelRoomByRidAndTime(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByRidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.findHotelRoomByHidAndTime(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidAndTime(int, Timestamp, Timestamp, Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/AuthenticationController",
-                "AuthenticationController.login(AuthenticationReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/AuthenticationServiceImpl",
-                "AuthenticationServiceImpl.login(AuthenticationReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelTrainOrder(TrainCustomerOrder>)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelMealOrder(MealCustomerOrder>)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelHotelOrder(HotelCustomerOrder>)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelTrainOrder(TrainCustomerOrder>)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.cancelSeatByTidAndStationIndex(String, String, int, int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelHotelOrder(HotelCustomerOrder>)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidRidRNumber(int, int, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelHotelOrder(HotelCustomerOrder>)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.cancelRoom(Timestamp, Timestamp, Timestamp, byte[])"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.deleteHotelComment(HotelCommentReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.deleteHotelComment(HotelCommentReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.cancelRoom(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidRidRNumber(int, int, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.cancelRoom(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.cancelRoom(Timestamp, Timestamp, Timestamp, byte[])"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.cancelRoom(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.updateHotelRoom(HotelRoom)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.cancelRoom(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/HotelServiceImpl",
-                "HotelServiceImpl.findHotelById(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.cancelRoom(Timestamp, Timestamp, Timestamp, byte[])"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.getDay(Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateUserOrder(AddUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateHotelOrder(int, HotelOrderReq, Timestamp)"
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderById(Long)"
             ],
             "execution_time": 10,
             "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateUserOrder(AddUserOrderReq)"
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderById(Long)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.setUserOrderPrice(UserOrder, String)"
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderDetailsByOrderId(Long)"
             ],
             "execution_time": 10,
-            "call_count": 6
+            "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateUserOrder(AddUserOrderReq)"
+                "com/example/demo/service/OrderService",
+                "OrderService.getOrderById(Long)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateTrainOrder(int, TrainOrderReq, Timestamp)"
+                "com/example/demo/service/OrderService",
+                "OrderService.getPaymentRecordByOrderId(Long)"
             ],
             "execution_time": 10,
-            "call_count": 1
+            "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateUserOrder(AddUserOrderReq)"
+                "com/example/demo/controller/OrderController",
+                "OrderController.createOrder(Order)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateMealOrder(int, MealOrderReq, Timestamp)"
+                "com/example/demo/service/OrderService",
+                "OrderService.createOrder(Order)"
             ],
             "execution_time": 10,
-            "call_count": 4
+            "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.addUserOrder(AddUserOrderReq)"
+                "com/example/demo/service/OrderService",
+                "OrderService.createOrder(Order)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.generateUserOrder(AddUserOrderReq)"
+                "com/example/demo/service/UserService",
+                "UserService.getUserById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 6
+            "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.addUserOrder(AddUserOrderReq)"
+                "com/example/demo/service/OrderService",
+                "OrderService.createOrder(Order)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)"
+                "com/example/demo/service/ProductService",
+                "ProductService.getProductById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 6
+            "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.orderRoom(RoomReq)"
+                "com/example/demo/controller/ProductController",
+                "ProductController.getProductByName(String)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByHidRidRNumber(int, int, String)"
+                "com/example/demo/service/ProductService",
+                "ProductService.getProductByName(String)"
             ],
             "execution_time": 10,
-            "call_count": 1
+            "call_count": 9
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.orderRoom(RoomReq)"
+                "com/example/demo/controller/PaymentRecordController",
+                "PaymentRecordController.addPaymentRecord(PaymentRecord)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.checkHotelRoom(HotelRoom, Timestamp, Timestamp, Timestamp)"
+                "com/example/demo/service/PaymentRecordService",
+                "PaymentRecordService.addPaymentRecord(PaymentRecord)"
             ],
             "execution_time": 10,
-            "call_count": 1
+            "call_count": 3
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.orderRoom(RoomReq)"
+                "com/example/demo/controller/UserController",
+                "UserController.getUserById(Long)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, byte[])"
+                "com/example/demo/service/UserService",
+                "UserService.getUserById(Long)"
             ],
             "execution_time": 10,
-            "call_count": 1
+            "call_count": 9
         },
         {
             "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.orderRoom(RoomReq)"
+                "com/example/demo/controller/CategoryController",
+                "CategoryController.getCategoryByName(String)"
             ],
             "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.updateHotelRoom(HotelRoom)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.orderRoom(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/HotelServiceImpl",
-                "HotelServiceImpl.findHotelById(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.getCustomerByCid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.findCustomerById(int)"
+                "com/example/demo/service/CategoryService",
+                "CategoryService.getCategoryByName(String)"
             ],
             "execution_time": 10,
             "call_count": 5
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.getUsers()"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.findUsers()"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.getCustomerByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.findCustomerByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 13
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.getCidByHid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.getCidByHid(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 3
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/HotelController",
-                "HotelController.getHotelByHid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/HotelServiceImpl",
-                "HotelServiceImpl.findHotelById(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/HotelController",
-                "HotelController.getHotelByHid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomDemoByHid(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.deleteCustomerByCid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.deleteCustomerByCid(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/AuthenticationController",
-                "AuthenticationController.logout(AuthenticationReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/AuthenticationServiceImpl",
-                "AuthenticationServiceImpl.logout(AuthenticationReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 4
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.cancelUserCustomer(CustomerReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.deleteUserCustomer(CustomerReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/HotelController",
-                "HotelController.deleteHotelByHid(int)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/HotelServiceImpl",
-                "HotelServiceImpl.deleteHotelByHid(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.addCustomer(CustomerReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.addCustomer(CustomerReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.getCustomers()"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.findCustomers()"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByTime(Timestamp, Timestamp, Timestamp)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.getDay(Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.getUserCustomerByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.getCustomersByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/SeatController",
-                "SeatController.getSeatCount(SeatReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatCountByTidAndStationIndex(String, int, int, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.updateUser(UserReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.updateUser(UserReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 4
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/UserController",
-                "UserController.updateUser(UserReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/UserServiceImpl",
-                "UserServiceImpl.findUserByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 4
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/demo/FileController",
-                "FileController.up(String, MultipartFile, HttpServletRequest)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/controller/demo/FileController",
-                "FileController.saveFile(MultipartFile, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.deleteUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.deleteUserOrder(OtherUserOrderReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.deleteUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.getHotelComment(HotelCommentReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.getHotelComment(HotelCommentReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/OrderServiceImpl",
-                "OrderServiceImpl.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/OrderController",
-                "OrderController.cancelUserOrder(OtherUserOrderReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/NoticeServiceImpl",
-                "NoticeServiceImpl.handleOrderNotice(NoticeRsp, String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTrainByLocationsAndTimes(TrainReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/TrainServiceImpl",
-                "TrainServiceImpl.findTrainByLocationAndTime(Timestamp, Location, Location)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTrainByLocationsAndTimes(TrainReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/SeatServiceImpl",
-                "SeatServiceImpl.getSeatDemoByTidAndLocation(String, Location, Location)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/MealController",
-                "MealController.BuyMeal(MealReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/MealServiceImpl",
-                "MealServiceImpl.buyMeal(String, int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/MealController",
-                "MealController.BuyMeal(MealReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/MealServiceImpl",
-                "MealServiceImpl.getMealByMid(int)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/RoomController",
-                "RoomController.findHotelRoomByTime(RoomReq)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.findHotelRoomByTime(Timestamp, Timestamp, Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/TrainController",
-                "TrainController.getTidByUid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/TrainServiceImpl",
-                "TrainServiceImpl.getTidByUid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 7
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/controller/CustomerController",
-                "CustomerController.getCidByTid(String)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/CustomerServiceImpl",
-                "CustomerServiceImpl.getCidByTid(String)"
-            ],
-            "execution_time": 10,
-            "call_count": 1
-        },
-        {
-            "caller_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.orderRoom(Timestamp, Timestamp, Timestamp, [B)"
-            ],
-            "called_tuple": [
-                "com/dofinal/RG/service/impl/RoomServiceImpl",
-                "RoomServiceImpl.getDay(Timestamp)"
-            ],
-            "execution_time": 10,
-            "call_count": 12
         }
     ]
 }

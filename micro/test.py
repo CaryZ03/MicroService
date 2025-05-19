@@ -11,7 +11,7 @@ def send_request(method: str, url: str, **kwargs):
         url = base_url + url
     else:
         name = method + ":" + url
-        with open("entries_demo1.json", "r") as f:
+        with open("entries_demo1-origin.json", "r") as f:
             entries = json.load(f)
         entry = matchEntry(name, entries)["name"]
         with open("entry_partitions.json", "r") as f:
@@ -118,7 +118,7 @@ def test(port=None):
     id = response.json().get("id")
     get_user_by_username(username)
     get_user_by_id(id)
-    category_name = "testCategor16"
+    category_name = "testCategor25"
     response = create_category(category_name)
     print("Create Category Response:", response.json())
     category_id = response.json().get("id")
@@ -154,7 +154,7 @@ def test(port=None):
 if __name__ == "__main__":
     # response = send_request("GET", f"/start/test")
     # print("Start Test Response:", response.text)
-    test(8080) 
+    test() 
     # response = create_order(1, 1)
     # print("Create Order Response:", response.json())
 

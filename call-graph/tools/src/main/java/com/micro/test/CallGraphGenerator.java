@@ -98,8 +98,10 @@ public class CallGraphGenerator {
             callGraph.get("Excluded_Names").addAll(excludedNames);
 //            System.out.println(callGraph);
         }
-        System.out.println(impls);
+        System.out.println("Impls: " + impls);
         System.out.println(callGraph.get("Excluded_Names"));
+
+        System.out.println("CallGraph:" + callGraph);
 
         Map<String, List<String>> newCallGraph = new HashMap<>();
 
@@ -144,14 +146,15 @@ public class CallGraphGenerator {
 
     private static String replaceInterfaceWithImpl(String methodSignature, Map<String, List<String>> impls) {
         System.out.println(methodSignature);
+        if (!methodSignature.contains("(")) return methodSignature;
         // 提取类全名，比如从 com.a.b.c() 提取 com.a.b
         int dotPos = methodSignature.substring(0, methodSignature.indexOf("(")).lastIndexOf(".");
-        System.out.println(dotPos);
+//        System.out.println(dotPos);
 
         String className = methodSignature.substring(0, dotPos);
-        System.out.println(className);
+//        System.out.println(className);
         String methodName = methodSignature.substring(dotPos);
-        System.out.println(methodName);
+//        System.out.println(methodName);
 
         for (String interfaceName : impls.keySet()) {
             if (className.equals(interfaceName) && impls.get(interfaceName).size() == 1) {

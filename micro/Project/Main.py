@@ -71,14 +71,15 @@ def stage2Main() -> None:
         microservice_reference: Dict[int, List[str]] = louvain.partitionMicroservices(partition_reference)
 
         # initialize the environment and agent.
-        microservice_count: int = len(microservice_reference.keys())
+        # microservice_count: int = len(microservice_reference.keys())
+        microservice_count: int = 4
         env: GraphEnvironment = GraphEnvironment(graph, microservice_count)
 
         state_dim: int = env.getNodeCnt()
         action_dim: int = env.getNodeCnt() * microservice_count
         agent: DQNAgent = DQNAgent(state_dim, action_dim)
 
-        episodes = 2500
+        episodes = 3500
         max_steps = 100
         batch_size = 128
 

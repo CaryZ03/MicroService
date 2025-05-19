@@ -28,10 +28,10 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 
-# source = "D:/Programs/MicroService/micro/demos/demo1-origin"
+source = "D:/Programs/MicroService/micro/demos/demo1-origin"
 source = "D:/Programs/MicroService/traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
-target = source + "-fuxii"
+target = source + "-fuxiii"
 
 # 如果目标目录存在，则删除它
 if os.path.exists(target):
@@ -108,8 +108,8 @@ def static():
 
 
 def dynamic():
-    global G
-    G = buildGraph(G, source='json', saveSpans=False, saveEntries=False)
+    global G, proj_name
+    G = buildGraph(G, source='json', saveSpans=False, saveEntries=False, proj_name=proj_name)
     # showGraph(G)
 
 
@@ -118,7 +118,7 @@ def partition():
     # 修改工作目录到 main.py 所在的目录
     os.chdir("Project")
 
-    partitions = stage1Main()
+    partitions = stage2Main()
 
     os.chdir("..")
     
@@ -269,42 +269,42 @@ def save_to_json(partitions, G):
     with open("partitions.json", "w") as f:
         json.dump(partitions, f, indent=4)
     
-    rawData = [{
-        "func_name": to_func_name(func),
-        "file_path": to_file_path(func),
-        "full_name": func,
-        "lineno": 0,
-        "end_lineno": 0,
-        "docstring": 0,
-        "execution_time": 0,
-        "count": 0,
-        "label": label
-    } for func, label in partitions.items() if get_type(func) == "function"]
+    # rawData = [{
+    #     "func_name": to_func_name(func),
+    #     "file_path": to_file_path(func),
+    #     "full_name": func,
+    #     "lineno": 0,
+    #     "end_lineno": 0,
+    #     "docstring": 0,
+    #     "execution_time": 0,
+    #     "count": 0,
+    #     "label": label
+    # } for func, label in partitions.items() if get_type(func) == "function"]
     
-    # print(G.edges(data=True))
+    # # print(G.edges(data=True))
     
-    rawConnections = [{
-        "caller_tuple": [
-            to_file_path(caller),
-            to_func_name(caller),
-        ],
-        "called_tuple": [
-            to_file_path(callee),
-            to_func_name(callee),
-        ],
-        "execution_time": 10,
-        "call_count": attr["weight"] if "weight" in attr else 1,
-    } for caller, callee, attr in G.edges(data=True) if get_type(caller) == "function" and get_type(callee) == "function"]
+    # rawConnections = [{
+    #     "caller_tuple": [
+    #         to_file_path(caller),
+    #         to_func_name(caller),
+    #     ],
+    #     "called_tuple": [
+    #         to_file_path(callee),
+    #         to_func_name(callee),
+    #     ],
+    #     "execution_time": 10,
+    #     "call_count": attr["weight"] if "weight" in attr else 1,
+    # } for caller, callee, attr in G.edges(data=True) if get_type(caller) == "function" and get_type(callee) == "function"]
     
-    print("rawConnections: ", rawConnections)
+    # print("rawConnections: ", rawConnections)
     
-    vueData = {
-        "rawData": rawData,
-        "rawConnections": rawConnections,
-    }
+    # vueData = {
+    #     "rawData": rawData,
+    #     "rawConnections": rawConnections,
+    # }
     
-    with open("vueData.json", "w") as f:
-        json.dump(vueData, f, indent=4)
+    # with open("vueData.json", "w") as f:
+    #     json.dump(vueData, f, indent=4)
 
 
 def save_microservices(partitions, G):
@@ -316,6 +316,7 @@ def save_microservices(partitions, G):
         microservices[communityID].append(node)
     
     output: Dict[int, Dict[str, List[str]]] = {}
+    entry_partitions: Dict[str, int] = {}
 
     # 假设 microservices 是一个字典，格式为 {serviceID: [func1, func2, ...]}
     # 假设 graph 是通过 nx.DiGraph 加载的有向图
@@ -332,12 +333,14 @@ def save_microservices(partitions, G):
             predecessors = list(G.predecessors(func))  # 获取所有指向 func 的节点
             for predecessor in predecessors:
                 if predecessor not in partitions:
+                    if "type" in G.nodes[predecessor] and G.nodes[predecessor]["type"] == "entry":
+                        entry_partitions[predecessor] = serviceID
                     continue
                 in_serviceID = partitions[predecessor]
                 if in_serviceID != serviceID:
                     if func not in output[serviceID]["ins"]:
                         output[serviceID]["ins"].append(func)
-            successors = list(G.successors(func))  # 获取所有指向 func 的节点
+            successors = list(G.successors(func))  # 获取所有 func 指向的节点
             for successor in successors:
                 if successor not in partitions:
                     continue
@@ -348,38 +351,31 @@ def save_microservices(partitions, G):
         
     with open("microservices.json", "w") as f:
         json.dump(output, f, indent=4)
+    
+    with open("entry_partitions.json", "w") as f:
+        json.dump(entry_partitions, f, indent=4)
         
     return output
 
 
 def main():
     global G
-    static()
+    # static()
     
-    # nodes = list(G.nodes)
-    
-    # for node in nodes:
-    #     print(node, ": ", G.nodes[node])
-    
-    # showGraph(G)
-    generate_echarts_html(G, output_file="dag.html")
+    # # showGraph(G)
+    # generate_echarts_html(G, output_file="dag.html")
     # # return
-    # run_project()
-    # print("run_project success!")
-    # # return
-    dynamic()
+    # # run_project()
+    # # print("run_project success!")
+    # # # return
+    # dynamic()
     
-    nodes = list(G.nodes)
+    # generate_echarts_html(G, output_file="dag1.html")
     
-    for node in nodes:
-        print(node, ": ", G.nodes[node])
-    
-    generate_echarts_html(G, output_file="dag1.html")
-    
-    G.remove_nodes_from(list(nx.isolates(G)))
-    # showGraph(G)
-    generate_echarts_html(G, output_file="dag2.html")
-    nx.write_graphml(G, "Project/data/src/graph.graphml")
+    # G.remove_nodes_from(list(nx.isolates(G)))
+    # # showGraph(G)
+    # generate_echarts_html(G, output_file="dag2.html")
+    # nx.write_graphml(G, "Project/data/src/graph.graphml")
     # return
     
     ###########################################
@@ -396,7 +392,11 @@ def main():
     
     save_to_json(partitions, G)
     
+    return
+    
     input(f"waiting for modify, click enter to continue...")
+    
+    return
     
     with open("partitions_user.json", "r") as f:
         partitions = json.load(f)
@@ -406,7 +406,7 @@ def main():
     
     output = save_microservices(partitions, G)
     
-    reconstruct(partitions, output)
+    # reconstruct(partitions, output)
     
     
 
@@ -418,6 +418,10 @@ tools_dir = os.path.join(current_dir, "Project")
 sys.path.insert(0, tools_dir)
 from Project.Main import *
 
+
+start_time = time.time()
 main()
+end_time = time.time()
+print("Total time: ", end_time - start_time)
 
 

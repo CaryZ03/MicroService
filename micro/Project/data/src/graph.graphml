@@ -625,7 +625,7 @@
       <data key="d1">0</data>
       <data key="d2">function</data>
     </node>
-    <node id="POST:/user/getUserOrder/123">
+    <node id="POST:/user/getUserOrder/{str}">
       <data key="d0">299</data>
       <data key="d1">17</data>
       <data key="d2">entry</data>
@@ -670,7 +670,7 @@
       <data key="d1">73</data>
       <data key="d2">database</data>
     </node>
-    <node id="GET:/customer/getByUid/123">
+    <node id="GET:/customer/getByUid/{str}">
       <data key="d0">44</data>
       <data key="d1">12</data>
       <data key="d2">entry</data>
@@ -680,7 +680,7 @@
       <data key="d1">12</data>
       <data key="d2">database</data>
     </node>
-    <node id="GET:/user/getByUid/123">
+    <node id="GET:/user/getByUid/{str}">
       <data key="d0">20</data>
       <data key="d1">7</data>
       <data key="d2">entry</data>
@@ -705,7 +705,7 @@
       <data key="d1">15</data>
       <data key="d2">database</data>
     </node>
-    <node id="GET:/train/getTidByUid/123">
+    <node id="GET:/train/getTidByUid/{str}">
       <data key="d0">32</data>
       <data key="d1">6</data>
       <data key="d2">entry</data>
@@ -765,17 +765,12 @@
       <data key="d1">3</data>
       <data key="d2">function</data>
     </node>
-    <node id="GET:/customer/getCidByHid/5">
-      <data key="d0">2</data>
-      <data key="d1">1</data>
+    <node id="GET:/customer/getCidByHid/{str}">
+      <data key="d0">7</data>
+      <data key="d1">2</data>
       <data key="d2">entry</data>
     </node>
-    <node id="GET:/customer/getCidByHid/1">
-      <data key="d0">5</data>
-      <data key="d1">1</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="GET:/user/getNoticeByUid/123">
+    <node id="GET:/user/getNoticeByUid/{str}">
       <data key="d0">14</data>
       <data key="d1">4</data>
       <data key="d2">entry</data>
@@ -785,24 +780,14 @@
       <data key="d1">3</data>
       <data key="d2">entry</data>
     </node>
-    <node id="GET:/customer/getByCid/2">
-      <data key="d0">8</data>
+    <node id="GET:/customer/getByCid/{str}">
+      <data key="d0">10</data>
+      <data key="d1">4</data>
+      <data key="d2">entry</data>
+    </node>
+    <node id="POST:/customer/getCidByTidStrict/{str}">
+      <data key="d0">12</data>
       <data key="d1">3</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="GET:/customer/getByCid/1">
-      <data key="d0">2</data>
-      <data key="d1">1</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="POST:/customer/getCidByTidStrict/K11">
-      <data key="d0">4</data>
-      <data key="d1">1</data>
-      <data key="d2">entry</data>
-    </node>
-    <node id="POST:/customer/getCidByTidStrict/J10">
-      <data key="d0">8</data>
-      <data key="d1">2</data>
       <data key="d2">entry</data>
     </node>
     <edge source="com.dofinal.RG.controller.OrderController.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)" target="com.dofinal.RG.service.impl.OrderServiceImpl.payUserOrder(com.dofinal.RG.reqs.userOrder.OtherUserOrderReq)">
@@ -1267,25 +1252,25 @@
     <edge source="com.dofinal.RG.controller.CustomerController.getCidByTid(java.lang.String)" target="com.dofinal.RG.service.impl.CustomerServiceImpl.getCidByTid(java.lang.String)">
       <data key="d3">1</data>
     </edge>
-    <edge source="POST:/user/getUserOrder/123" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+    <edge source="POST:/user/getUserOrder/{str}" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
       <data key="d3">17</data>
     </edge>
-    <edge source="POST:/user/getUserOrder/123" target="com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)">
+    <edge source="POST:/user/getUserOrder/{str}" target="com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)">
       <data key="d3">17</data>
     </edge>
-    <edge source="GET:/customer/getByUid/123" target="com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)">
+    <edge source="GET:/customer/getByUid/{str}" target="com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)">
       <data key="d3">12</data>
     </edge>
-    <edge source="GET:/user/getByUid/123" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+    <edge source="GET:/user/getByUid/{str}" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
       <data key="d3">7</data>
     </edge>
-    <edge source="GET:/user/getByUid/123" target="com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)">
+    <edge source="GET:/user/getByUid/{str}" target="com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)">
       <data key="d3">7</data>
     </edge>
     <edge source="POST:/meal/getTrainMeals" target="com.dofinal.RG.controller.MealController.getTrainMeals(com.dofinal.RG.reqs.entity.MealReq)">
       <data key="d3">12</data>
     </edge>
-    <edge source="GET:/train/getTidByUid/123" target="com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)">
+    <edge source="GET:/train/getTidByUid/{str}" target="com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)">
       <data key="d3">6</data>
     </edge>
     <edge source="PUT:/user/rateHotelByOid" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
@@ -1324,32 +1309,23 @@
     <edge source="com.dofinal.RG.service.impl.RoomServiceImpl.orderRoom(java.sql.Timestamp,java.sql.Timestamp,java.sql.Timestamp,[B)" target="com.dofinal.RG.service.impl.RoomServiceImpl.getDay(java.sql.Timestamp)">
       <data key="d3">12</data>
     </edge>
-    <edge source="GET:/customer/getCidByHid/5" target="com.dofinal.RG.controller.CustomerController.getCidByHid(int)">
-      <data key="d3">1</data>
+    <edge source="GET:/customer/getCidByHid/{str}" target="com.dofinal.RG.controller.CustomerController.getCidByHid(int)">
+      <data key="d3">2</data>
     </edge>
-    <edge source="GET:/customer/getCidByHid/1" target="com.dofinal.RG.controller.CustomerController.getCidByHid(int)">
-      <data key="d3">1</data>
-    </edge>
-    <edge source="GET:/user/getNoticeByUid/123" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
+    <edge source="GET:/user/getNoticeByUid/{str}" target="com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)">
       <data key="d3">4</data>
     </edge>
-    <edge source="GET:/user/getNoticeByUid/123" target="com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)">
+    <edge source="GET:/user/getNoticeByUid/{str}" target="com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)">
       <data key="d3">4</data>
     </edge>
     <edge source="POST:/logout" target="com.dofinal.RG.controller.AuthenticationController.logout(com.dofinal.RG.reqs.entity.AuthenticationReq)">
       <data key="d3">3</data>
     </edge>
-    <edge source="GET:/customer/getByCid/2" target="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)">
+    <edge source="GET:/customer/getByCid/{str}" target="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)">
+      <data key="d3">4</data>
+    </edge>
+    <edge source="POST:/customer/getCidByTidStrict/{str}" target="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)">
       <data key="d3">3</data>
-    </edge>
-    <edge source="GET:/customer/getByCid/1" target="com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)">
-      <data key="d3">1</data>
-    </edge>
-    <edge source="POST:/customer/getCidByTidStrict/K11" target="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)">
-      <data key="d3">1</data>
-    </edge>
-    <edge source="POST:/customer/getCidByTidStrict/J10" target="com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)">
-      <data key="d3">2</data>
     </edge>
   </graph>
 </graphml>

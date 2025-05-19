@@ -2304,8 +2304,8 @@
         }
     },
     {
-        "id": "POST:/user/getUserOrder/123",
-        "name": "POST:/user/getUserOrder/123",
+        "id": "POST:/user/getUserOrder/{str}",
+        "name": "POST:/user/getUserOrder/{str}",
         "symbolSize": 33.4,
         "value": {
             "execution_time": 299,
@@ -2466,8 +2466,8 @@
         }
     },
     {
-        "id": "GET:/customer/getByUid/123",
-        "name": "GET:/customer/getByUid/123",
+        "id": "GET:/customer/getByUid/{str}",
+        "name": "GET:/customer/getByUid/{str}",
         "symbolSize": 32.4,
         "value": {
             "execution_time": 44,
@@ -2502,8 +2502,8 @@
         }
     },
     {
-        "id": "GET:/user/getByUid/123",
-        "name": "GET:/user/getByUid/123",
+        "id": "GET:/user/getByUid/{str}",
+        "name": "GET:/user/getByUid/{str}",
         "symbolSize": 31.4,
         "value": {
             "execution_time": 20,
@@ -2592,8 +2592,8 @@
         }
     },
     {
-        "id": "GET:/train/getTidByUid/123",
-        "name": "GET:/train/getTidByUid/123",
+        "id": "GET:/train/getTidByUid/{str}",
+        "name": "GET:/train/getTidByUid/{str}",
         "symbolSize": 31.2,
         "value": {
             "execution_time": 32,
@@ -2808,12 +2808,12 @@
         }
     },
     {
-        "id": "GET:/customer/getCidByHid/5",
-        "name": "GET:/customer/getCidByHid/5",
-        "symbolSize": 30.2,
+        "id": "GET:/customer/getCidByHid/{str}",
+        "name": "GET:/customer/getCidByHid/{str}",
+        "symbolSize": 30.4,
         "value": {
-            "execution_time": 2,
-            "count": 1,
+            "execution_time": 7,
+            "count": 2,
             "type": "entry"
         },
         "itemStyle": {
@@ -2826,26 +2826,8 @@
         }
     },
     {
-        "id": "GET:/customer/getCidByHid/1",
-        "name": "GET:/customer/getCidByHid/1",
-        "symbolSize": 30.2,
-        "value": {
-            "execution_time": 5,
-            "count": 1,
-            "type": "entry"
-        },
-        "itemStyle": {
-            "color": "#91cc75",
-            "shadowBlur": 10,
-            "shadowColor": "rgba(0, 0, 0, 0.3)"
-        },
-        "label": {
-            "show": true
-        }
-    },
-    {
-        "id": "GET:/user/getNoticeByUid/123",
-        "name": "GET:/user/getNoticeByUid/123",
+        "id": "GET:/user/getNoticeByUid/{str}",
+        "name": "GET:/user/getNoticeByUid/{str}",
         "symbolSize": 30.8,
         "value": {
             "execution_time": 14,
@@ -2880,66 +2862,30 @@
         }
     },
     {
-        "id": "GET:/customer/getByCid/2",
-        "name": "GET:/customer/getByCid/2",
+        "id": "GET:/customer/getByCid/{str}",
+        "name": "GET:/customer/getByCid/{str}",
+        "symbolSize": 30.8,
+        "value": {
+            "execution_time": 10,
+            "count": 4,
+            "type": "entry"
+        },
+        "itemStyle": {
+            "color": "#91cc75",
+            "shadowBlur": 10,
+            "shadowColor": "rgba(0, 0, 0, 0.3)"
+        },
+        "label": {
+            "show": true
+        }
+    },
+    {
+        "id": "POST:/customer/getCidByTidStrict/{str}",
+        "name": "POST:/customer/getCidByTidStrict/{str}",
         "symbolSize": 30.6,
         "value": {
-            "execution_time": 8,
+            "execution_time": 12,
             "count": 3,
-            "type": "entry"
-        },
-        "itemStyle": {
-            "color": "#91cc75",
-            "shadowBlur": 10,
-            "shadowColor": "rgba(0, 0, 0, 0.3)"
-        },
-        "label": {
-            "show": true
-        }
-    },
-    {
-        "id": "GET:/customer/getByCid/1",
-        "name": "GET:/customer/getByCid/1",
-        "symbolSize": 30.2,
-        "value": {
-            "execution_time": 2,
-            "count": 1,
-            "type": "entry"
-        },
-        "itemStyle": {
-            "color": "#91cc75",
-            "shadowBlur": 10,
-            "shadowColor": "rgba(0, 0, 0, 0.3)"
-        },
-        "label": {
-            "show": true
-        }
-    },
-    {
-        "id": "POST:/customer/getCidByTidStrict/K11",
-        "name": "POST:/customer/getCidByTidStrict/K11",
-        "symbolSize": 30.2,
-        "value": {
-            "execution_time": 4,
-            "count": 1,
-            "type": "entry"
-        },
-        "itemStyle": {
-            "color": "#91cc75",
-            "shadowBlur": 10,
-            "shadowColor": "rgba(0, 0, 0, 0.3)"
-        },
-        "label": {
-            "show": true
-        }
-    },
-    {
-        "id": "POST:/customer/getCidByTidStrict/J10",
-        "name": "POST:/customer/getCidByTidStrict/J10",
-        "symbolSize": 30.4,
-        "value": {
-            "execution_time": 8,
-            "count": 2,
             "type": "entry"
         },
         "itemStyle": {
@@ -6804,7 +6750,7 @@
         }
     },
     {
-        "source": "POST:/user/getUserOrder/123",
+        "source": "POST:/user/getUserOrder/{str}",
         "target": "com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)",
         "value": 17,
         "lineStyle": {
@@ -6829,7 +6775,7 @@
         }
     },
     {
-        "source": "POST:/user/getUserOrder/123",
+        "source": "POST:/user/getUserOrder/{str}",
         "target": "com.dofinal.RG.controller.UserController.getUserOrderByUid(java.lang.String)",
         "value": 17,
         "lineStyle": {
@@ -6854,7 +6800,7 @@
         }
     },
     {
-        "source": "GET:/customer/getByUid/123",
+        "source": "GET:/customer/getByUid/{str}",
         "target": "com.dofinal.RG.controller.CustomerController.getCustomerByUid(java.lang.String)",
         "value": 12,
         "lineStyle": {
@@ -6879,7 +6825,7 @@
         }
     },
     {
-        "source": "GET:/user/getByUid/123",
+        "source": "GET:/user/getByUid/{str}",
         "target": "com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)",
         "value": 7,
         "lineStyle": {
@@ -6904,7 +6850,7 @@
         }
     },
     {
-        "source": "GET:/user/getByUid/123",
+        "source": "GET:/user/getByUid/{str}",
         "target": "com.dofinal.RG.controller.UserController.getUserByUid(java.lang.String)",
         "value": 7,
         "lineStyle": {
@@ -6954,7 +6900,7 @@
         }
     },
     {
-        "source": "GET:/train/getTidByUid/123",
+        "source": "GET:/train/getTidByUid/{str}",
         "target": "com.dofinal.RG.controller.TrainController.getTidByUid(java.lang.String)",
         "value": 6,
         "lineStyle": {
@@ -7279,11 +7225,11 @@
         }
     },
     {
-        "source": "GET:/customer/getCidByHid/5",
+        "source": "GET:/customer/getCidByHid/{str}",
         "target": "com.dofinal.RG.controller.CustomerController.getCidByHid(int)",
-        "value": 1,
+        "value": 2,
         "lineStyle": {
-            "width": 1.5,
+            "width": 2.0,
             "color": {
                 "type": "linear",
                 "x": 0,
@@ -7304,32 +7250,7 @@
         }
     },
     {
-        "source": "GET:/customer/getCidByHid/1",
-        "target": "com.dofinal.RG.controller.CustomerController.getCidByHid(int)",
-        "value": 1,
-        "lineStyle": {
-            "width": 1.5,
-            "color": {
-                "type": "linear",
-                "x": 0,
-                "y": 0,
-                "x2": 1,
-                "y2": 0,
-                "colorStops": [
-                    {
-                        "offset": 0,
-                        "color": "#91d5ff"
-                    },
-                    {
-                        "offset": 1,
-                        "color": "#096dd9"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "source": "GET:/user/getNoticeByUid/123",
+        "source": "GET:/user/getNoticeByUid/{str}",
         "target": "com.dofinal.RG.Interceptor.LoginInterceptor.preHandle(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.Object)",
         "value": 4,
         "lineStyle": {
@@ -7354,7 +7275,7 @@
         }
     },
     {
-        "source": "GET:/user/getNoticeByUid/123",
+        "source": "GET:/user/getNoticeByUid/{str}",
         "target": "com.dofinal.RG.controller.NoticeController.getUserNoticeByUid(java.lang.String)",
         "value": 4,
         "lineStyle": {
@@ -7404,86 +7325,36 @@
         }
     },
     {
-        "source": "GET:/customer/getByCid/2",
+        "source": "GET:/customer/getByCid/{str}",
         "target": "com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)",
+        "value": 4,
+        "lineStyle": {
+            "width": 3.0,
+            "color": {
+                "type": "linear",
+                "x": 0,
+                "y": 0,
+                "x2": 1,
+                "y2": 0,
+                "colorStops": [
+                    {
+                        "offset": 0,
+                        "color": "#91d5ff"
+                    },
+                    {
+                        "offset": 1,
+                        "color": "#096dd9"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "source": "POST:/customer/getCidByTidStrict/{str}",
+        "target": "com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)",
         "value": 3,
         "lineStyle": {
             "width": 2.5,
-            "color": {
-                "type": "linear",
-                "x": 0,
-                "y": 0,
-                "x2": 1,
-                "y2": 0,
-                "colorStops": [
-                    {
-                        "offset": 0,
-                        "color": "#91d5ff"
-                    },
-                    {
-                        "offset": 1,
-                        "color": "#096dd9"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "source": "GET:/customer/getByCid/1",
-        "target": "com.dofinal.RG.controller.CustomerController.getCustomerByCid(int)",
-        "value": 1,
-        "lineStyle": {
-            "width": 1.5,
-            "color": {
-                "type": "linear",
-                "x": 0,
-                "y": 0,
-                "x2": 1,
-                "y2": 0,
-                "colorStops": [
-                    {
-                        "offset": 0,
-                        "color": "#91d5ff"
-                    },
-                    {
-                        "offset": 1,
-                        "color": "#096dd9"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "source": "POST:/customer/getCidByTidStrict/K11",
-        "target": "com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)",
-        "value": 1,
-        "lineStyle": {
-            "width": 1.5,
-            "color": {
-                "type": "linear",
-                "x": 0,
-                "y": 0,
-                "x2": 1,
-                "y2": 0,
-                "colorStops": [
-                    {
-                        "offset": 0,
-                        "color": "#91d5ff"
-                    },
-                    {
-                        "offset": 1,
-                        "color": "#096dd9"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "source": "POST:/customer/getCidByTidStrict/J10",
-        "target": "com.dofinal.RG.controller.CustomerController.getCidByTidStrict(java.lang.String)",
-        "value": 2,
-        "lineStyle": {
-            "width": 2.0,
             "color": {
                 "type": "linear",
                 "x": 0,

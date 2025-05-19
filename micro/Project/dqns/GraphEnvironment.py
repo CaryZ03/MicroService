@@ -105,6 +105,7 @@ class GraphEnvironment:
                                node_microservice_after: Dict[int, int]) -> float:
         
         return self.calcReward(node_microservice_after) - self.calcReward(node_microservice_before) 
+    #  - self.calcReward(node_microservice_before) 
     
     def calcReward(self, node_microservice: Dict[int, int]) -> float:
         modularity = self.calcModularity(node_microservice)
@@ -117,8 +118,13 @@ class GraphEnvironment:
         #       intra_cohesion, " inter: ", inter_coupling, " balance: ", size_balance,
         #       " data_cons: ", data_consistency)
 
-        reward = modularity + intra_cohesion - inter_coupling + size_balance + data_consistency
-        return reward
+        reward = modularity / 20 + intra_cohesion - inter_coupling * 5 + size_balance * 0.01 + data_consistency * 3
+        # print("modularity: ", modularity)
+        # print("intra_cohesion: ", intra_cohesion)
+        # print("inter_coupling: ", inter_coupling)
+        # print("size_balance: ", size_balance)
+        # print("data_consistency: ", data_consistency)
+        return reward * 10
 
 
     def calcModularity(self, node_microservice: Dict[int, int]) -> float:

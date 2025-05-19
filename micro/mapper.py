@@ -328,9 +328,9 @@ def staticGraph(G):
     return G
 
 
-def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False):
+def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False, proj_name=None):
     if source == 'json':
-        with open("spans_traveldog.json", "r") as infile:
+        with open(f"spans_{proj_name}.json", "r") as infile:
             spanss = json.load(infile)
     elif source == 'static':
         return staticGraph(G)
@@ -346,13 +346,13 @@ def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False
                 spanss.append(spans)
             # break
         if saveSpans:
-            with open("spans1.json", "w") as outfile:
+            with open(f"spans_{proj_name}.json", "w") as outfile:
                 json.dump(spanss, outfile, indent=4)
         
     if saveEntries:
         entries = []
     else:
-        with open("entries_demo1.json", "r") as json_file:
+        with open(f"entries_{proj_name}.json", "r") as json_file:
             entries = json.load(json_file)
     
     # print("Entries:", entries)
@@ -367,7 +367,7 @@ def buildGraph(G=nx.DiGraph(), source='json', saveSpans=False, saveEntries=False
         entries = [{"name": entry_name, "weight": 1} for entry_name in entry_names]
 
         # 写入 JSON 文件
-        with open("entries_traveldog.json", "w") as json_file:
+        with open(f"entries_{proj_name}.json", "w") as json_file:
             json.dump(entries, json_file, indent=4)  # 使用 indent 参数美化输出
     
     return G

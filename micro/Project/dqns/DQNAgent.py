@@ -10,7 +10,7 @@ from dqns.DQNetwork import DQNetwork
 
 class DQNAgent:
     def __init__(self, state_dim: int, action_dim: int,
-                 learning_rate: float = 0.0001, gamma: float = 0.99, 
+                 learning_rate: float = 0.001, gamma: float = 0.5, 
                  epsilon: float = 0.99, epsilon_min : float= 0.05, 
                  epsilon_decay: float = 0.995):
         

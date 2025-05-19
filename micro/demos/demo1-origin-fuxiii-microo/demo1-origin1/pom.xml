@@ -7,7 +7,7 @@
     <relativePath/>
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>demo1</artifactId>
+  <artifactId>demo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>demo1</name>
   <description>demo1</description>
@@ -53,11 +53,6 @@
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.skywalking</groupId>
-      <artifactId>apm-toolkit-trace</artifactId>
-      <version>9.3.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
