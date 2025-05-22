@@ -251,7 +251,13 @@ public class CallGraphGenerator {
 
                 if (type.getAnnotations().stream().anyMatch(annotation -> {
                     String name = annotation.getNameAsString();
-                    return name.equals("Entity") || name.equals("Repository") || name.equals("SpringBootApplication") || name.equals("TableName");
+                    return name.equals("SpringBootApplication");
+                })) {
+                    excludedNames.add("FUXI_FOUND_MAIN_CLASS_" + type.getFullyQualifiedName().orElse("<UnknownClass>"));
+                    continue;
+                } else if (type.getAnnotations().stream().anyMatch(annotation -> {
+                    String name = annotation.getNameAsString();
+                    return name.equals("Entity") || name.equals("Repository") || name.equals("TableName");
                 })) {
                     excludedNames.add(type.getFullyQualifiedName().get());
                     continue;

@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ServiceTemp {
     private String target_path;
+    private String main_class;
     private Map<String, Integer> partition;
     private String port;
     private List<String> functions;
@@ -17,6 +18,14 @@ public class ServiceTemp {
 
     public void setTarget_path(String target_path) {
         this.target_path = target_path;
+    }
+
+    public String getMain_class() {
+        return main_class;
+    }
+
+    public void setMain_class(String main_class) {
+        this.main_class = main_class;
     }
 
     public Map<String, Integer> getPartition() {

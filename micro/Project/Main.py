@@ -72,7 +72,7 @@ def stage2Main() -> None:
 
         # initialize the environment and agent.
         # microservice_count: int = len(microservice_reference.keys())
-        microservice_count: int = 4
+        microservice_count: int = 5
         env: GraphEnvironment = GraphEnvironment(graph, microservice_count)
 
         state_dim: int = env.getNodeCnt()

@@ -29,9 +29,9 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
-source = "D:/Programs/MicroService/traveldog/traveldog"
+# source = "D:/Programs/MicroService/traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
-target = source + "-fuxiii"
+target = source + "-fuxiiii"
 
 # 如果目标目录存在，则删除它
 if os.path.exists(target):
@@ -45,6 +45,8 @@ print(proj_name)
 source = target
 
 G = nx.DiGraph()
+
+mainClass = ""
 
 def static():
     global G
@@ -85,6 +87,11 @@ def static():
     #     static_data = json.load(f)
     
     excluded_names = static_data.get("Excluded_Names", [])
+    
+    for name in excluded_names:
+        if name.startswith("FUXI_FOUND_MAIN_CLASS_"):
+            global mainClass
+            mainClass = name.split("FUXI_FOUND_MAIN_CLASS_")[-1]
 
     for caller, callees in static_data.items():
         if caller == "Excluded_Names": continue
@@ -159,6 +166,7 @@ def reconstruct(partitions, output):
         
         json_data = {
             "target_path": target,
+            "main_class": mainClass,
             **value,
             "partition": partitions,
             "port": f"185{int(key):02d}",
@@ -269,42 +277,42 @@ def save_to_json(partitions, G):
     with open("partitions.json", "w") as f:
         json.dump(partitions, f, indent=4)
     
-    # rawData = [{
-    #     "func_name": to_func_name(func),
-    #     "file_path": to_file_path(func),
-    #     "full_name": func,
-    #     "lineno": 0,
-    #     "end_lineno": 0,
-    #     "docstring": 0,
-    #     "execution_time": 0,
-    #     "count": 0,
-    #     "label": label
-    # } for func, label in partitions.items() if get_type(func) == "function"]
+    rawData = [{
+        "func_name": to_func_name(func),
+        "file_path": to_file_path(func),
+        "full_name": func,
+        "lineno": 0,
+        "end_lineno": 0,
+        "docstring": 0,
+        "execution_time": 0,
+        "count": 0,
+        "label": label
+    } for func, label in partitions.items() if get_type(func) == "function"]
     
-    # # print(G.edges(data=True))
+    # print(G.edges(data=True))
     
-    # rawConnections = [{
-    #     "caller_tuple": [
-    #         to_file_path(caller),
-    #         to_func_name(caller),
-    #     ],
-    #     "called_tuple": [
-    #         to_file_path(callee),
-    #         to_func_name(callee),
-    #     ],
-    #     "execution_time": 10,
-    #     "call_count": attr["weight"] if "weight" in attr else 1,
-    # } for caller, callee, attr in G.edges(data=True) if get_type(caller) == "function" and get_type(callee) == "function"]
+    rawConnections = [{
+        "caller_tuple": [
+            to_file_path(caller),
+            to_func_name(caller),
+        ],
+        "called_tuple": [
+            to_file_path(callee),
+            to_func_name(callee),
+        ],
+        "execution_time": 10,
+        "call_count": attr["weight"] if "weight" in attr else 1,
+    } for caller, callee, attr in G.edges(data=True) if get_type(caller) == "function" and get_type(callee) == "function"]
     
-    # print("rawConnections: ", rawConnections)
+    print("rawConnections: ", rawConnections)
     
-    # vueData = {
-    #     "rawData": rawData,
-    #     "rawConnections": rawConnections,
-    # }
+    vueData = {
+        "rawData": rawData,
+        "rawConnections": rawConnections,
+    }
     
-    # with open("vueData.json", "w") as f:
-    #     json.dump(vueData, f, indent=4)
+    with open("vueData.json", "w") as f:
+        json.dump(vueData, f, indent=4)
 
 
 def save_microservices(partitions, G):
@@ -360,23 +368,23 @@ def save_microservices(partitions, G):
 
 def main():
     global G
-    # static()
+    static()
     
-    # # showGraph(G)
-    # generate_echarts_html(G, output_file="dag.html")
+    # showGraph(G)
+    generate_echarts_html(G, output_file="dag.html")
+    return
+    # run_project()
+    # print("run_project success!")
     # # return
-    # # run_project()
-    # # print("run_project success!")
-    # # # return
-    # dynamic()
+    dynamic()
     
-    # generate_echarts_html(G, output_file="dag1.html")
+    generate_echarts_html(G, output_file="dag1.html")
     
-    # G.remove_nodes_from(list(nx.isolates(G)))
-    # # showGraph(G)
-    # generate_echarts_html(G, output_file="dag2.html")
-    # nx.write_graphml(G, "Project/data/src/graph.graphml")
-    # return
+    G.remove_nodes_from(list(nx.isolates(G)))
+    # showGraph(G)
+    generate_echarts_html(G, output_file="dag2.html")
+    nx.write_graphml(G, "Project/data/src/graph.graphml")
+    return
     
     ###########################################
     
