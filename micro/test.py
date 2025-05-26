@@ -118,7 +118,7 @@ def test(port=None):
     id = response.json().get("id")
     get_user_by_username(username)
     get_user_by_id(id)
-    category_name = "testCategor25"
+    category_name = "testCategor555"
     response = create_category(category_name)
     print("Create Category Response:", response.json())
     category_id = response.json().get("id")
@@ -154,7 +154,7 @@ def test(port=None):
 if __name__ == "__main__":
     # response = send_request("GET", f"/start/test")
     # print("Start Test Response:", response.text)
-    test() 
+    test(8080) 
     # response = create_order(1, 1)
     # print("Create Order Response:", response.json())
 

@@ -31,7 +31,7 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
 # source = "D:/Programs/MicroService/traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
-target = source + "-fuxiiii"
+target = source + "-fuxiiiiiiii"
 
 # 如果目标目录存在，则删除它
 if os.path.exists(target):
@@ -372,9 +372,9 @@ def main():
     
     # showGraph(G)
     generate_echarts_html(G, output_file="dag.html")
-    return
-    # run_project()
-    # print("run_project success!")
+    # return
+    run_project()
+    print("run_project success!")
     # # return
     dynamic()
     
@@ -384,7 +384,7 @@ def main():
     # showGraph(G)
     generate_echarts_html(G, output_file="dag2.html")
     nx.write_graphml(G, "Project/data/src/graph.graphml")
-    return
+    # return
     
     ###########################################
     
@@ -400,11 +400,11 @@ def main():
     
     save_to_json(partitions, G)
     
-    return
+    # return
     
     input(f"waiting for modify, click enter to continue...")
     
-    return
+    # return
     
     with open("partitions_user.json", "r") as f:
         partitions = json.load(f)
@@ -414,7 +414,7 @@ def main():
     
     output = save_microservices(partitions, G)
     
-    # reconstruct(partitions, output)
+    reconstruct(partitions, output)
     
     
 

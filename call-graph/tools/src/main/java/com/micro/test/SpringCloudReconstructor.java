@@ -92,42 +92,6 @@ public class SpringCloudReconstructor {
         return req;
     }
 
-    private static List<String> addSpringCloudAnnotation(JavaParser parser, File javaFile) {
-        try (FileInputStream in = new FileInputStream(javaFile)) {
-            CompilationUnit cu = parser.parse(in).getResult().orElseThrow();
-
-            boolean found = false;
-            // 遍历所有方法并添加 @Trace 注解
-            for (TypeDeclaration<?> type : cu.getTypes()) {
-
-                for (MethodDeclaration method : type.getMethods()) {
-                    found = true;
-                    if (!method.getAnnotations().stream().anyMatch(a -> a.getNameAsString().equals("Trace"))) {
-                        MarkerAnnotationExpr traceAnnotation = new MarkerAnnotationExpr();
-                        traceAnnotation.setName("Trace");
-                        method.addAnnotation(traceAnnotation);
-                    }
-                }
-            }
-
-            if (found) {
-                // 添加 import 语句
-                if (!cu.getImports().stream().anyMatch(i -> i.getNameAsString().equals("org.apache.skywalking.apm.toolkit.trace.Trace"))) {
-                    cu.addImport("org.apache.skywalking.apm.toolkit.trace.Trace");
-                }
-            }
-
-            // 保存修改后的文件
-            String modifiedCode = new PrettyPrinter().print(cu);
-            try (FileWriter writer = new FileWriter(javaFile)) {
-                writer.write(modifiedCode);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return excludedNames;
-    }
-
     public void parseConfig(String targetPath, String port) {
         String configFilePath = targetPath + "/src/main/resources/application.properties";
         File configFile = new File(configFilePath);
