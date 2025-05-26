@@ -31,7 +31,7 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
 # source = "D:/Programs/MicroService/traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
-target = source + "-fuxiiiiiiii"
+target = source + "-fuxi"
 
 # 如果目标目录存在，则删除它
 if os.path.exists(target):
@@ -368,33 +368,33 @@ def save_microservices(partitions, G):
 
 def main():
     global G
-    static()
+    # static()
     
-    # showGraph(G)
-    generate_echarts_html(G, output_file="dag.html")
-    # return
-    run_project()
-    print("run_project success!")
+    # # showGraph(G)
+    # generate_echarts_html(G, output_file="dag.html")
     # # return
-    dynamic()
+    # run_project()
+    # print("run_project success!")
+    # # # return
+    # dynamic()
     
-    generate_echarts_html(G, output_file="dag1.html")
+    # generate_echarts_html(G, output_file="dag1.html")
     
-    G.remove_nodes_from(list(nx.isolates(G)))
-    # showGraph(G)
-    generate_echarts_html(G, output_file="dag2.html")
-    nx.write_graphml(G, "Project/data/src/graph.graphml")
-    # return
+    # G.remove_nodes_from(list(nx.isolates(G)))
+    # # showGraph(G)
+    # generate_echarts_html(G, output_file="dag2.html")
+    # nx.write_graphml(G, "Project/data/src/graph.graphml")
+    # # return
     
-    ###########################################
+    # ###########################################
     
     
     G = nx.read_graphml("Project/data/src/graph.graphml")
     
-    partitions = partition()
+    # partitions = partition()
     
-    # with open("partitions.json", "r") as f:
-    #     partitions = json.load(f)
+    with open("partitions.json", "r") as f:
+        partitions = json.load(f)
     
     print("partitions: ", partitions)
     

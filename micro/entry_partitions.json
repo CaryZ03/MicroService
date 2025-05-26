@@ -1,14 +1,14 @@
 {
-    "POST:/products": 1,
-    "POST:/categories": 1,
-    "POST:/users/register": 1,
-    "POST:/payment-records": 1,
-    "POST:/order-details": 2,
-    "GET:/users/username/{str}": 2,
-    "GET:/products/name/{str}": 2,
-    "GET:/orders/id/{int}": 3,
-    "GET:/categories/name/{str}": 3,
-    "GET:/products/id/{int}": 0,
-    "POST:/orders": 0,
-    "GET:/users/id/{int}": 0
+    "POST:/products": 3,
+    "GET:/products/name/{str}": 3,
+    "POST:/order-details": 1,
+    "GET:/products/id/{int}": 1,
+    "GET:/orders/id/{int}": 1,
+    "POST:/orders": 1,
+    "GET:/users/username/{str}": 0,
+    "POST:/users/register": 0,
+    "GET:/users/id/{int}": 0,
+    "POST:/categories": 2,
+    "POST:/payment-records": 2,
+    "GET:/categories/name/{str}": 2
 }
