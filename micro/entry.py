@@ -404,7 +404,7 @@ def main():
     
     input(f"waiting for modify, click enter to continue...")
     
-    # return
+    return
     
     with open("partitions_user.json", "r") as f:
         partitions = json.load(f)

@@ -9,7 +9,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 2
         },
         {
             "func_name": "ProductService.addProduct(Product)",
@@ -20,7 +20,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 3
+            "label": 1
         },
         {
             "func_name": "OrderDetailController.addOrderDetail(OrderDetail)",
@@ -31,7 +31,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 1
+            "label": 2
         },
         {
             "func_name": "OrderDetailService.addOrderDetail(OrderDetail)",
@@ -130,7 +130,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 2
+            "label": 3
         },
         {
             "func_name": "ProductController.getProductById(Long)",
@@ -284,7 +284,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 2
+            "label": 1
         },
         {
             "func_name": "UserController.getUserById(Long)",
@@ -306,7 +306,7 @@
             "docstring": 0,
             "execution_time": 0,
             "count": 0,
-            "label": 2
+            "label": 3
         }
     ],
     "rawConnections": [
