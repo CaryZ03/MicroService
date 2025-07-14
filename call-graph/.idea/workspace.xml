@@ -5,38 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd02c3fc-b835-47db-b9c8-46df634de470" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/ASTAnalyzer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/CallGraphGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/PomXmlModifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/ServiceTemp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/SpringCloudReconstructor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/StaticParseNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/src/main/java/com/micro/test/TraceAnnotationGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/main/java/com/example/demo/ControllerA.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/main/java/com/example/demo/ControllerB.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/main/java/com/example/demo/Demo1Application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/main/java/com/example/demo/RestTemplateConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/main/java/com/example/demo/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice0/src/test/java/com/example/demo/Demo1ApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices2.json" beforeDir="false" afterPath="$PROJECT_DIR$/microservices2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../micro/Partition/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../micro/Partition/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../micro/Partition/data/src/graph.graphml" beforeDir="false" afterPath="$PROJECT_DIR$/../micro/Partition/data/src/graph.graphml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../micro/Partition/data/target/microservice_graph.graphml" beforeDir="false" afterPath="$PROJECT_DIR$/../micro/Partition/data/target/microservice_graph.graphml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../micro/Partition/microservices.json" beforeDir="false" afterPath="$PROJECT_DIR$/../micro/Partition/microservices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../micro/entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/../micro/entry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../micro/mapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/../micro/mapper.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +33,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Programs/MicroService/call-graph/tools/src/main/java/com/example/test",
+    "last_opened_file_path": "D:/Projects/MicroService/call-graph/tools",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,6 +58,23 @@
       <recent name="com.micro.javaparser" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="fuxi" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="call-graph" />
+      <option name="SPRING_BOOT_MAIN_CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -103,6 +89,7 @@
       <workItem from="1744896255504" duration="38000" />
       <workItem from="1744896325230" duration="11000" />
       <workItem from="1744962576923" duration="5653000" />
+      <workItem from="1752133518309" duration="1422000" />
     </task>
     <servers />
   </component>

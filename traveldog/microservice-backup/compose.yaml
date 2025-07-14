@@ -1,0 +1,65 @@
+services:
+  frontend:
+    container_name: frontend
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_frontend:v1
+    build: ./vue/traveldog/
+    ports:
+      - "8085:80"
+    depends_on:
+      - backend_hotel
+      - backend_location
+      - backend_order
+      - backend_train
+      - backend_user
+
+  backend_hotel:
+    container_name: backend_hotel
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_hotel_backend:v1
+    build: ./Hotel_Service/target/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  backend_location:
+    container_name: backend_location
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_location_backend:v1
+    build: ./Location_Service/target
+    ports:
+      - "8081:8081"
+    depends_on:
+      - database
+
+  backend_order:
+    container_name: backend_order
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_order_backend:v1
+    build: ./Order_Service/target/
+    ports:
+      - "8082:8082"
+    depends_on:
+      - database
+
+  backend_train:
+    container_name: backend_train
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_train_backend:v1
+    build: ./Train_Service/target/
+    ports:
+      - "8083:8083"
+    depends_on:
+      - database
+
+  backend_user:
+    container_name: backend_user
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_user_backend:v1
+    build: ./User_Service/target/
+    ports:
+      - "8084:8084"
+    depends_on:
+      - database
+
+  database:
+    container_name: database
+    image: swr.cn-north-4.myhuaweicloud.com/rg/traveldog_database:v1
+    build: ./mysql/
+    ports:
+      - "3307:3306"

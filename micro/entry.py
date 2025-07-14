@@ -12,6 +12,7 @@ import glob
 
 from graph import generate_echarts_html
 from test import test
+from pathlib import Path
 
 # from flask import Flask, request, jsonify
 # from flask_cors import CORS
@@ -29,8 +30,10 @@ source = "D:/Programs/MicroService/call-graph/tools/demo"
 
 
 source = "D:/Programs/MicroService/micro/demos/demo1-origin"
-# source = "D:/Programs/MicroService/traveldog/traveldog"
+source = "../traveldog/traveldog"
 # source = "D:/Programs/MicroService/mall"
+source = str(Path(source).resolve()).replace("\\", "/")
+print("source: ", source)
 target = source + "-fuxi"
 
 # 如果目标目录存在，则删除它
@@ -368,23 +371,23 @@ def save_microservices(partitions, G):
 
 def main():
     global G
-    # static()
+    static()
     
     # # showGraph(G)
-    # generate_echarts_html(G, output_file="dag.html")
+    generate_echarts_html(G, output_file="dag.html")
     # # return
     # run_project()
     # print("run_project success!")
     # # # return
-    # dynamic()
+    dynamic()
     
-    # generate_echarts_html(G, output_file="dag1.html")
+    generate_echarts_html(G, output_file="dag1.html")
     
-    # G.remove_nodes_from(list(nx.isolates(G)))
+    G.remove_nodes_from(list(nx.isolates(G)))
     # # showGraph(G)
-    # generate_echarts_html(G, output_file="dag2.html")
-    # nx.write_graphml(G, "Project/data/src/graph.graphml")
-    # # return
+    generate_echarts_html(G, output_file="dag2.html")
+    nx.write_graphml(G, "Project/data/src/graph.graphml")
+    return
     
     # ###########################################
     

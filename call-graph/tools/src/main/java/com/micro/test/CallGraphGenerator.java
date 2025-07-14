@@ -44,11 +44,11 @@ import java.util.*;
 public class CallGraphGenerator {
 
 //    public static void main(String[] args) throws Exception {
+//        // 项目根目录
+//        String targetProjectRoot = "D:/Projects/MicroService/traveldog/traveldog-fuxi";
 
     @PostMapping("/callGraph")
     public Map<String, List<String>> callGraph(@RequestBody String targetProjectRoot) {
-        // 项目根目录
-//        String targetProjectRoot = "D:\\Programs\\MicroService\\call-graph\\tools\\demo";
         addSkyWalkingDependency(targetProjectRoot + "/pom.xml");
         File targetProjectDir = new File(targetProjectRoot);
 
@@ -108,9 +108,11 @@ public class CallGraphGenerator {
         for (Map.Entry<String, List<String>> entry : callGraph.entrySet()) {
 
             if (entry.getKey().equals("Excluded_Names")) continue;
+            System.out.println("caller:" + entry.getKey());
             String caller = replaceInterfaceWithImpl(entry.getKey(), impls);
             List<String> callees = new ArrayList<>();
             for (String callee : entry.getValue()) {
+                System.out.println(callee);
                 callees.add(replaceInterfaceWithImpl(callee, impls));
             }
             newCallGraph.put(caller, callees);
@@ -145,7 +147,7 @@ public class CallGraphGenerator {
     }
 
     private static String replaceInterfaceWithImpl(String methodSignature, Map<String, List<String>> impls) {
-        System.out.println(methodSignature);
+//        System.out.println(methodSignature);
         if (!methodSignature.contains("(")) return methodSignature;
         // 提取类全名，比如从 com.a.b.c() 提取 com.a.b
         int dotPos = methodSignature.substring(0, methodSignature.indexOf("(")).lastIndexOf(".");
